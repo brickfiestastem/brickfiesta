@@ -1,0 +1,11 @@
+{% block content %}
+<h1>Locations</h1>
+{% for location in locations %}
+    <a href="{% url 'location' location.id %}">{{ location.name }}</a>
+    {{ location.street }}
+    {{ location.locality }}
+    {{ location.region }}
+    {{ location.postal_code }}
+    {{ location.country }}
+{% endfor %}
+{% endblock content %}
