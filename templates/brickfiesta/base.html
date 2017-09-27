@@ -1,0 +1,46 @@
+<!doctype html>
+{% load static %}
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Brick Fiesta - {% block subtitle %}A celebration of LEGO in Texas{% endblock subtitle %}</title>
+  <meta name="description" content="Brick Fiesta - A non-profit hobby fan run family focused LEGO convention in Texas.">
+  <meta name="author" content="Brick Fiesta STEM">
+  <link rel="stylesheet" type="text/css" href="{% static 'css/picnic/picnic.min.css' %}" />
+  <style>
+      main {
+        width: 90%;
+        max-width: 960px;
+        margin: 0 auto;
+        padding: 80px 0 0;
+        }
+  </style>
+</head>
+
+<body>
+<header>
+    <nav class="mainmenu">
+        <a href="{% url 'event:index' %}" class="brand">
+        <img class="logo" src="" />
+        <span>Brick Fiesta</span>
+        </a>
+        <input id="bmenub" type="checkbox" class="show">
+        <label for="bmenub" class="burger pseudo button">Navigation</label>
+        <div class="menu">
+        <a href="{% url 'news:index' %}">News</a>                  
+        <a href="{% url 'mocs:index' %}">MOCs</a>                
+        <a href="{% url 'mocs:index' %}" class="button">Sign In/Out</a>
+        </div>
+    </nav>
+</header>
+<main>
+<article>
+{% block content %}{% endblock content %}
+</article>
+</main>
+<footer>
+
+</footer>
+</body>
+</html>

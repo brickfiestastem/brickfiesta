@@ -1,3 +1,6 @@
+{% extends "brickfiesta/base.html" %}
+
+{% block content %}
 <h1>{{ location.name }}</h1>
 {{ location.street }}
 {{ location.locality }}
@@ -9,3 +12,4 @@
 <p>Here is a list of the events we have held at this location.</p>
 
 <h2>Map</h2>
+{% endblock content %}
