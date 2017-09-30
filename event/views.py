@@ -1,8 +1,6 @@
 from django.shortcuts import render, get_object_or_404
 from event.models import Event, Location
 
-
-
 def index(request):
     obj_events = Event.objects.all().order_by('start_date')
     return render(request, 'event/index.html', {'events': obj_events})
@@ -17,4 +15,5 @@ def locations(request):
 
 def location(request, location_id):
     obj_location = get_object_or_404(Location, id=location_id)
-    return render(request, 'event/location.html', {'location': obj_location})
+    obj_events = Event.objects.all().order_by('start_date').filter(location=obj_location)
+    return render(request, 'event/location.html', {'location': obj_location, 'events': obj_events})

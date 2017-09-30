@@ -1,46 +1,40 @@
+{% load staticfiles %}
 <!doctype html>
-{% load static %}
 <html lang="en">
+
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Brick Fiesta - {% block subtitle %}A celebration of LEGO in Texas{% endblock subtitle %}</title>
   <meta name="description" content="Brick Fiesta - A non-profit hobby fan run family focused LEGO convention in Texas.">
   <meta name="author" content="Brick Fiesta STEM">
-  <link rel="stylesheet" type="text/css" href="{% static 'css/picnic/picnic.min.css' %}" />
-  <style>
-      main {
-        width: 90%;
-        max-width: 960px;
-        margin: 0 auto;
-        padding: 80px 0 0;
-        }
-  </style>
+  <title>Brick Fiesta - {% block subtitle %}A celebration of LEGO in Texas{% endblock subtitle %}</title>
+  <link rel="stylesheet" type="text/css" href="{% static 'css/kube/dist/css/kube.min.css' %}" />
 </head>
 
 <body>
-<header>
-    <nav class="mainmenu">
-        <a href="{% url 'event:index' %}" class="brand">
-        <img class="logo" src="" />
-        <span>Brick Fiesta</span>
-        </a>
-        <input id="bmenub" type="checkbox" class="show">
-        <label for="bmenub" class="burger pseudo button">Navigation</label>
-        <div class="menu">
-        <a href="{% url 'news:index' %}">News</a>                  
-        <a href="{% url 'mocs:index' %}">MOCs</a>                
-        <a href="{% url 'mocs:index' %}" class="button">Sign In/Out</a>
-        </div>
-    </nav>
-</header>
-<main>
-<article>
-{% block content %}{% endblock content %}
-</article>
-</main>
-<footer>
 
+<header>
+<div>
+    <ul>
+        <li class="brand"><a href="{% url 'event:index' %}">Brick Fiesta</a></li>
+        <li><a href="{% url 'news:index' %}">News</a></li>
+        <li><a href="{% url 'mocs:index' %}">MOCs</a></li>
+        <li><a href="{% url 'admin:logout' %}">Sign In/Out</a></li>
+    </ul>
+</div>
+</header>
+
+<article>
+<div>
+{% block content %}{% endblock content %}
+</div>
+</article>
+
+<footer>
+<div>
+    <p>2011 - 2017 <a href="">Brick Fiesta</a> / <a href="">About</a> / <a href="">Contact Us</a> / <a href="">Privacy Policy</a></p>
+</div>
 </footer>
+
 </body>
 </html>

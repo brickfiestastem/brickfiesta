@@ -13,7 +13,7 @@ class BaseModel(models.Model):
 
 class Category(BaseModel):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-    name = models.CharField(verbose_name='Name', unique=True, max_length=64)
+    title = models.CharField(verbose_name='Title', unique=True, max_length=64)
     description = models.TextField(verbose_name='Description')
     age_limit_min = models.IntegerField(verbose_name='Minimum Age Limit')
     age_limit_max = models.IntegerField(verbose_name='Maximum Age Limit')

@@ -1,7 +1,17 @@
 {% extends "brickfiesta/base.html" %}
 
 {% block content %}
-<h1>Event Details</h1>
+
+<div>
+<h1>{{ event.title }}</h1>
+<h3>{{ event.start_date }} to {{ event.end_date }}</h3>
+</div>
+
+<div>
+<h2>{{ event.theme }}</h2>
+<p>{{ event.description }}</p>
+<p align="right">Tag us on social media: #{{ event.hashtag }}</p>
+</div>
 
 <h2>Sponsors</h2>
 
@@ -12,5 +22,7 @@
 <h2>Passes</h2>
 
 <h2>Location</h2>
+<p><a href="{% url 'event:location' event.location.id %}">{{ event.location.name }}</a></p>
+<p>{{ event.hotel_information }}</p>
 
 {% endblock content %}

@@ -1,7 +1,9 @@
+{% extends "brickfiesta/base.html" %}
+
 {% block content %}
 <h1>Locations</h1>
 {% for location in locations %}
-    <a href="{% url 'location' location.id %}">{{ location.name }}</a>
+    <a href="{% url 'event:location' location.id %}">{{ location.name }}</a>
     {{ location.street }}
     {{ location.locality }}
     {{ location.region }}
