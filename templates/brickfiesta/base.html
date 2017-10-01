@@ -14,14 +14,14 @@
 <body>
 
 <header>
-<div>
-    <ul>
-        <li class="brand"><a href="{% url 'event:index' %}">Brick Fiesta</a></li>
-        <li><a href="{% url 'news:index' %}">News</a></li>
-        <li><a href="{% url 'mocs:index' %}">MOCs</a></li>
-        <li><a href="{% url 'admin:logout' %}">Sign In/Out</a></li>
+<nav>
+    <ul class="row gutters auto">
+        <li class="col"><h1><a href="{% url 'event:index' %}">Brick Fiesta</a></h1></li>
+        <li class="col"><a href="{% url 'news:index' %}">News</a></li>
+        <li class="col"><a href="{% url 'mocs:index' %}">MOCs</a></li>
+        <li class="col"><a href="{% url 'admin:logout' %}">Sign In/Out</a></li>
     </ul>
-</div>
+</nav>
 </header>
 
 <article>
@@ -31,9 +31,14 @@
 </article>
 
 <footer>
-<div>
-    <p>2011 - 2017 <a href="">Brick Fiesta</a> / <a href="">About</a> / <a href="">Contact Us</a> / <a href="">Privacy Policy</a></p>
-</div>
+<nav class="breadcrumbs push-center">
+    <ul>
+        <li>2011 - {% now 'Y' %} <a href="http://www.brickfiestastem.org/">Brick Fiesta STEM</a></li>
+        <li><a href="">About</a></li>
+        <li><a href="">Contact Us</a></li>
+        <li><a href="">Privacy Policy</a></li>
+    </ul>
+</nav>
 </footer>
 
 </body>
