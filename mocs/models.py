@@ -3,13 +3,17 @@ from event.models import Event, Space
 from django.contrib.auth.models import User
 import uuid
 
+
 class BaseModel(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-    created = models.DateTimeField(verbose_name='Created', auto_now_add=True, editable=False)
-    modified = models.DateTimeField(verbose_name='Last Modified', auto_now=True, editable=False)
+    created = models.DateTimeField(
+        verbose_name='Created', auto_now_add=True, editable=False)
+    modified = models.DateTimeField(
+        verbose_name='Last Modified', auto_now=True, editable=False)
 
     class Meta:
         abstract = True
+
 
 class Category(BaseModel):
     title = models.CharField(verbose_name='Title', unique=True, max_length=64)
@@ -23,6 +27,7 @@ class Category(BaseModel):
     class Meta:
         verbose_name_plural = 'categories'
 
+
 class EventCategory(BaseModel):
     category = models.ForeignKey(Category)
     event = models.ForeignKey(Event)
@@ -30,6 +35,7 @@ class EventCategory(BaseModel):
     class Meta:
         verbose_name_plural = 'EventCategories'
         unique_together = ('category', 'event')
+
 
 class Moc(BaseModel):
     creator = models.ForeignKey(User, on_delete=models.CASCADE, blank=True)
@@ -47,12 +53,14 @@ class Moc(BaseModel):
     def __str__(self):
         return self.title
 
+
 class EventMoc(BaseModel):
     user = models.ForeignKey(User)
     category = models.ForeignKey(EventCategory)
     moc = models.ForeignKey(Moc)
 
     # TODO: Find a way to make the event and moc unique while still using eventcategory
+
 
 class Layout(BaseModel):
     user = models.ForeignKey(User)
@@ -64,6 +72,7 @@ class Layout(BaseModel):
 
     class Meta:
         unique_together = ('category', 'title')
+
 
 class LayoutMoc(BaseModel):
     layout = models.ForeignKey(Layout)

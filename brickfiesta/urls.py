@@ -18,8 +18,8 @@ from django.contrib import admin
 
 urlpatterns = [
     url(r'', include('event.urls', namespace='index')),
-    url(r'^event/', include('event.urls',namespace='event')),
-    url(r'^news/', include('news.urls',namespace='news')),
-    url(r'^mocs/', include('mocs.urls',namespace='mocs')),
+    url(r'^event/', include('event.urls', namespace='event')),
+    url(r'^news/', include('news.urls', namespace='news')),
+    url(r'^mocs/', include('mocs.urls', namespace='mocs')),
     url(r'^admin/', admin.site.urls),
 ]
