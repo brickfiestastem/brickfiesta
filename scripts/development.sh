@@ -24,11 +24,19 @@ setup_local_settings() {
     echo "SECRET_KEY = '$NEW_UUID'" >> local_settings.py
 }
 
+run_autopep8() {
+    echo "Running autopep8"
+    cd $SCRIPT_DIR
+    cd ../
+    find . -path ./venv -prune -o -name '*.py' -exec autopep8 -i {} \;
+}
+
 usage () {
     echo "f Full Install"
     echo "v Just virtualenv"
     echo "l Just local_settings.py"
-    echo "Usage $0 [f] [v] [l]"
+    echo "8 Run autopep8"
+    echo "Usage $0 [f] [v] [l] [8]"
     exit 1
 }
 
@@ -42,6 +50,9 @@ case "$1" in
         ;;
     v)
         setup_virtualenv
+        ;;
+    8)
+        run_autopep8
         ;;
     *)
         usage

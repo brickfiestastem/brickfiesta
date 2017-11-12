@@ -49,7 +49,7 @@ class Attendee(BaseModel):
     role = models.CharField(max_length=16, choices=ROLES)
 
 
-class Badges(BaseModel):
+class Badge(BaseModel):
     user = models.ForeignKey(User)
     event = models.ForeignKey(Event)
     badge_name = models.CharField(max_length=32, blank=False)
