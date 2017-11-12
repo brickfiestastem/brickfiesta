@@ -3,6 +3,7 @@ from event.models import Event
 import uuid
 
 class BaseModel(models.Model):
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     created = models.DateTimeField(verbose_name='Created', auto_now_add=True, editable=False)
     modified = models.DateTimeField(verbose_name='Last Modified', auto_now=True, editable=False)
 
@@ -10,7 +11,6 @@ class BaseModel(models.Model):
         abstract = True
 
 class InventoryItem(BaseModel):
-    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     make = models.CharField(verbose_name='Make', max_length=64)
     model = models.CharField(verbose_name='Model', max_length=64)
     description = models.TextField(verbose_name='Description')

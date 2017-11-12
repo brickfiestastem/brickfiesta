@@ -1,8 +1,11 @@
 from django.db import models
+from django.contrib.auth.models import User
+
 import datetime
 import uuid
 
 class BaseModel(models.Model):
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     created = models.DateTimeField(verbose_name='Created', auto_now_add=True, editable=False)
     modified = models.DateTimeField(verbose_name='Last Modified', auto_now=True, editable=False)
 
@@ -10,7 +13,6 @@ class BaseModel(models.Model):
         abstract = True
 
 class Location(BaseModel):
-    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     name = models.CharField(verbose_name='Name of Location', unique=True, max_length=128)
     street = models.CharField(verbose_name='Street', max_length=128)
     locality = models.CharField(verbose_name='City', max_length=64)
@@ -24,12 +26,11 @@ class Location(BaseModel):
         return self.name
 
 class Space(BaseModel):
-    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    location = models.ForeignKey(Location)
     name = models.CharField(verbose_name='Venue Space Name', max_length=64)
     description = models.TextField(verbose_name='Description')
-    url_image = models.URLField(verbose_name='Image')
+    image = models.ImageField()
     max_seating = models.IntegerField(verbose_name='Max Seating')
-    location = models.ForeignKey(Location)
     latitude = models.FloatField(verbose_name='Latitude', blank=True, null=True)
     longitude = models.FloatField(verbose_name='Longitude', blank=True, null=True)
 
@@ -37,7 +38,6 @@ class Space(BaseModel):
         return self.name
 
 class Activity(BaseModel):
-    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     title = models.CharField(verbose_name='Title', unique=True, max_length=64)
     description = models.TextField(verbose_name='Description')
     rules = models.TextField(verbose_name='Rules')
@@ -47,7 +47,6 @@ class Activity(BaseModel):
     max_people = models.IntegerField(verbose_name='Maximum People')
 
 class Event(BaseModel):
-    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     title = models.CharField(verbose_name='Title', unique=True, max_length=64)
     description = models.TextField(verbose_name='Description')
     hashtag = models.CharField(verbose_name='Hashtag', unique=True, max_length=16)
@@ -56,6 +55,7 @@ class Event(BaseModel):
     start_date = models.DateField(verbose_name='Start Date')
     end_date = models.DateField(verbose_name='End Date')
     location = models.ForeignKey(Location)
+    logo = models.ImageField(null=True)
 
     def __str__(self):
         return self.title
@@ -74,3 +74,14 @@ class Event(BaseModel):
     def is_upcoming(self):
         today = datetime.date.today()
         return self.start_date > today
+
+class Schedule(BaseModel):
+    event = models.ForeignKey(Event)
+    space = models.ForeignKey(Space)
+    activity = models.ForeignKey(Activity)
+    user = models.ForeignKey(User)
+    start_time = models.TimeField()
+    end_time = models.TimeField()
+    date = models.DateField()
+
+    #TODO: Event, Space, Date, and Time can't conflict.

@@ -28,9 +28,14 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'afol.apps.AfolConfig',
     'event.apps.EventConfig',
     'mocs.apps.MocsConfig',
     'news.apps.NewsConfig',
+    'planning.apps.PlanningConfig',
+    'referral.apps.ReferralConfig',
+    'shop.apps.ShopConfig',
+    'vendor.apps.VendorConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',

@@ -8,37 +8,41 @@
   <meta name="description" content="Brick Fiesta - A non-profit hobby fan run family focused LEGO convention in Texas.">
   <meta name="author" content="Brick Fiesta STEM">
   <title>Brick Fiesta - {% block subtitle %}A celebration of LEGO in Texas{% endblock subtitle %}</title>
-  <link rel="stylesheet" type="text/css" href="{% static 'css/kube/dist/css/kube.min.css' %}" />
+  <link rel="stylesheet" type="text/css" href="{% static 'css/Semantic-UI/dist/semantic.min.css' %}" />
 </head>
 
 <body>
 
 <header>
-<nav>
-    <ul class="row gutters auto">
-        <li class="col"><h1><a href="{% url 'event:index' %}">Brick Fiesta</a></h1></li>
-        <li class="col"><a href="{% url 'news:index' %}">News</a></li>
-        <li class="col"><a href="{% url 'mocs:index' %}">MOCs</a></li>
-        <li class="col"><a href="{% url 'admin:logout' %}">Sign In/Out</a></li>
-    </ul>
-</nav>
+<div class="ui">
+    <div class="ui menu">
+        <a class="item" href="{% url 'event:index' %}"><h1 class="ui header">Brick Fiesta</h1></a>
+        <a class="item" href="{% url 'news:index' %}">News</a>
+        <a class="item" href="{% url 'mocs:index' %}">MOCs</a>        
+        <div class="right menu">
+            <a class="item" href="{% url 'admin:logout' %}">Sign In/Out</a>
+        </div>
+    </div>
+</div>
 </header>
 
 <article>
-<div>
+<div class="ui container">
 {% block content %}{% endblock content %}
 </div>
 </article>
 
-<footer>
-<nav class="breadcrumbs push-center">
-    <ul>
-        <li>2011 - {% now 'Y' %} <a href="http://www.brickfiestastem.org/">Brick Fiesta STEM</a></li>
-        <li><a href="">About</a></li>
-        <li><a href="">Contact Us</a></li>
-        <li><a href="">Privacy Policy</a></li>
-    </ul>
-</nav>
+<footer class="ui container">
+<div class="ui divider"></div>
+<div class="ui breadcrumb">
+        <div class="section">2011 - {% now 'Y' %} <a href="http://www.brickfiestastem.org/">Brick Fiesta STEM</a></div>
+        <div class="divider"> / </div>
+        <a href="" class="section">About</a>
+        <div class="divider"> / </div>
+        <a href="" class="section">Contact Us</a>
+        <div class="divider"> / </div>
+        <a href="" class="section">Privacy Policy</a>
+</div>
 </footer>
 
 </body>
