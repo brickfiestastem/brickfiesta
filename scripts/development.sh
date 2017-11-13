@@ -28,7 +28,7 @@ run_autopep8() {
     echo "Running autopep8"
     cd $SCRIPT_DIR
     cd ../
-    find . -path ./venv -prune -o -name '*.py' -exec autopep8 -i {} \;
+    find . -path ./venv -prune -o -name '*.py' -print -exec autopep8 -i {} \;
 }
 
 usage () {
