@@ -7,6 +7,16 @@ def index(request):
     return render(request, 'event/index.html', {'events': obj_events})
 
 
+def frontpage(request):
+    obj_events_current = Event.objects.all().order_by('start_date')
+    obj_events_upcoming = Event.objects.all().order_by('start_date')
+    obj_events_past = Event.objects.all().order_by('start_date')
+
+    return render(request, 'event/frontpage.html', {'events_current': obj_events_current,
+                                                    'events_upcoming': obj_events_upcoming,
+                                                    'events_past': obj_events_past})
+
+
 def details(request, event_id):
     obj_event = get_object_or_404(Event, id=event_id)
     return render(request, 'event/details.html', {'event': obj_event})

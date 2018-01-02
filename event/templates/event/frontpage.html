@@ -1,0 +1,39 @@
+{% extends "brickfiesta/base.html" %}
+
+{% block content %}
+
+{% for event in events_current %}
+<div>
+    <h3><a href="{% url 'event:details' event.id %}">{{ event.title }}</a></h3>
+    <h5>{{ event.start_date }} to {{ event.end_date }}</h5>
+</div>
+{% empty %}
+{% endfor %}
+
+<h2>Current Sponsors</h2>
+
+<h2>Upcoming Events</h2>
+{% for event in events_upcoming %}
+<div>
+    <h3><a href="{% url 'event:details' event.id %}">{{ event.title }}</a></h3>
+    <h5>{{ event.start_date }} to {{ event.end_date }}</h5>
+</div>
+{% empty %}
+<div>
+    <h3>No upcoming events scheduled</h3>
+</div>
+{% endfor %}
+
+<h2>Current Vendors</h2>
+
+<h2>Past Events</h2>
+{% for event in events_past %}
+<div>
+    <h3><a href="{% url 'event:details' event.id %}">{{ event.title }}</a></h3>
+    <h5>{{ event.start_date }} to {{ event.end_date }}</h5>
+</div>
+{% empty %}
+
+{% endfor %}
+
+{% endblock content %}

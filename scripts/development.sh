@@ -22,7 +22,7 @@ run_virtualenv() {
 }
 
 setup_local_settings() {
-    echo "Setting up local settings."
+    echo "Setting up local settings"
     cd $SCRIPT_DIR
     cd ../brickfiesta
     NEW_UUID=$(tr -dc '[:alnum:]' < /dev/urandom | head -c 48)
@@ -38,17 +38,32 @@ run_autopep8() {
     find . -path ./venv -prune -o -name '*.py' -print -exec autopep8 -i {} \;
 }
 
+clean_database() {
+    echo "Running clean database"
+    cd $SCRIPT_DIR
+    cd ../
+    # find . -path "*/migrations/*.py" -not -name "__init__.py" -delete
+    find . -path "*/migrations/*.pyc"  -delete
+    rm *.sqlite3
+    python manage.py makemigrations
+    python manage.py migrate
+}
+
 usage() {
+    echo "d Clean database"
     echo "f Full Install"
     echo "l Just local_settings.py"
     echo "r run virtualenv"
     echo "v Just virtualenv"
     echo "8 Run autopep8"
-    echo "Usage $0 [f] [l] [r] [v] [8]"
+    echo "Usage $0 [c] [f] [l] [r] [v] [8]"
     exit 1
 }
 
 case "$1" in
+    c)
+        clean_database
+        ;;
     f)
         setup_virtualenv
         setup_local_settings
