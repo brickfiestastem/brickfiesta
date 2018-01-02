@@ -50,8 +50,8 @@ class Attendee(BaseModel):
 
 
 class Badge(BaseModel):
-    user = models.ForeignKey(User)
-    event = models.ForeignKey(Event)
+    user = models.ForeignKey(User, on_delete=None)
+    event = models.ForeignKey(Event, on_delete=None)
     badge_name = models.CharField(max_length=32, blank=False)
     rlug_name = models.CharField(max_length=32, blank=False)
     locality = models.CharField(max_length=32, blank=False)
@@ -60,6 +60,6 @@ class Badge(BaseModel):
 
 
 class Shirt(BaseModel):
-    user = models.ForeignKey(User)
-    event = models.ForeignKey(Event)
+    user = models.ForeignKey(User, on_delete=None)
+    event = models.ForeignKey(Event, on_delete=None)
     shirt_size = models.CharField(max_length=8)

@@ -32,7 +32,7 @@ class Location(BaseModel):
 
 
 class Space(BaseModel):
-    location = models.ForeignKey(Location)
+    location = models.ForeignKey(Location, on_delete=None)
     name = models.CharField(verbose_name='Venue Space Name', max_length=64)
     description = models.TextField(verbose_name='Description')
     image = models.ImageField(null=True)
@@ -66,7 +66,7 @@ class Event(BaseModel):
         verbose_name='Hotel Information', null=True)
     start_date = models.DateField(verbose_name='Start Date')
     end_date = models.DateField(verbose_name='End Date')
-    location = models.ForeignKey(Location)
+    location = models.ForeignKey(Location, on_delete=None)
     logo = models.ImageField(null=True)
 
     def __str__(self):
@@ -89,10 +89,10 @@ class Event(BaseModel):
 
 
 class Schedule(BaseModel):
-    event = models.ForeignKey(Event)
-    space = models.ForeignKey(Space)
-    activity = models.ForeignKey(Activity)
-    user = models.ForeignKey(User)
+    event = models.ForeignKey(Event, on_delete=None)
+    space = models.ForeignKey(Space, on_delete=None)
+    activity = models.ForeignKey(Activity, on_delete=None)
+    user = models.ForeignKey(User, on_delete=None)
     start_time = models.TimeField()
     end_time = models.TimeField()
     date = models.DateField()

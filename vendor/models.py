@@ -17,7 +17,7 @@ class BaseModel(models.Model):
 
 
 class Business(models.Model):
-    user = models.ForeignKey(User)
+    user = models.ForeignKey(User, on_delete=None)
     name = models.CharField(
         verbose_name='Name of Business', unique=True, max_length=128)
     description = models.TextField(verbose_name='Description')
@@ -32,6 +32,6 @@ class Business(models.Model):
 
 
 class BusinessNote(BaseModel):
-    business = models.ForeignKey(Business)
-    user = models.ForeignKey(User)
+    business = models.ForeignKey(Business, on_delete=None)
+    user = models.ForeignKey(User, on_delete=None)
     note = models.TextField(verbose_name='Note')

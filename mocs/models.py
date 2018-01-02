@@ -29,8 +29,8 @@ class Category(BaseModel):
 
 
 class EventCategory(BaseModel):
-    category = models.ForeignKey(Category)
-    event = models.ForeignKey(Event)
+    category = models.ForeignKey(Category, on_delete=None)
+    event = models.ForeignKey(Event, on_delete=None)
 
     class Meta:
         verbose_name_plural = 'EventCategories'
@@ -55,18 +55,18 @@ class Moc(BaseModel):
 
 
 class EventMoc(BaseModel):
-    user = models.ForeignKey(User)
-    category = models.ForeignKey(EventCategory)
-    moc = models.ForeignKey(Moc)
+    user = models.ForeignKey(User, on_delete=None)
+    category = models.ForeignKey(EventCategory, on_delete=None)
+    moc = models.ForeignKey(Moc, on_delete=None)
 
     # TODO: Find a way to make the event and moc unique while still using eventcategory
 
 
 class Layout(BaseModel):
-    user = models.ForeignKey(User)
-    category = models.ForeignKey(EventCategory)
+    user = models.ForeignKey(User, on_delete=None)
+    category = models.ForeignKey(EventCategory, on_delete=None)
     title = models.CharField(verbose_name='Title', max_length=64)
-    space = models.ForeignKey(Space)
+    space = models.ForeignKey(Space, on_delete=None)
     length = models.IntegerField()
     width = models.IntegerField()
 
@@ -75,8 +75,8 @@ class Layout(BaseModel):
 
 
 class LayoutMoc(BaseModel):
-    layout = models.ForeignKey(Layout)
-    moc = models.ForeignKey(Moc)
+    layout = models.ForeignKey(Layout, on_delete=None)
+    moc = models.ForeignKey(Moc, on_delete=None)
     x = models.IntegerField()
     y = models.IntegerField()
 

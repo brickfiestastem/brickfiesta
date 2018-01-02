@@ -2,6 +2,8 @@ from django.conf.urls import include, url
 
 import mocs.views
 
+app_name = 'mocs'
+
 urlpatterns = [
     url(r'^$', mocs.views.index, name="index"),
     url(r'^add/$', mocs.views.add, name="add"),

@@ -22,15 +22,15 @@ class ProductType(BaseModel):
 
 
 class Product(BaseModel):
-    event = models.ForeignKey(Event)
-    product_type = models.ForeignKey(ProductType)
+    event = models.ForeignKey(Event, on_delete=None)
+    product_type = models.ForeignKey(ProductType, on_delete=None)
     title = models.CharField(max_length=64)
     description = models.TextField()
     price = models.FloatField()
 
 
 class Order(BaseModel):
-    product = models.ForeignKey(Product)
-    user = models.ForeignKey(User)
+    product = models.ForeignKey(Product, on_delete=None)
+    user = models.ForeignKey(User, on_delete=None)
     guest = models.CharField(max_length=255)
-    referral = models.ForeignKey(Referral)
+    referral = models.ForeignKey(Referral, on_delete=None)

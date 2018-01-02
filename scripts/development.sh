@@ -14,6 +14,13 @@ setup_virtualenv() {
     pip install -r requirements.txt
 }
 
+run_virtualenv() {
+    echo "Run local virtualenv"
+    cd $SCRIPT_DIR
+    cd ../
+    source venv/bin/activate
+}
+
 setup_local_settings() {
     echo "Setting up local settings."
     cd $SCRIPT_DIR
@@ -31,12 +38,13 @@ run_autopep8() {
     find . -path ./venv -prune -o -name '*.py' -print -exec autopep8 -i {} \;
 }
 
-usage () {
+usage() {
     echo "f Full Install"
-    echo "v Just virtualenv"
     echo "l Just local_settings.py"
+    echo "r run virtualenv"
+    echo "v Just virtualenv"
     echo "8 Run autopep8"
-    echo "Usage $0 [f] [v] [l] [8]"
+    echo "Usage $0 [f] [l] [r] [v] [8]"
     exit 1
 }
 
@@ -47,6 +55,9 @@ case "$1" in
         ;;
     l)
         setup_local_settings
+        ;;
+    r)
+        run_virtualenv
         ;;
     v)
         setup_virtualenv

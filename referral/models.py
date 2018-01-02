@@ -16,7 +16,7 @@ class BaseModel(models.Model):
 
 
 class Referral(BaseModel):
-    event = models.ForeignKey(Event)
+    event = models.ForeignKey(Event, on_delete=None)
     group_name = models.CharField(max_length=64)
     description = models.TextField()
     code = models.UUIDField(default=uuid.uuid4, editable=False)
