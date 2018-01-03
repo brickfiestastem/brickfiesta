@@ -1,6 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
-
+from event.utils import upload_path_event
 import datetime
 import uuid
 
@@ -55,7 +55,6 @@ class Activity(BaseModel):
     min_people = models.IntegerField(verbose_name='Minimum People')
     max_people = models.IntegerField(verbose_name='Maximum People')
 
-
 class Event(BaseModel):
     title = models.CharField(verbose_name='Title', unique=True, max_length=64)
     description = models.TextField(verbose_name='Description')
@@ -67,7 +66,7 @@ class Event(BaseModel):
     start_date = models.DateField(verbose_name='Start Date')
     end_date = models.DateField(verbose_name='End Date')
     location = models.ForeignKey(Location, on_delete=None)
-    logo = models.ImageField(null=True)
+    logo = models.ImageField(upload_to=upload_path_event, null=True)
 
     def __str__(self):
         return self.title
