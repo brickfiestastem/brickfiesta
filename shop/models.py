@@ -20,6 +20,9 @@ class ProductType(BaseModel):
     title = models.CharField(max_length=64)
     description = models.TextField()
 
+    def __str__(self):
+        return self.title
+
 
 class Product(BaseModel):
     event = models.ForeignKey(Event, on_delete=None)
@@ -28,9 +31,27 @@ class Product(BaseModel):
     description = models.TextField()
     price = models.FloatField()
 
-
 class Order(BaseModel):
-    product = models.ForeignKey(Product, on_delete=None)
     user = models.ForeignKey(User, on_delete=None)
     guest = models.CharField(max_length=255)
     referral = models.ForeignKey(Referral, on_delete=None)
+
+class OrderItem(BaseModel):
+    order = models.ForeignKey(Order, on_delete=None)
+    user = models.ForeignKey(User, on_delete=None, null=True)
+    product = models.ForeignKey(Product, on_delete=None)
+    price = models.FloatField()
+
+class Cart(BaseModel):
+    user = models.ForeignKey(User, on_delete=None, null=True)
+    session = models.CharField(max_length=255, blank=True)
+
+    def __str__(self):
+        return self.session
+
+class CartItem(BaseModel):
+    cart = models.ForeignKey(Cart, on_delete=None)
+    first_name = models.CharField(max_length=16, blank=True)
+    last_name = models.CharField(max_length=16, blank=True)
+    email = models.EmailField(blank=True)
+    product = models.ForeignKey(Product, on_delete=None)

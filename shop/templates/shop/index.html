@@ -1,0 +1,14 @@
+{% extends "brickfiesta/base.html" %}
+{% block content %} 
+{% for product in products %}
+<div class="card">
+    <div class="card-body">
+        <h4 class="card-title">{{ product.title }}</h4>
+        <h6 class="card-subtitle mb-2 text-muted">{{ product.product_type.title }}</h6>
+        <p class="card-text">{{ product.description }}</p>
+        <a href="{% url 'shop:details' product.id %}" class="card-link">More Details</a>
+        <a href="#" class="card-link">Add To Cart</a>
+    </div>
+</div>
+{% endfor %}
+{% endblock content %}
