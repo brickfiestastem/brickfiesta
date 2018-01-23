@@ -65,11 +65,12 @@ class EventMoc(BaseModel):
 
 
 class VoteManager(models.Manager):
-    def get_counts_by_uuid(self, uuid):
+    def get_counts_by_event_category_uuid(self, event_category_uuid):
         # How to use: Vote.objects.get_counts("4def8511-873c-4cae-b1a3-f735f8a9e286")
-        uuid = uuid.UUID(uuid)
+        if isinstance(event_category_uuid, str):
+            event_category_uuid = uuid.UUID(event_category_uuid)
         fieldname = "moc"
-        category_votes = self.filter(category__category__id=uuid)\
+        category_votes = self.filter(category__category__id=event_category_uuid)\
             .values(fieldname).order_by(fieldname)\
             .annotate(the_count=Count(fieldname))
         return category_votes
