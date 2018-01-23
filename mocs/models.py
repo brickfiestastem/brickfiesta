@@ -1,4 +1,6 @@
 from django.db import models
+from django.db.models import Count
+
 from event.models import Event, Space
 from django.contrib.auth.models import User
 import uuid
@@ -22,7 +24,7 @@ class Category(BaseModel):
     age_limit_max = models.IntegerField(verbose_name='Maximum Age Limit')
 
     def __str__(self):
-        return self.name
+        return self.title
 
     class Meta:
         verbose_name_plural = 'categories'
@@ -60,6 +62,29 @@ class EventMoc(BaseModel):
     moc = models.ForeignKey(Moc, on_delete=None)
 
     # TODO: Find a way to make the event and moc unique while still using eventcategory
+
+
+class VoteManager(models.Manager):
+    def get_counts_by_uuid(self, uuid):
+        # How to use: Vote.objects.get_counts("4def8511-873c-4cae-b1a3-f735f8a9e286")
+        uuid = uuid.UUID(uuid)
+        fieldname = "moc"
+        category_votes = self.filter(category__category__id=uuid)\
+            .values(fieldname).order_by(fieldname)\
+            .annotate(the_count=Count(fieldname))
+        return category_votes
+
+
+class Vote(BaseModel):
+    user = models.ForeignKey(User, on_delete=None)
+    moc = models.ForeignKey(Moc, on_delete=None)
+    category = models.ForeignKey(EventCategory, on_delete=None)
+    value = models.IntegerField(default=1)
+
+    class Meta:
+        unique_together = ('user', 'category')
+
+    objects = VoteManager()
 
 
 class Layout(BaseModel):
