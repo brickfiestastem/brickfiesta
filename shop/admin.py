@@ -1,8 +1,14 @@
 from django.contrib import admin
-from .models import Product, ProductType, Order, OrderItem, Cart, CartItem
+from .models import Product, ProductType, Order, OrderItem, Cart, CartItem, ProductBulletPoint
+
+
+class ProductBulletPointInline(admin.TabularInline):
+    model = ProductBulletPoint
+    extra = 1
 
 
 class ProductAdmin(admin.ModelAdmin):
+    inlines = (ProductBulletPointInline,)
     list_display = ('title', 'event', 'product_type', 'price')
 
 

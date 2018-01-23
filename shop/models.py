@@ -25,18 +25,26 @@ class ProductType(BaseModel):
         return self.title
 
 
+class ProductManager(models.Manager):
+    def get_product_bullets(self, product_uuid):
+        if isinstance(product_uuid, str):
+            product_uuid = uuid.UUID(product_uuid)
+        return self.get(id=product_uuid).productbulletpoint_set.all()
+
+
 class Product(BaseModel):
     event = models.ForeignKey(Event, on_delete=None)
     product_type = models.ForeignKey(ProductType, on_delete=None)
     title = models.CharField(max_length=64)
     description = models.TextField()
-    bullet_point_one = models.CharField(max_length=64, blank=True)
-    bullet_point_two = models.CharField(max_length=64, blank=True)
-    bullet_point_three = models.CharField(max_length=64, blank=True)
-    bullet_point_four = models.CharField(max_length=64, blank=True)
-    bullet_point_five = models.CharField(max_length=64, blank=True)
     price = models.FloatField()
     image = models.ImageField(upload_to=upload_path_product, null=True)
+    objects = ProductManager()
+
+
+class ProductBulletPoint(BaseModel):
+    product = models.ForeignKey(Product, on_delete=None)
+    text = models.CharField(max_length=64, blank=True)
 
 
 class Order(BaseModel):
