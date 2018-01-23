@@ -29,6 +29,11 @@ class Product(BaseModel):
     product_type = models.ForeignKey(ProductType, on_delete=None)
     title = models.CharField(max_length=64)
     description = models.TextField()
+    bullet_point_one = models.CharField(max_length=64, blank=True)
+    bullet_point_two = models.CharField(max_length=64, blank=True)
+    bullet_point_three = models.CharField(max_length=64, blank=True)
+    bullet_point_four = models.CharField(max_length=64, blank=True)
+    bullet_point_five = models.CharField(max_length=64, blank=True)
     price = models.FloatField()
 
 
