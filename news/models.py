@@ -19,11 +19,26 @@ class Article(BaseModel):
     title = models.CharField(max_length=255, blank=False)
     body = models.TextField()
 
+    class Meta:
+        ordering = ['-created','title']
+
+    def __str__(self):
+        return self.title
+
 
 class QuestionAnswer(BaseModel):
     QUESTION_TYPE = (
+        ('convention', 'Fan Convention'),
+        ('public', 'Public Exhibition'),
         ('vendor', 'Vendor'),
+        ('sponsor', 'Sponsor'),
     )
-    question_type = models.CharField(max_length=64, blank=False)
+    question_type = models.CharField(max_length=64, blank=False, choices=QUESTION_TYPE, default='convention')
     question = models.TextField()
     answer = models.TextField()
+
+    class Meta:
+        ordering = ['question_type','question']
+
+    def __str__(self):
+        return self.question
