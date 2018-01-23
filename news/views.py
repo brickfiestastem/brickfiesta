@@ -1,8 +1,7 @@
 from django.shortcuts import render
-
+from django.views.generic import ListView
+from .models import QuestionAnswer 
 # Create your views here.
 
-
-def index(request):
-    # obj_locations = Location.objects.all().order_by('postal_code')
-    return render(request, 'mocs/index.html', {'sample': 'sample'})
+class QuestionAnswerView(ListView):
+    model = QuestionAnswer
