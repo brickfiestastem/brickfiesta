@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 from event.models import Event
+from event.utils import upload_path_product
 from referral.models import Referral
 import uuid
 
@@ -35,6 +36,8 @@ class Product(BaseModel):
     bullet_point_four = models.CharField(max_length=64, blank=True)
     bullet_point_five = models.CharField(max_length=64, blank=True)
     price = models.FloatField()
+    image = models.ImageField(upload_to=upload_path_product, null=True)
+
 
 
 class Order(BaseModel):
