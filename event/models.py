@@ -55,6 +55,7 @@ class Activity(BaseModel):
     min_people = models.IntegerField(verbose_name='Minimum People')
     max_people = models.IntegerField(verbose_name='Maximum People')
 
+
 class Event(BaseModel):
     title = models.CharField(verbose_name='Title', unique=True, max_length=64)
     description = models.TextField(verbose_name='Description')
