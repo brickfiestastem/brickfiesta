@@ -31,10 +31,12 @@ class Product(BaseModel):
     description = models.TextField()
     price = models.FloatField()
 
+
 class Order(BaseModel):
     user = models.ForeignKey(User, on_delete=None)
     guest = models.CharField(max_length=255)
     referral = models.ForeignKey(Referral, on_delete=None)
+
 
 class OrderItem(BaseModel):
     order = models.ForeignKey(Order, on_delete=None)
@@ -42,12 +44,14 @@ class OrderItem(BaseModel):
     product = models.ForeignKey(Product, on_delete=None)
     price = models.FloatField()
 
+
 class Cart(BaseModel):
     user = models.ForeignKey(User, on_delete=None, null=True)
     session = models.CharField(max_length=255, blank=True)
 
     def __str__(self):
         return self.session
+
 
 class CartItem(BaseModel):
     cart = models.ForeignKey(Cart, on_delete=None)
