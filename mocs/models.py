@@ -87,6 +87,11 @@ class Vote(BaseModel):
 
     objects = VoteManager()
 
+    def save(self, *args, **kwargs):
+        if self.value > 1:
+            self.value = 1
+        super(Vote, self).save(*args, **kwargs)
+
 
 class Layout(BaseModel):
     user = models.ForeignKey(User, on_delete=None)
