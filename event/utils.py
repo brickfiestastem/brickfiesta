@@ -2,8 +2,10 @@ import os
 import uuid
 from django.conf import settings
 
+
 def upload_path_product(instance, filename):
     return upload_path('products/', filename)
+
 
 def upload_path_event(instance, filename):
     return upload_path('events/', filename)

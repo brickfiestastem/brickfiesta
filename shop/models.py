@@ -39,7 +39,6 @@ class Product(BaseModel):
     image = models.ImageField(upload_to=upload_path_product, null=True)
 
 
-
 class Order(BaseModel):
     user = models.ForeignKey(User, on_delete=None)
     guest = models.CharField(max_length=255)
