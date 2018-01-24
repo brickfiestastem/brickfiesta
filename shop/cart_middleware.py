@@ -13,28 +13,28 @@ class InitializeCart:
         self.response_logic()
         return response
 
+    def create_cart(self, user=None, session=None):
+        return Cart.objects.create(user=user, session=session)
+
     def request_logic(self, request):
         if not request.session.get('id', None):
             request.session['id'] = str(uuid.uuid4())
-        # import ipdb; ipdb.set_trace()
         session = request.session.get('id')
-        cart = Cart.objects.filter(session=session)
-        if not cart:
-            if not request.user.id:
-                cart = Cart.objects.create(session=session)
-            else:
+        if request.user.is_authenticated:
+            try:
+                cart = Cart.objects.get(user=request.user)
+            except Cart.DoesNotExist:
                 try:
-                    cart = Cart.objects.get(user=request.user)
-                    cart.session = session
+                    cart = Cart.objects.get(session=session)
+                    cart.user = request.user
                     cart.save()
-                except Exception:
-                    cart = Cart.objects.create(
-                        session=session, user=request.user)
+                except Cart.DoesNotExist:
+                    cart = self.create_cart(user=request.user, session=session)
         else:
-            cart = cart.first()
-            if not cart.user and request.user.id:
-                cart.user = request.user
-                cart.save()
+            try:
+                cart = Cart.objects.get(session=session)
+            except Cart.DoesNotExist:
+                cart = self.create_cart(session=session)
         request.session['cart'] = str(cart.id)
 
     def response_logic(self):

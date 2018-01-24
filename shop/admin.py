@@ -32,7 +32,7 @@ admin.site.register(Order, OrderAdmin)
 
 
 class CartAdmin(admin.ModelAdmin):
-    list_display = ('session',)
+    list_display = ('user', 'session', 'created')
 
 
 admin.site.register(Cart, CartAdmin)

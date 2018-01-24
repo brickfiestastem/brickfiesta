@@ -2,6 +2,7 @@ from django.shortcuts import render, get_object_or_404
 from django.views import View
 from .models import Product, Cart, CartItem
 
+
 # Create your views here.
 
 
@@ -10,13 +11,21 @@ def index(request):
     return render(request, 'shop/index.html', {'products': obj_products})
 
 
-class Cart(View):
+class CartView(View):
+    def get_cart(self, request):
+        if request.user.is_authenticated:
+            cart = Cart.objects.get(user=request.user)
+        else:
+            cart = Cart.objects.get(session=request.session.get('id'))
+        return cart
+
     def get(self, request):
-        try:
-            obj_cart = Cart.objects.get(session=request.session.get('id'))
-        except Exception:
-            obj_cart = None
+        obj_cart = self.get_cart(request)
         return render(request, 'shop/cart_contents.html', {'cart': obj_cart})
+
+    def post(self, request, *args, **kwargs):
+        obj_cart = self.get_cart(request)
+        return render(request, 'shop/cart_item_added.html', {'cart': obj_cart})
 
 
 class Details(View):

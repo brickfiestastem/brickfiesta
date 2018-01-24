@@ -8,6 +8,7 @@
         <meta name="author" content="Brick Fiesta STEM">
         <title>Brick Fiesta - {% block subtitle %}A celebration of LEGO in Texas{% endblock subtitle %}</title>
         <link rel="stylesheet" type="text/css" href="{% static 'css/bootswatch/dist/simplex/bootstrap.min.css' %}" />
+        <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
         {% block extra_css %}{% endblock %}
 </head>
 
@@ -36,7 +37,13 @@
                                                 <a class="nav-link" href="{% url 'shop:index' %}">Shop</a>
                                         </li>
                                 </ul>
-                                <a class="nav-link btn btn-info" href="{% url 'admin:logout' %}">Sign In/Out</a>
+                            <div style="display:inline-flex;">
+                                <a class="nav-link btn btn-info" href="{% url 'admin:logout' %}" style="margin-right:5px">Sign In/Out</a>
+                                <a href="{% url 'shop:cart' %}" class="btn btn-success shop-btn">
+                                    <i class="fa fa-3x fa-shopping-cart" style="color:whitesmoke;"></i>
+{#                                    <span class="air air-top-right label-danger txt-color-white padding-5">10</span>#}
+                                </a>
+                                </div>
                         </div>
                 </nav>
         </header>
@@ -66,19 +73,6 @@
 
 </body>
 
-<script src="//ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-<script>
-    if (!window.jQuery) {
-        document.write('<script src="js/libs/jquery-3.2.1.min.js"><\/script>');
-    }
-</script>
-
-<script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
-<script>
-    if (!window.jQuery.ui) {
-        document.write('<script src="js/libs/jquery-ui.min.js"><\/script>');
-    }
-</script>
 {% block extra_js %}
 {% endblock %}
 
