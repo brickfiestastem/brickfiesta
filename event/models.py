@@ -24,6 +24,7 @@ class Location(BaseModel):
     region = models.CharField(verbose_name='State', max_length=64)
     postal_code = models.CharField(verbose_name='Postal Code', max_length=16)
     country = models.CharField(verbose_name='Country', max_length=3)
+    url = models.URLField(verbose_name='URL', blank=True)
     latitude = models.FloatField(verbose_name='Latitude')
     longitude = models.FloatField(verbose_name='Longitude')
 

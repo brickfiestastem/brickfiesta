@@ -20,7 +20,7 @@ class Article(BaseModel):
     body = models.TextField()
 
     class Meta:
-        ordering = ['-created','title']
+        ordering = ['-created', 'title']
 
     def __str__(self):
         return self.title
@@ -33,12 +33,13 @@ class QuestionAnswer(BaseModel):
         ('vendor', 'Vendor'),
         ('sponsor', 'Sponsor'),
     )
-    question_type = models.CharField(max_length=64, blank=False, choices=QUESTION_TYPE, default='convention')
+    question_type = models.CharField(
+        max_length=64, blank=False, choices=QUESTION_TYPE, default='convention')
     question = models.TextField()
     answer = models.TextField()
 
     class Meta:
-        ordering = ['question_type','question']
+        ordering = ['question_type', 'question']
 
     def __str__(self):
         return self.question

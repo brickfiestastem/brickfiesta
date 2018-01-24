@@ -2,11 +2,6 @@ from django.shortcuts import render, get_object_or_404
 from event.models import Event, Location
 
 
-def index(request):
-    obj_events = Event.objects.all().order_by('start_date')
-    return render(request, 'event/index.html', {'events': obj_events})
-
-
 def frontpage(request):
     obj_events_current = Event.objects.all().order_by('start_date')
     obj_events_upcoming = Event.objects.all().order_by('start_date')
