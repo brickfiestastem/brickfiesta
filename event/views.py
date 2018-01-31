@@ -1,29 +1,26 @@
 from django.shortcuts import render, get_object_or_404
 from event.models import Event, Location
+from django.views.generic import DetailView
+import datetime
 
 
 def frontpage(request):
-    obj_events_current = Event.objects.all().order_by('start_date')
-    obj_events_upcoming = Event.objects.all().order_by('start_date')
-    obj_events_past = Event.objects.all().order_by('start_date')
+    today = datetime.date.today()
+    obj_events_current = Event.objects.all().order_by(
+        '-start_date').filter(start_date__lte=today, end_date__gte=today)
+    obj_events_upcoming = Event.objects.all().order_by(
+        'start_date').filter(start_date__gt=today)
+    obj_events_past = Event.objects.all().order_by(
+        '-start_date').filter(end_date__lt=today)
 
     return render(request, 'event/frontpage.html', {'events_current': obj_events_current,
                                                     'events_upcoming': obj_events_upcoming,
                                                     'events_past': obj_events_past})
 
 
-def details(request, event_id):
-    obj_event = get_object_or_404(Event, id=event_id)
-    return render(request, 'event/details.html', {'event': obj_event})
+class EventDetail(DetailView):
+    model = Event
 
 
-def locations(request):
-    obj_locations = Location.objects.all().order_by('postal_code')
-    return render(request, 'event/locations.html', {'locations': obj_locations})
-
-
-def location(request, location_id):
-    obj_location = get_object_or_404(Location, id=location_id)
-    obj_events = Event.objects.all().order_by(
-        'start_date').filter(location=obj_location)
-    return render(request, 'event/location.html', {'location': obj_location, 'events': obj_events})
+class LocationDetail(DetailView):
+    model = Location

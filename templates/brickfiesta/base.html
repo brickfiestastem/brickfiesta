@@ -1,6 +1,5 @@
 <!doctype html>{% load staticfiles %}
 <html lang="en">
-
 <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -11,9 +10,7 @@
         <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
         {% block extra_css %}{% endblock %}
 </head>
-
 <body>
-
         <header>
                 <nav class="navbar navbar-expand-lg navbar-light bg-primary">
                         <a class="navbar-brand" href="{% url 'event:frontpage' %}">Brick Fiesta</a>
@@ -21,7 +18,6 @@
                                 aria-label="Toggle navigation">
                                 <span class="navbar-toggler-icon"></span>
                         </button>
-
                         <div class="collapse navbar-collapse" id="navbar">
                                 <ul class="navbar-nav mr-auto">
                                         <li class="nav-item">
@@ -47,13 +43,11 @@
                         </div>
                 </nav>
         </header>
-
         <article class="container">
                 <div>
                         {% block content %}{% endblock content %}
                 </div>
         </article>
-
         <footer>
                 <ol class="breadcrumb">
                         <li class="breadcrumb-item">2011 - {% now 'Y' %}
@@ -70,7 +64,6 @@
                         </li>
                 </ol>
         </footer>
-
 </body>
 
 {% block extra_js %}

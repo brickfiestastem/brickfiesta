@@ -17,7 +17,7 @@
 <h2>Event History</h2>
 <p>Here is a list of the events we have held at this location.</p>
 <ul>
-    {% for event in events %}
+    {% for event in location.event %}
     <li>
         <a href="{% url 'event:details' event.id %}">{{ event.title }}</a>
     </li>

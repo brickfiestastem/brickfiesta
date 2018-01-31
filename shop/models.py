@@ -1,7 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 from event.models import Event
-from event.utils import upload_path_product
+from shop.utils import upload_path_product
 from referral.models import Referral
 import uuid
 

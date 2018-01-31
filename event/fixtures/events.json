@@ -1,0 +1,138 @@
+[
+{
+  "model": "event.event",
+  "pk": "10749cf1-85c4-42cd-bee9-74818100ff48",
+  "fields": {
+    "created": "2018-01-31T06:00:10.533Z",
+    "modified": "2018-01-31T06:00:10.533Z",
+    "title": "Brick Fiesta 2011",
+    "description": "Brick Fiesta is the premier fan of LEGO event held in the great state of Texas. Since 2003 the idea of having a LEGO convention and exhibition has been the dream and ambition of several TexLUG members. With the opening of a LEGO store in Austin and the right people asking the right questions Brick Fiesta is coming soon. We are looking forward to years of continued success.\r\n\r\nBrick Fiesta is proudly presented by the Texas LEGO User Group (TexLUG) and it\u2019s various chapters.",
+    "hashtag": "bf2011",
+    "theme": "Fiesta",
+    "hotel_information": "Brick Fiesta's premiere event starts at a location that is both close to the airport and close to the LEGO store.\r\n\r\nParking is available at an additional lot located across from the hotel.\r\n\r\nBe sure to book early to ensure you get your spot.",
+    "start_date": "2011-06-30",
+    "end_date": "2011-07-03",
+    "location": "ef8a31c2-e034-4706-8376-5329780f12e1",
+    "logo": "events/10749cf1-85c4-42cd-bee9-74818100ff48.png"
+  }
+},
+{
+  "model": "event.event",
+  "pk": "51ea1d6c-47b6-4f54-9192-faa0292aaf66",
+  "fields": {
+    "created": "2018-01-31T06:05:11.329Z",
+    "modified": "2018-01-31T06:05:11.329Z",
+    "title": "Brick Fiesta 2012",
+    "description": "Brick Fiesta is open to adults fans of LEGO (AFOLs) 18 and over, and younger with an accompanying adult. While younger enthusiasts are welcome to attend, the target audience for this convention is adults and teens.\r\n\r\nThere are two components to Brick Fiesta 2012:\r\n\r\nFan Event\r\nBrick Fiesta will be July 4 \u2013 8, 2012. It\u2019s being held at the Westin Galleria Houston located inside the Galleria mall in Houston, Texas. Please get your membership and book your hotel room as soon as possible. Thanks.\r\n\r\nPublic Exhibition\r\nBrick Fiesta 2012 will be open to the public on:\r\n- Saturday, July 7, 2012 from 10:00am to 4:00pm\r\n- Sunday, July 8, 2012 from 11:00am to 3:00pm",
+    "hashtag": "bf2012",
+    "theme": "Space",
+    "hotel_information": "Brick Fiesta is graciously being hosted by Westin Galleria. Conveniently located in the Galleria Mall, the Westin is within easy walking distance of the Houston LEGO Store. We have negotiated a special rate for the hotel accommodations.\r\n\r\nOur special rates are $112 per night (single) and $127 per night (double).\r\n\r\nPlease note that the deadline to reserve your room is June 11, 2012.",
+    "start_date": "2012-07-04",
+    "end_date": "2012-07-08",
+    "location": "8118c725-89ad-4bf3-a79a-429cb6c47dd0",
+    "logo": "events/51ea1d6c-47b6-4f54-9192-faa0292aaf66.png"
+  }
+},
+{
+  "model": "event.event",
+  "pk": "5e8c374a-8982-46d3-af7a-511380b6eda1",
+  "fields": {
+    "created": "2018-01-31T06:45:53.854Z",
+    "modified": "2018-01-31T06:45:53.854Z",
+    "title": "Brick Fiesta 2018",
+    "description": "We are pleased to announce that Brick Fiesta is taking place in San Antonio, Texas and will be held at the El Tropicano Hotel on the Riverwalk from 5 - 8 July 2018.\r\n\r\nBrick Fiesta has a track record of providing family focused fun since 2011. We have held our event in various venues including the Omni Austin Hotel at South Park, The Westin Galleria Houston, Mesquite Convention Center, and DoubleTree by Hilton San Antonio Airport. We are a Texas nonprofit corporation providing a family friendly Science, Technology, Engineering, and Math (STEM) focus event revolving around LEGO\u00ae. The event is co-chaired and staffed by unpaid volunteers from the various LEGO\u00ae User Groups based around Texas.\r\n\r\nThe 4 day event starts on a Thursday morning, with convention attendees and their families delivering and setting up their various LEGO\u00ae creations. Saturday and Sunday for a few hours, the convention attendees show the public what they have been building, demonstrate various STEM focused concepts, coordinate LEGO\u00ae STEM activities (robotics, great ball contraptions, speed builds), and answer fan based LEGO\u00ae questions. The event concludes on Sunday evening with families and LEGO\u00ae fans checking out on Monday.",
+    "hashtag": "bf2018",
+    "theme": "Bright Ideas",
+    "hotel_information": "We are pleased to announce that Brick Fiesta is taking place in San Antonio, Texas and will be held at the El Tropicano Hotel on the Riverwalk from 5 - 8 July 2018.",
+    "start_date": "2018-07-05",
+    "end_date": "2018-07-08",
+    "location": "33326ca8-96e7-44d0-b972-19fa6fd02560",
+    "logo": "events/5e8c374a-8982-46d3-af7a-511380b6eda1.png"
+  }
+},
+{
+  "model": "event.event",
+  "pk": "5fad3201-89c0-4a02-85bd-bf226d46a5ca",
+  "fields": {
+    "created": "2018-01-31T06:35:04.095Z",
+    "modified": "2018-01-31T06:35:04.095Z",
+    "title": "Brick Fiesta 2017",
+    "description": "Welcome to Brick Fiesta 2017, a LEGO Fan Convention.  Each year Brick Fiesta is hosted in one of the four major cities in Texas \u2013 Austin, Houston, Dallas, and San Antonio.  This year\u2019s convention is hosted in Dallas by the Dallas Ft.Worth LEGO User Group, DFWLUG.\r\n\r\nBrick Fiesta consists of two components, the convention for members and the public exhibition.\r\n\r\nThe convention for Members \u2013 Thursday thru Sunday\r\n   Display creations and compete for best of your category\r\n   Attend numerous workshops, presentations and lectures\r\n   Lots of LEGO to play with\r\n   Join in group constructions and group challenges\r\n   Compete in small, medium, and large speed builds\r\n   Compete in creative builds, blind builds, and in-the-bag builds\r\n   Participate in LEGO set drafts\r\n   Seed build competitions\r\n   Buy rare and custom sets, and parts from various vendors\r\n\r\nThe free build space is accessible to both convention members and exhibition members. Something new and creative is sure to develop over the course of the weekend!\r\n\r\nWe encourage All-Access Members to stay at our host hotel, The Hampton Inn & Suites, which has offered us a special Brick Fiesta room rate.  Book now!\r\n\r\nThe convention for Public Exhibition \u2013 Saturday and Sunday\r\n   See hundreds of LEGO creations\r\n   Millions of LEGO pieces\r\n   Lots of LEGO to play with\r\n   Meet and talk with the builders\r\n   Buy rare and custom LEGO parts and sets from various vendors\r\n   View speed build competitions\r\n   Meet your local LEGO User Group\r\n   Pull back car races",
+    "hashtag": "bf2017",
+    "theme": "Automation",
+    "hotel_information": "The group rate code for reservations is \u201cBFE\u201d and is valid for hotel room reservations between June 29, 2017 and July 2, 2017.\r\nBeginning June 10, 2017, rooms will only be available at regular rates, so book your rooms\r\n\r\non or before June 9 to take advantage of our group rate!\r\nNote that the group code will not work online for reservations that begin or end outside of those dates.\r\nThe hotel phone number is: 972-329-3100\r\nThe address is:  1700 Rodeo Drive, Mesquite, Texas, 75149",
+    "start_date": "2017-06-29",
+    "end_date": "2017-07-02",
+    "location": "7f39a82b-a8af-49b9-a066-49a5d5a44fbd",
+    "logo": "events/5fad3201-89c0-4a02-85bd-bf226d46a5ca.png"
+  }
+},
+{
+  "model": "event.event",
+  "pk": "647b8c0d-11f8-4cc9-8a84-c4bf18f6d4f5",
+  "fields": {
+    "created": "2018-01-31T06:17:56.850Z",
+    "modified": "2018-01-31T06:18:21.103Z",
+    "title": "Brick Fiesta 2014",
+    "description": "Brick Fiesta 2014 - the premier LEGO\u00ae fan event in Texas - is being held in San Antonio, Texas with public hours on July 5 from 10 AM to 4 PM and July 6 from 10 AM to 3 PM.  You will be able to purchase memberships at the door up to an hour before the public exhibition closes for that day. No strollers please.\r\n\r\nMemberships now only available at the door.\r\n\r\nSaturday or Sunday $20 for family memberships (4 people); $10 for individual memberships.\r\n\r\nAvailable Saturday only $30 for 2 day (Saturday and Sunday) family memberships (4 people); $15 for 2 day individual memberships.\r\n\r\nKids under 6 are free.\r\n\r\nTo get an idea of what Brick Fiesta is like, check out our archive of past events and the 2013 show report in RailBricks magazine issue 14!",
+    "hashtag": "bf2014",
+    "theme": "Fiesta",
+    "hotel_information": "Hilton DoubleTree Airport\r\n37 NE Loop 410\r\nSan Antonio, TX 78216",
+    "start_date": "2014-07-03",
+    "end_date": "2014-07-06",
+    "location": "61360996-731a-4eb6-a805-c321f4723734",
+    "logo": "events/647b8c0d-11f8-4cc9-8a84-c4bf18f6d4f5.png"
+  }
+},
+{
+  "model": "event.event",
+  "pk": "a4bd5ad9-3980-442f-a10a-4dec32f0936a",
+  "fields": {
+    "created": "2018-01-31T06:09:48.047Z",
+    "modified": "2018-01-31T06:09:48.047Z",
+    "title": "Brick Fiesta 2013",
+    "description": "Brick Fiesta is a four day unique LEGO celebration in Texas taking place July 4 \u2013 7. Started 2011 in Austin, grew in size last year in Houston. We are expecting big things this year as we move to the Dallas area and use the Hampton Suites & Convention Center in Mesquite for this years event.\r\n\r\nPlease note that Brick Fiesta is an adult fan oriented event and any one under the age of 18 must have a parent or guardian present at ALL times. If you just want to see what it\u2019s all about we recommend coming during our public exhibition.\r\n\r\nPlease take a moment to review the membership options for this year there are public exhibition hours if you would like just see all the incredible LEGO creations and talk with the builders as well as listen in on some interesting sessions. If you a huge fan of LEGO and would like to be more involved and attend all four days of the convention please check out our convention memberships.\r\n\r\nIf you are coming from out of town we highly suggest taking advantage of our Brick Fiesta hotel rate.\r\n\r\nIf you have a business that specializes in LEGO feel free to contact us about becoming a vendor or sponsor.",
+    "hashtag": "bf2013",
+    "theme": "Rodeo",
+    "hotel_information": "We have filled up our allotment of rooms at the Hampton Suites hotel, which is attached to the convention center.\r\n\r\nWe now have an agreement with the Holiday Inn Express that\u2019s right across the street from the convention, if you can try to get a discounted room at the Hampton Suites, but here\u2019s the information for the Holiday Inn Express.\r\n\r\nBook your room here, and enter the code \u201cBFF\u201d (without the quotes) into the Group Code field on the left (it will show up after you click the Group Code link).  That BFF code will get you an $89 room.\r\n\r\nDuring your stay if you want to check out the surround Dallas area there is much to see and do nearby.\r\n\r\nIf you\u2019d still like to use the Hampton Suites Convention Center, even if you can\u2019t get the discounted rate.\r\n\r\nThe Hampton Suites & Convention Center Mesquite is hotel attached to the convention center.",
+    "start_date": "2013-07-04",
+    "end_date": "2013-07-07",
+    "location": "7f39a82b-a8af-49b9-a066-49a5d5a44fbd",
+    "logo": "events/a4bd5ad9-3980-442f-a10a-4dec32f0936a.png"
+  }
+},
+{
+  "model": "event.event",
+  "pk": "c95f579f-cb04-4243-b720-847d2135e933",
+  "fields": {
+    "created": "2018-01-31T06:29:58.723Z",
+    "modified": "2018-01-31T06:29:58.724Z",
+    "title": "Brick Fiesta 2016",
+    "description": "A Celebration of LEGO\u00ae in Texas!\r\nBrick Fiesta is a non-profit, fan-run, family friendly annual convention celebrating the love for everything LEGO\u00ae!  Brick Fiesta moves each year, among 4 major Texas cities, and this year Brick Fiesta 2016 will be celebrating LEGO in Houston.\r\n\r\nThere are 2 parts to Brick Fiesta; a 4 day Adult Fans of LEGO (AFOL) convention and a 2 day Public Exhibition welcoming LEGO fans of all ages.\r\n\r\nBrick Fiesta provides an opportunity for AFOLs from all over the country to come together to share in their enthusiasm for all things LEGO.  At the private convention the fan community can:\r\n\r\nSocialize, sharing tips, tricks, & building techniques\r\nAttend lectures, workshops, & round table discussions\r\nParticipate in games, contests, & other activities\r\nDisplay original LEGO creations (MOCs)\r\nCompete in a special LEGO sponsored Celebrate Friends Building Competition\r\nShop a variety of vendors\r\nAt the 2 day Public Exhibition we welcome fans of all ages to:\r\n\r\nView hundreds of unique, custom-built LEGO creations on display\r\nShop vendors selling a wide variety of current, retired, and custom LEGO sets, parts, and minifigs\r\nMeet and talk with the model builders\r\nJoin in at the hands-on build and play area\r\nBring your camera \u2013 photography is encouraged!\r\nPlease mark your calendars for July 7 \u2013 July 10, 2016 at The Westin Galleria Houston.\r\n\r\nFollow us on Facebook or Twitter for updates and check back here from time to time to see all that\u2019s going on!\r\n\r\nBrick Fiesta is a non-profit convention / exhibition run completely by volunteers from TexLUG (Texas Lego Users Group) who are enthusiastic about sharing their creations with the public.  Parking is free and you won\u2019t find a better bargain for family entertainment!",
+    "hashtag": "bf2016",
+    "theme": "Space Cowboy",
+    "hotel_information": "Brick Fiesta 2016 will be held in the Westin Galleria.  With endless dining, shopping (including the LEGO store) and entertainment just steps away, your entire family is sure to have a wonderful time!\r\n\r\nWe have negotiated a special \u201cBrick Fiesta\u201d rate for our convention attendees.  This rate will be available spanning 2 days prior and 1 day after the event dates, subject to availability of guest rooms at the time of reservation.\r\n\r\nOur special Brick Fiesta rates are:\r\n$119 for a standard single or double guest room\r\n$134 for a triple\r\n$149 for a quad.\r\nRates do not include applicable state and local taxes.",
+    "start_date": "2016-07-07",
+    "end_date": "2016-07-10",
+    "location": "8118c725-89ad-4bf3-a79a-429cb6c47dd0",
+    "logo": "events/c95f579f-cb04-4243-b720-847d2135e933.png"
+  }
+},
+{
+  "model": "event.event",
+  "pk": "f3323d4c-96a0-4a5c-a056-4ff382935e1c",
+  "fields": {
+    "created": "2018-01-31T06:23:46.017Z",
+    "modified": "2018-01-31T06:23:46.017Z",
+    "title": "Brick Fiesta 2015",
+    "description": "Brick Fiesta 2015 - the premier LEGO\u00ae fan event in Texas - is being held in Austin, Texas with public hours on July 25 from 10 AM to 4 PM and July 26 from 10 AM to 3 PM.  \r\n\r\nTo get an idea of what Brick Fiesta is like, check out our archive of past events and the 2013 show report in RailBricks magazine issue 14!",
+    "hashtag": "bf2015",
+    "theme": "Everything is Austin",
+    "hotel_information": "DoubleTree by Hilton Hotel\r\n6505 N Interstate 35 Frontage Rd\r\nAustin, Texas, 78752\r\n\r\nReservations: 1-512-454-3737\r\n\r\nMake sure to tell DoubleTree you are with \"Brick Fiesta\" to get your room at the discounted rate of $119 a night.",
+    "start_date": "2015-07-23",
+    "end_date": "2015-07-26",
+    "location": "a362675d-5553-4fdf-a95e-645d1f3f544d",
+    "logo": "events/f3323d4c-96a0-4a5c-a056-4ff382935e1c.gif"
+  }
+}
+]

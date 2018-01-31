@@ -1,8 +1,10 @@
-{% extends "brickfiesta/base.html" %} {% block content %} {% for event in latest %}
-<div>
-    <h3>
-        <a href="{% url 'event:details' event.id %}">{{ event.title }}</a>
-    </h3>
-    <h5>{{ event.start_date }} to {{ event.end_date }}</h5>
+{% extends "brickfiesta/base.html" %}
+{% block content %}
+<div class="row">
+    {% for event in latest %}
+    <div class="col-lg-4">
+        {% include 'event/event_card.html' %}
+    </div>
+{% empty %} {% endfor %}
 </div>
-{% empty %} {% endfor %} {% endblock content %}
+{% endblock content %}

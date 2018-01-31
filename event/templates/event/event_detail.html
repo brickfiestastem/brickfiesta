@@ -22,7 +22,7 @@
 <h2>Passes</h2>
 
 <h2>Location</h2>
-<p><a href="{% url 'event:location' event.location.id %}">{{ event.location.name }}</a></p>
+<p><strong><a href="{% url 'event:location' event.location.id %}">{{ event.location.name }}</a></strong></p>
 <p>{{ event.hotel_information }}</p>
 
 {% endblock content %}

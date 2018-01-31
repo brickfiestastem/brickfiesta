@@ -1,0 +1,110 @@
+[
+{
+  "model": "event.location",
+  "pk": "33326ca8-96e7-44d0-b972-19fa6fd02560",
+  "fields": {
+    "created": "2018-01-31T05:39:52.703Z",
+    "modified": "2018-01-31T05:39:52.703Z",
+    "name": "El Tropicano Riverwalk Hotel",
+    "street": "110 Lexington Ave",
+    "locality": "San Antonio",
+    "region": "Texas",
+    "postal_code": "78205",
+    "country": "USA",
+    "phone_number": "2102239461",
+    "url": "http://www.eltropicanohotel.com/",
+    "latitude": 29.4318787,
+    "longitude": -98.4886726
+  }
+},
+{
+  "model": "event.location",
+  "pk": "61360996-731a-4eb6-a805-c321f4723734",
+  "fields": {
+    "created": "2018-01-31T05:33:15.928Z",
+    "modified": "2018-01-31T05:33:15.928Z",
+    "name": "DoubleTree by Hilton Hotel San Antonio Airport",
+    "street": "37 NE Loop 410",
+    "locality": "San Antonio",
+    "region": "Texas",
+    "postal_code": "78216",
+    "country": "USA",
+    "phone_number": "2103662424",
+    "url": "http://doubletree3.hilton.com/en/hotels/texas/doubletree-by-hilton-hotel-san-antonio-airport-SATNSDT/index.html",
+    "latitude": 29.5213303,
+    "longitude": -98.4910008
+  }
+},
+{
+  "model": "event.location",
+  "pk": "7f39a82b-a8af-49b9-a066-49a5d5a44fbd",
+  "fields": {
+    "created": "2018-01-31T05:29:54.964Z",
+    "modified": "2018-01-31T05:29:54.964Z",
+    "name": "Hampton Inn & Suites Dallas-Mesquite",
+    "street": "1700 Rodeo Drive",
+    "locality": "Mesquite",
+    "region": "Texas",
+    "postal_code": "75149",
+    "country": "USA",
+    "phone_number": "9723293100",
+    "url": "http://hamptoninn3.hilton.com/en/hotels/texas/hampton-inn-and-suites-dallas-mesquite-DALHSHX/index.html",
+    "latitude": 32.7623202,
+    "longitude": -96.6242073
+  }
+},
+{
+  "model": "event.location",
+  "pk": "8118c725-89ad-4bf3-a79a-429cb6c47dd0",
+  "fields": {
+    "created": "2018-01-31T05:27:11.697Z",
+    "modified": "2018-01-31T05:27:11.697Z",
+    "name": "The Westin Galleria Houston",
+    "street": "5060 West Alabama",
+    "locality": "Houston",
+    "region": "Texas",
+    "postal_code": "77056",
+    "country": "USA",
+    "phone_number": "7139608100",
+    "url": "http://www.westingalleriahoustonhotel.com/",
+    "latitude": 29.7383189,
+    "longitude": -95.4648658
+  }
+},
+{
+  "model": "event.location",
+  "pk": "a362675d-5553-4fdf-a95e-645d1f3f544d",
+  "fields": {
+    "created": "2018-01-31T05:37:35.272Z",
+    "modified": "2018-01-31T05:37:35.272Z",
+    "name": "DoubleTree by Hilton Hotel Austin",
+    "street": "6505 N Interstate 35",
+    "locality": "Austin",
+    "region": "Texas",
+    "postal_code": "78752",
+    "country": "USA",
+    "phone_number": "5124543737",
+    "url": "http://doubletree3.hilton.com/en/hotels/texas/doubletree-by-hilton-hotel-austin-AUSLNDT/index.html",
+    "latitude": 30.326311,
+    "longitude": -97.7044765
+  }
+},
+{
+  "model": "event.location",
+  "pk": "ef8a31c2-e034-4706-8376-5329780f12e1",
+  "fields": {
+    "created": "2018-01-31T05:21:30.855Z",
+    "modified": "2018-01-31T05:21:30.855Z",
+    "name": "Omni Austin Hotel at Southpark",
+    "street": "4140 Governors Row",
+    "locality": "Austin",
+    "region": "Texas",
+    "postal_code": "78744",
+    "country": "USA",
+    "phone_number": "5124482222",
+    "url": "https://www.omnihotels.com/hotels/austin-southpark",
+    "latitude": 30.2144291,
+    "longitude": -97.7509803
+  }
+}
+]

@@ -1,0 +1,7 @@
+<div class="card mb-3">
+    <a href="{% url 'event:details' event.id %}"><img style="height: 200px; width: 100%; display: block;" src="{{ event.logo.url }}" alt="Event Logo"></a>
+<h3 class="card-header" align="center"><a href="{% url 'event:details' event.id %}">{{ event.title }}</a></h3>
+  <div class="card-body">
+      <h5 class="card-title" align="center">{{ event.start_date }} to {{ event.end_date }}</h5>
+  </div>
+</div>
