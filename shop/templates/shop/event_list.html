@@ -1,0 +1,27 @@
+{% extends "brickfiesta/base.html" %}
+{% block content %}
+<div class="row">
+    <div class="col-lg-12">
+        <h1>Online Shop</h1>
+    </div>
+    {% for event in object_list %}
+    <div class="col-lg-4">
+        <div class="card mb-3">
+            <img style="height: 200px; width: 100%; display: block;" src="{{ event.logo.url }}" alt="Event Logo">
+            <h3 class="card-header" align="center">{{ event.title }}
+            </h3>
+            <div class="card-body">
+                <h5 class="card-title" align="center">{{ event.start_date }} to {{ event.end_date }}</h5>
+                <p class="card-title" align="center"><a href="{% url 'event:details' event.id %}" role="button">Event
+                    Information</a></p>
+                <p align="center">
+
+                    <a class="btn btn-info btn-lg" href="{% url 'shop:event' event.id %}" role="button">Purchase
+                        Passes</a>
+                </p>
+            </div>
+        </div>
+    </div>
+    {% empty %} {% endfor %}
+</div>
+{% endblock content %}

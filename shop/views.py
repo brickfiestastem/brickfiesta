@@ -1,14 +1,23 @@
 from django.shortcuts import render, get_object_or_404
 from django.views import View
+from django.views.generic.list import ListView
+from event.models import Event
 from .models import Product, Cart, CartItem
-
+import datetime
 
 # Create your views here.
 
 
-def index(request):
-    obj_products = Product.objects.all()
-    return render(request, 'shop/index.html', {'products': obj_products})
+class EventListView(ListView):
+    queryset = Event.objects.all().order_by('start_date').filter(
+        start_date__gt=datetime.date.today())
+    template_name = 'shop/event_list.html'
+
+
+class EventProductView(View):
+    def get(self, request, event_id):
+        obj_products = Product.objects.filter(event__id__exact=event_id)
+        return render(request, 'shop/product_list.html', {'object_list': obj_products, 'first': obj_products.first()})
 
 
 class CartView(View):

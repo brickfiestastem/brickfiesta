@@ -1,10 +1,11 @@
 {% extends "brickfiesta/base.html" %}
 {% block content %}
+<h1>Events</h1>
 <div class="row">
     {% for event in latest %}
     <div class="col-lg-4">
         {% include 'event/event_card.html' %}
     </div>
-{% empty %} {% endfor %}
+    {% empty %} {% endfor %}
 </div>
 {% endblock content %}

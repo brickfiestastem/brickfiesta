@@ -41,6 +41,9 @@ class Product(BaseModel):
     image = models.ImageField(upload_to=upload_path_product, null=True)
     objects = ProductManager()
 
+    def __str__(self):
+        return self.event.title + " - " + self.title
+
 
 class ProductBulletPoint(BaseModel):
     product = models.ForeignKey(Product, on_delete=None)

@@ -1,6 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
-
+from .utils import upload_path_vendor
 import datetime
 import uuid
 
@@ -28,7 +28,7 @@ class Business(models.Model):
     country = models.CharField(verbose_name='Country', max_length=3)
     phone_number = models.CharField(verbose_name='Phone Number', max_length=32)
     url = models.CharField(verbose_name='Website URL', max_length=255)
-    logo = models.ImageField()
+    logo = models.ImageField(upload_to=upload_path_vendor, null=True)
 
 
 class BusinessNote(BaseModel):

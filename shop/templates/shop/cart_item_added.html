@@ -1,10 +1,10 @@
 {% extends "brickfiesta/base.html" %}
 {% block content %}
-    <ol>
+<ol>
 
-{% for item in cart.cartitem_set.all %}
+    {% for item in cart.cartitem_set.all %}
     <li>{{ item.product.title }}</li>
-{% endfor %}
+    {% endfor %}
 
-    </ol>
+</ol>
 {% endblock content %}

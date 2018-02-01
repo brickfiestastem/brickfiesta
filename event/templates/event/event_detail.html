@@ -2,15 +2,20 @@
 
 {% block content %}
 
-<div>
-<h1>{{ event.title }}</h1>
-<h3>{{ event.start_date }} to {{ event.end_date }}</h3>
+<div class="row">
+    <div class="col-md-7">
+        <h1>{{ event.title }}</h1>
+        <h3>{{ event.start_date }} to {{ event.end_date }}</h3>
+        <h2>{{ event.theme }}</h2>
+    </div>
+    <div class="col-md-5">
+        <img style="height: 200px; width: 100%; display: block;" src="{{ event.logo.url }}" alt="Event Logo"/>
+    </div>
 </div>
 
 <div>
-<h2>{{ event.theme }}</h2>
-<p>{{ event.description }}</p>
-<p align="right">Tag us on social media: #{{ event.hashtag }}</p>
+    <p>{{ event.description }}</p>
+    <p class="alert alert-info" align="right">Tag us on social media: #{{ event.hashtag }}</p>
 </div>
 
 <h2>Sponsors</h2>
@@ -20,6 +25,19 @@
 <h2>Vendors</h2>
 
 <h2>Passes</h2>
+{% if event.is_upcoming %}
+<a class="btn btn-info btn-lg" href="{% url 'shop:event' event.id %}" role="button">Purchase Passes</a>
+{% elif event.is_current %}
+<div class="alert alert-warning">
+    <strong>Purchasing online for this event is now closed.</strong> Please visit the registration booth at the event to
+    pickup or purchase passes.
+</div>
+{% else %}
+<div class="alert alert-warning">
+    <strong>This is a past event and passes are no longer available find out about our <a
+            href="{% url 'event:index' %}">next event</a>.</strong>
+</div>
+{% endif %}
 
 <h2>Location</h2>
 <p><strong><a href="{% url 'event:location' event.location.id %}">{{ event.location.name }}</a></strong></p>

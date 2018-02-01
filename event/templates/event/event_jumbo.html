@@ -1,0 +1,18 @@
+<div class="jumbotron">
+    <div class="row">
+        <div class="col-md-7">
+            <h1 class="display-4"><a href="{% url 'event:details' event.id %}">{{ event.title }}</a></h1>
+            <h3>{{ event.theme }}</h3>
+            <p class="lead">{{ event.start_date }} to {{ event.end_date }} at {{ event.location.name }}</p>
+        </div>
+        <div class="col-md-5"><img src="{{ event.logo.url }}" alt="Event Logo"/></div>
+    </div>
+    <hr class="my-4">
+    <p>{{ event.description }}</p>
+    <p class="lead">
+        <a class="btn btn-primary btn-lg" href="{% url 'event:details' event.id %}" role="button">More Information</a>
+        {% if event.is_upcoming %}
+        <a class="btn btn-info btn-lg" href="{% url 'shop:event' event.id %}" role="button">Purchase Passes</a>
+        {% endif %}
+    </p>
+</div>

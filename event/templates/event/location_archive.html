@@ -2,7 +2,8 @@
 <h1>Locations</h1>
 <div class="list-group">
     {% for location in latest %}
-    <a href="{% url 'event:location' location.id %}" class="vcard url list-group-item list-group-item-action flex-column align-items-start">
+    <a href="{% url 'event:location' location.id %}"
+       class="vcard url list-group-item list-group-item-action flex-column align-items-start">
         <h5 class="fn mb-1">{{ location.name }}</h5>
         <div class="adr">
             <div class="street-address">{{ location.street }}</div>
