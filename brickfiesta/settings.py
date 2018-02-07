@@ -130,3 +130,6 @@ MEDIA_ROOT = os.path.join(os.path.join(BASE_DIR, 'static'), 'media')
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, "static"),
 ]
+
+LOGIN_REDIRECT_URL = '/afol/profile/'
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'

@@ -2,6 +2,12 @@
 {% load template_extras %}
 {% block content %}
 
+<div class="row">
+    <div class="col-lg-12">
+        <h1>Online Shop - Your Cart</h1>
+    </div>
+</div>
+
 <section id="widget-grid" class="">
     {% for item in cart.cartitem_set.all %}
     <div class="row" style="height:50%">

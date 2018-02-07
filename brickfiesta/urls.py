@@ -19,6 +19,7 @@ from event import views as main_views
 
 urlpatterns = [
     path('', main_views.frontpage),
+    path('afol/', include('afol.urls')),
     path('events/', include('event.urls')),
     path('news/', include('news.urls')),
     path('mocs/', include('mocs.urls')),

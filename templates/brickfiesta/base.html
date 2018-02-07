@@ -32,21 +32,27 @@
                 <li class="nav-item">
                     <a class="nav-link" href="{% url 'news:index' %}">News</a>
                 </li>
-                <li class="nav-item">
+                <!-- li class="nav-item">
                     <a class="nav-link" href="{% url 'mocs:index' %}">MOCs</a>
-                </li>
+                </li -->
                 <li class="nav-item">
                     <a class="nav-link" href="{% url 'shop:index' %}">Shop</a>
                 </li>
             </ul>
-            <div style="display:inline-flex;">
-                <a class="nav-link btn btn-info" href="{% url 'admin:logout' %}" style="margin-right:5px">Sign
-                    In/Out</a>
-                <a href="{% url 'shop:cart' %}" class="btn btn-success shop-btn">
-                    <i class="fa fa-3x fa-shopping-cart" style="color:whitesmoke;"></i>
-                    {# <span class="air air-top-right label-danger txt-color-white padding-5">10</span>#}
-                </a>
-            </div>
+            <ul class="navbar-nav my-2 my-lg-0">
+                {% if user.is_authenticated %}
+                <li class="nav-item active">
+                    <a class="nav-link" href="{% url 'afol:logout' %}">Log Out</a>
+                </li>
+                {% else %}
+                <li class="nav-item active">
+                    <a class="nav-link" href="{% url 'afol:login' %}">Log In</a>
+                </li>
+                {% endif %}
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'shop:cart' %}">Cart</a>
+                </li>
+            </ul>
         </div>
     </nav>
 </header>
