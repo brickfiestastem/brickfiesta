@@ -25,4 +25,5 @@ urlpatterns = [
     path('mocs/', include('mocs.urls')),
     path('shop/', include('shop.urls')),
     path('admin/', admin.site.urls),
+    path('pages/', include('django.contrib.flatpages.urls')),
 ]

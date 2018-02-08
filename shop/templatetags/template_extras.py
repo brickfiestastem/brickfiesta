@@ -8,3 +8,8 @@ register = template.Library()
 @register.filter()
 def currency(value):
     return locale.currency(value, grouping=True)
+
+
+@register.filter()
+def addcss(field, css):
+    return field.as_widget(attrs={"class": css})

@@ -1,0 +1,12 @@
+{% extends "brickfiesta/base.html" %}
+{% block content %}
+<div class="row">
+    <div class="col-lg-4"></div>
+    <div class="col-lg-4">
+        <fieldset>
+            <legend>Log Out</legend>
+            <p>Would you like to <a href="{% url 'afol:login' %}">Log In</a>?</p>
+        </fieldset>
+    </div>
+</div>
+{% endblock content %}

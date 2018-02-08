@@ -1,3 +1,5 @@
+{% load template_extras %}
+
 {% if form.errors %}
 <div class="form-group has-danger">
     {% for error in form.errors %}
@@ -6,23 +8,21 @@
 </div>
 {% endif %}
 
-
 {% for field in form %}
 {% if field.errors %}
 <div class="form-group has-danger">
     <label for="{{ field.id_for_label }}">{{ field.label }}</label>
-    <input type="{{ field.widget }}" name="{{ field.html_name }}" class="form-control is-invalid" id="{{ field.id_for_label }}" aria-describedby="{{ field.name }}Help" placeholder="{{ field.initial }}">
+    {{ field|addcss:"form-control is-invalid" }}
     {% for error in  field.errors %}
-     <small class="invalid-feedback" id="{{ field.name }}Help">{{ error }}</small>
+     <small class="invalid-feedback">{{ error }}</small>
     {% endfor %}
 </div>
 {% else %}
 <div class="form-group">
     <label for="{{ field.id_for_label }}">{{ field.label }}</label>
-    <input type="{{ field.widget }}" name="{{ field.html_name }}" class="form-control" id="{{ field.id_for_label }}" aria-describedby="{{ field.name }}Help" placeholder="{{ field.initial }}">
-    <!-- div class="form-control">{{ field }}</div -->
+    {{ field|addcss:"form-control" }}
     {% if field.help_text %}
-        <small class="form-text text-muted" id="{{ field.name }}Help">{{ field.help_text }}</small>
+        <small class="form-text text-muted" id="{{ field.name }}Help">{{ field.help_text|safe }}</small>
     {% endif %}
 </div>
 {% endif %}

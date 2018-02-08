@@ -20,9 +20,9 @@ class BaseModel(models.Model):
 class Profile(BaseModel):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     birth_date = models.DateField(null=True, blank=True)
-    bricklink_username = models.TextField(max_length=64, blank=True)
-    twitter_handle = models.TextField(max_length=64, blank=True)
-    flickr_handle = models.TextField(max_length=128, blank=True)
+    bricklink_username = models.CharField(max_length=64, blank=True)
+    twitter_handle = models.CharField(max_length=64, blank=True)
+    flickr_handle = models.CharField(max_length=128, blank=True)
 
     @receiver(post_save, sender=User)
     def create_user_profile(sender, instance, created, **kwargs):

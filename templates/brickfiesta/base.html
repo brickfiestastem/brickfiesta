@@ -40,18 +40,21 @@
                 </li>
             </ul>
             <ul class="navbar-nav my-2 my-lg-0">
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'shop:cart' %}">Cart</a>
+                </li>
                 {% if user.is_authenticated %}
+                <li class="nav-item active">
+                    <a class="nav-link" href="{% url 'afol:profile' %}">Profile: {{ user.get_username }}</a>
+                </li>
                 <li class="nav-item active">
                     <a class="nav-link" href="{% url 'afol:logout' %}">Log Out</a>
                 </li>
                 {% else %}
                 <li class="nav-item active">
-                    <a class="nav-link" href="{% url 'afol:login' %}">Log In</a>
+                    <a class="nav-link" href="{% url 'afol:login' %}?next={{request.path}}">Log In</a>
                 </li>
                 {% endif %}
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'shop:cart' %}">Cart</a>
-                </li>
             </ul>
         </div>
     </nav>
@@ -67,13 +70,13 @@
             <a href="http://www.brickfiestastem.org/">Brick Fiesta STEM</a>
         </li>
         <li class="breadcrumb-item">
-            <a href="#">About</a>
+            <a href="/about/">About</a>
         </li>
         <li class="breadcrumb-item">
             <a href="#">Contact Us</a>
         </li>
         <li class="breadcrumb-item">
-            <a href="#">Privacy Policy</a>
+            <a href="/privacy_policy/">Privacy Policy</a>
         </li>
     </ol>
 </footer>

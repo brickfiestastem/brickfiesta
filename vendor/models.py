@@ -1,6 +1,8 @@
 from django.db import models
 from django.contrib.auth.models import User
 from .utils import upload_path_vendor
+from event.models import Event
+from shop.models import Product
 import datetime
 import uuid
 
@@ -35,3 +37,36 @@ class BusinessNote(BaseModel):
     business = models.ForeignKey(Business, on_delete=None)
     user = models.ForeignKey(User, on_delete=None)
     note = models.TextField(verbose_name='Note')
+
+
+class Vendor(BaseModel):
+    STATUS_TYPE = (
+        ('submitted', 'Submitted'),
+        ('review', 'Review'),
+        ('denied', 'Denied'),
+        ('pending', 'Pending Payment'),
+        ('approved', 'Approved'),
+    )
+    status = models.CharField(
+        max_length=64, blank=False, choices=STATUS_TYPE, default='submitted')
+    business = models.ForeignKey(Business, on_delete=None)
+    user = models.ForeignKey(User, on_delete=None)
+    event = models.ForeignKey(Event, on_delete=None)
+    product_quantity = models.IntegerField(verbose_name='Product Quantity')
+
+
+class Sponsor(BaseModel):
+    STATUS_TYPE = (
+        ('submitted', 'Submitted'),
+        ('review', 'Review'),
+        ('denied', 'Denied'),
+        ('pending', 'Pending Payment'),
+        ('approved', 'Approved'),
+    )
+    status = models.CharField(
+        max_length=64, blank=False, choices=STATUS_TYPE, default='submitted')
+    business = models.ForeignKey(Business, on_delete=None)
+    user = models.ForeignKey(User, on_delete=None)
+    event = models.ForeignKey(Event, on_delete=None)
+    product = models.ForeignKey(Product, on_delete=None)
+    product_quantity = models.IntegerField(verbose_name='Product Quantity')
