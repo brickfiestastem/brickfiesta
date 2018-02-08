@@ -43,20 +43,37 @@ clean_database() {
     cd $SCRIPT_DIR
     cd ../
     # find . -path "*/migrations/*.py" -not -name "__init__.py" -delete
+    find . -path "afol/migrations/*.py" -delete
+    find . -path "event/migrations/*.py" -delete
+    find . -path "mocs/migrations/*.py" -delete
+    find . -path "news/migrations/*.py" -delete
+    find . -path "planning/migrations/*.py" -delete
+    find . -path "referral/migrations/*.py" -delete
+    find . -path "shop/migrations/*.py" -delete
+    find . -path "vendor/migrations/*.py" -delete
     find . -path "*/migrations/*.pyc"  -delete
     rm *.sqlite3
     python manage.py makemigrations
     python manage.py migrate
 }
 
+load_fixtures() {
+    echo "Load fixtures"
+    cd $SCRIPT_DIR
+    cd ../
+    python manage.py loaddata event/fixtures/locations.json
+    python manage.py loaddata event/fixtures/events.json
+}
+
 usage() {
-    echo "d Clean database"
+    echo "c Clean database"
     echo "f Full Install"
     echo "l Just local_settings.py"
+    echo "L Load fixtures"
     echo "r run virtualenv"
     echo "v Just virtualenv"
     echo "8 Run autopep8"
-    echo "Usage $0 [c] [f] [l] [r] [v] [8]"
+    echo "Usage $0 [c] [f] [l] [L] [r] [v] [8]"
     exit 1
 }
 
@@ -70,6 +87,9 @@ case "$1" in
         ;;
     l)
         setup_local_settings
+        ;;
+    L)
+        load_fixtures
         ;;
     r)
         run_virtualenv
