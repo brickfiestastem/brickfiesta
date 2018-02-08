@@ -32,6 +32,9 @@ class Business(models.Model):
     url = models.CharField(verbose_name='Website URL', max_length=255)
     logo = models.ImageField(upload_to=upload_path_vendor, null=True)
 
+    def __str__(self):
+        return self.name
+
 
 class BusinessNote(BaseModel):
     business = models.ForeignKey(Business, on_delete=None)
@@ -54,6 +57,9 @@ class Vendor(BaseModel):
     event = models.ForeignKey(Event, on_delete=None)
     product_quantity = models.IntegerField(verbose_name='Product Quantity')
 
+    def __str__(self):
+        return self.business.name + " - " + self.event.title
+
 
 class Sponsor(BaseModel):
     STATUS_TYPE = (
@@ -70,3 +76,6 @@ class Sponsor(BaseModel):
     event = models.ForeignKey(Event, on_delete=None)
     product = models.ForeignKey(Product, on_delete=None)
     product_quantity = models.IntegerField(verbose_name='Product Quantity')
+
+    def __str__(self):
+        return self.business.name + " - " + self.event.title

@@ -18,8 +18,13 @@ class SignUpForm(UserCreationForm):
     def save(self, commit=True):
         user = super(UserCreationForm, self).save(commit=False)
         user.email = self.cleaned_data["email"]
+        user.profile.birth_date = self.cleaned_data["birth_date"]
+        user.profile.bricklink_username = self.cleaned_data["bricklink_username"]
+        user.profile.twitter_handle = self.cleaned_data["twitter_handle"]
+        user.profile.flickr_handle = self.cleaned_data["flickr_handle"]
         if commit:
             user.save()
+            user.profile.save()
         return user
 
 

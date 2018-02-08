@@ -24,6 +24,7 @@ urlpatterns = [
     path('news/', include('news.urls')),
     path('mocs/', include('mocs.urls')),
     path('shop/', include('shop.urls')),
+    path('vendor/', include('vendor.urls')),
     path('admin/', admin.site.urls),
     path('pages/', include('django.contrib.flatpages.urls')),
 ]
