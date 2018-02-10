@@ -6,11 +6,12 @@ class AfolUserCreateForm(UserCreationForm):
 
     class Meta:
         model = User
-        fields = UserCreationForm.Meta.fields
+        fields = ('username', 'first_name', 'last_name', 'email', 'birth_date')
 
 
 class AfolUserChangeForm(UserChangeForm):
 
     class Meta:
         model = User
-        fields = UserChangeForm.Meta.fields
+        fields = ('username', 'first_name', 'last_name', 'email',
+                  'birth_date', 'bricklink_username', 'twitter_handle', 'flickr_handle')

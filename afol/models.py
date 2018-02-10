@@ -16,7 +16,7 @@ class BaseModel(models.Model):
         abstract = True
 
 
-class User(AbstractUser):
+class User(BaseModel, AbstractUser):
     birth_date = models.DateField(null=True, blank=True)
     bricklink_username = models.CharField(max_length=64, blank=True)
     twitter_handle = models.CharField(max_length=64, blank=True)
