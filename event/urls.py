@@ -8,6 +8,7 @@ app_name = 'event'
 
 urlpatterns = [
     path('', views.frontpage, name='frontpage'),
+    path('contactus/', views.ContactView.as_view(), name='contactus'),
     path('listing/', ArchiveIndexView.as_view(model=Event,
                                               date_field='end_date',
                                               allow_future=True), name='index'),
