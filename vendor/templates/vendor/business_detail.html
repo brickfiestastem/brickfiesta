@@ -1,0 +1,32 @@
+{% extends "brickfiesta/base.html" %}
+
+{% block content %}
+
+<div class="row">
+    <div class="col-md-6">
+        <h1>{{ business.name }}</h1>
+        <div class="vcard h3">
+            <a class="fn org url" href="{{ business.url }}">{{ business.url }}</a>
+            <div class="adr">
+                <span class="type">Address</span>:
+                <div class="street-address">{{ business.street }}</div>
+                <span class="locality">{{ business.locality }}</span>,
+                <abbr class="region">{{ business.region }}</abbr>&nbsp;&nbsp;
+                <span class="postal-code">{{ business.postal_code }}</span>
+                <div class="country-name">{{ business.country }}</div>
+            </div>
+            <div class="tel">
+                <span class="type">Work</span>: {{ business.phone_number }}
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <img style="height: 256px; width: 100%; display: block;" src="{{ business.logo.url }}" alt="Event Logo"/>
+    </div>
+</div>
+
+<div>
+    <p>{{ business.description }}</p>
+</div>
+
+{% endblock content %}

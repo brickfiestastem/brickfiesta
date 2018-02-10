@@ -1,7 +1,6 @@
 {% extends "brickfiesta/base.html" %}
 
 {% block content %}
-
 <div class="row">
     <div class="col-md-7">
         <h1>{{ event.title }}</h1>
@@ -12,18 +11,28 @@
         <img style="height: 200px; width: 100%; display: block;" src="{{ event.logo.url }}" alt="Event Logo"/>
     </div>
 </div>
-
 <div>
     <p>{{ event.description }}</p>
     <p class="alert alert-info" align="right">Tag us on social media: #{{ event.hashtag }}</p>
 </div>
-
 <h2>Sponsors</h2>
-
+<div class="row">
+    {% for obj_sponsor in sponsor_list %}
+    <div class="col-md-4">
+        {% include "vendor/sponsor_card.html" %}
+    </div>
+    {% endfor %}
+</div>
 <h2>Schedule</h2>
 
 <h2>Vendors</h2>
-
+<div class="row">
+    {% for obj_vendor in vendor_list %}
+    <div class="col-md-3">
+        {% include "vendor/vendor_card.html" %}
+    </div>
+    {% endfor %}
+</div>
 <h2>Passes</h2>
 {% if event.is_upcoming %}
 <a class="btn btn-info btn-lg" href="{% url 'shop:event' event.id %}" role="button">Purchase Passes</a>
@@ -38,9 +47,8 @@
             href="{% url 'event:index' %}">next event</a>.</strong>
 </div>
 {% endif %}
-
 <h2>Location</h2>
-<p><strong><a href="{% url 'event:location' event.location.id %}">{{ event.location.name }}</a></strong></p>
+<p class="h4"><strong><a href="{% url 'event:location' event.location.id %}">{{ event.location.name }}</a></strong></p>
 <p>{{ event.hotel_information }}</p>
 
 {% endblock content %}

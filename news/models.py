@@ -40,6 +40,7 @@ class QuestionAnswer(BaseModel):
 
     class Meta:
         ordering = ['question_type', 'question']
+        verbose_name_plural = 'Questions'
 
     def __str__(self):
         return self.question

@@ -38,6 +38,9 @@
                 <li class="nav-item">
                     <a class="nav-link" href="{% url 'shop:index' %}">Shop</a>
                 </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'vendor:index' %}">Sponsors and Vendors</a>
+                </li>
             </ul>
             <ul class="navbar-nav my-2 my-lg-0">
                 <li class="nav-item">
@@ -59,11 +62,13 @@
         </div>
     </nav>
 </header>
+<br />
 <article class="container">
     <div>
         {% block content %}{% endblock content %}
     </div>
 </article>
+<br />
 <footer>
     <ol class="breadcrumb">
         <li class="breadcrumb-item">2011 - {% now 'Y' %}

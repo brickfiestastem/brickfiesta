@@ -3,10 +3,16 @@
 
 <div class="row">
     <div class="col-lg-12">
-        <h1>{{ first.event.title }} Vendors</h1>
+        <h1>Sponsors and Vendors</h1>
+        <p align="justified">Brick Fiesta is proud of the support and generosity of our various vendor partnerships and
+            sponsorships. Without their continued support our convention and exposition would not be the same. Below is
+            list of all our vendors and sponsors over the years. If you would to be a vendor at one of our upcoming
+            events please create an account and the select Vendor Request or Sponsor Request based on your interest.</p>
     </div>
     {% for obj_vendor in object_list %}
+    <div class="col-lg-4 col-md-4">
         {% include "vendor/vendor_card.html" %}
+    </div>
     {% endfor %}
 </div>
 {% endblock content %}

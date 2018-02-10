@@ -1,0 +1,5 @@
+<div class="card border-info">
+    <h3 class="card-header" align="center"><a href="{% url 'vendor:details' obj_sponsor.business.id %}">
+        {{ obj_sponsor.business.name }}</a></h3>
+    <img style="height: 265px; width: 100%; display: block;" src="{{ obj_sponsor.business.logo.url }}" alt="Card image">
+</div>

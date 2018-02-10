@@ -75,6 +75,9 @@ class Event(BaseModel):
     location = models.ForeignKey(Location, on_delete=None)
     logo = models.ImageField(upload_to=upload_path_event, null=True)
 
+    class Meta:
+        ordering = ['start_date']
+
     def __str__(self):
         return self.title
 

@@ -1,7 +1,7 @@
 {% extends "brickfiesta/base.html" %}
 {% block content %}
 <h1>{{ location.name }}</h1>
-<div class="vcard">
+<div class="vcard h3">
     <a class="fn org url" href="{{ location.url }}">Hotel Website</a>
     <div class="adr">
         <span class="type">Address</span>:
@@ -35,7 +35,6 @@
           zoom: 8
         });
       }
-
 </script>
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAcDoRovvx7MXPhW3lUxTCAKzkh6iCYKrg=&callback=initMap"
         async defer></script>

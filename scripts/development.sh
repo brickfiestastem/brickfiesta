@@ -42,18 +42,17 @@ clean_database() {
     echo "Running clean database"
     cd $SCRIPT_DIR
     cd ../
-    # find . -path "*/migrations/*.py" -not -name "__init__.py" -delete
-    find . -path "afol/migrations/*.py" -delete
-    find . -path "event/migrations/*.py" -delete
-    find . -path "mocs/migrations/*.py" -delete
-    find . -path "news/migrations/*.py" -delete
-    find . -path "planning/migrations/*.py" -delete
-    find . -path "referral/migrations/*.py" -delete
-    find . -path "shop/migrations/*.py" -delete
-    find . -path "vendor/migrations/*.py" -delete
-    find . -path "*/migrations/*.pyc"  -delete
+    find . -path "./afol/migrations/*.py" -delete -print
+    find . -path "./event/migrations/*.py" -delete -print
+    find . -path "./mocs/migrations/*.py" -delete -print
+    find . -path "./news/migrations/*.py" -delete -print
+    find . -path "./planning/migrations/*.py" -delete -print
+    find . -path "./referral/migrations/*.py" -delete -print
+    find . -path "./shop/migrations/*.py" -delete -print
+    find . -path "./vendor/migrations/*.py" -delete -print
+    find . -path "*/migrations/*.pyc"  -delete -print
     rm *.sqlite3
-    python manage.py makemigrations
+    python manage.py makemigrations afol event mocs news planning referral shop vendor
     python manage.py migrate
 }
 
@@ -63,6 +62,7 @@ load_fixtures() {
     cd ../
     python manage.py loaddata event/fixtures/locations.json
     python manage.py loaddata event/fixtures/events.json
+    python manage.py loaddata shop/fixtures/product_type.json
 }
 
 usage() {
@@ -80,6 +80,10 @@ usage() {
 case "$1" in
     c)
         clean_database
+        ;;
+    cL)
+        clean_database
+        load_fixtures
         ;;
     f)
         setup_virtualenv

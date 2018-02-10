@@ -18,7 +18,7 @@ class BaseModel(models.Model):
         abstract = True
 
 
-class Business(models.Model):
+class Business(BaseModel):
     user = models.ForeignKey(User, on_delete=None)
     name = models.CharField(
         verbose_name='Name of Business', unique=True, max_length=128)
@@ -31,6 +31,10 @@ class Business(models.Model):
     phone_number = models.CharField(verbose_name='Phone Number', max_length=32)
     url = models.CharField(verbose_name='Website URL', max_length=255)
     logo = models.ImageField(upload_to=upload_path_vendor, null=True)
+
+    class Meta:
+        ordering = ['name', 'postal_code']
+        verbose_name_plural = 'Businesses'
 
     def __str__(self):
         return self.name
@@ -55,10 +59,15 @@ class Vendor(BaseModel):
     business = models.ForeignKey(Business, on_delete=None)
     user = models.ForeignKey(User, on_delete=None)
     event = models.ForeignKey(Event, on_delete=None)
+    product = models.ForeignKey(Product, on_delete=None)
     product_quantity = models.IntegerField(verbose_name='Product Quantity')
 
+    class Meta:
+        ordering = ['event', 'business']
+        unique_together = ('business', 'event')
+
     def __str__(self):
-        return self.business.name + " - " + self.event.title
+        return self.business.name
 
 
 class Sponsor(BaseModel):
@@ -77,5 +86,9 @@ class Sponsor(BaseModel):
     product = models.ForeignKey(Product, on_delete=None)
     product_quantity = models.IntegerField(verbose_name='Product Quantity')
 
+    class Meta:
+        ordering = ['event', 'business']
+        unique_together = ('business', 'event')
+
     def __str__(self):
-        return self.business.name + " - " + self.event.title
+        return self.business.name
