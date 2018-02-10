@@ -26,9 +26,8 @@ setup_local_settings() {
     cd $SCRIPT_DIR
     cd ../brickfiesta
     NEW_UUID=$(tr -dc '[:alnum:]' < /dev/urandom | head -c 48)
-    echo '""" Do not commit to version control.' > local_settings.py
-    echo '"""' >> local_settings.py
-    echo "SECRET_KEY = '$NEW_UUID'" >> local_settings.py
+    echo "Set SECRET_KEY in local_settings."
+    echo "SECRET_KEY = '$NEW_UUID'"
 }
 
 run_autopep8() {
@@ -62,7 +61,6 @@ load_fixtures() {
     cd ../
     python manage.py loaddata event/fixtures/locations.json
     python manage.py loaddata event/fixtures/events.json
-    python manage.py loaddata shop/fixtures/product_type.json
 }
 
 usage() {

@@ -1,8 +1,8 @@
 from django.db import models
-from django.contrib.auth.models import User
 from event.utils import upload_path_event
 import datetime
 import uuid
+from django.conf import settings
 
 
 class BaseModel(models.Model):
@@ -101,7 +101,7 @@ class Schedule(BaseModel):
     event = models.ForeignKey(Event, on_delete=None)
     space = models.ForeignKey(Space, on_delete=None)
     activity = models.ForeignKey(Activity, on_delete=None)
-    user = models.ForeignKey(User, on_delete=None)
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=None)
     start_time = models.TimeField()
     end_time = models.TimeField()
     date = models.DateField()

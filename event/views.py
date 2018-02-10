@@ -1,4 +1,4 @@
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render
 from event.models import Event, Location
 from vendor.models import Sponsor, Vendor
 from django.views.generic import DetailView

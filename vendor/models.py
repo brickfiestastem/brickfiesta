@@ -1,9 +1,8 @@
 from django.db import models
-from django.contrib.auth.models import User
+from django.conf import settings
 from .utils import upload_path_vendor
 from event.models import Event
 from shop.models import Product
-import datetime
 import uuid
 
 
@@ -19,7 +18,7 @@ class BaseModel(models.Model):
 
 
 class Business(BaseModel):
-    user = models.ForeignKey(User, on_delete=None)
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=None)
     name = models.CharField(
         verbose_name='Name of Business', unique=True, max_length=128)
     description = models.TextField(verbose_name='Description')
@@ -42,7 +41,7 @@ class Business(BaseModel):
 
 class BusinessNote(BaseModel):
     business = models.ForeignKey(Business, on_delete=None)
-    user = models.ForeignKey(User, on_delete=None)
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=None)
     note = models.TextField(verbose_name='Note')
 
 
@@ -57,7 +56,7 @@ class Vendor(BaseModel):
     status = models.CharField(
         max_length=64, blank=False, choices=STATUS_TYPE, default='submitted')
     business = models.ForeignKey(Business, on_delete=None)
-    user = models.ForeignKey(User, on_delete=None)
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=None)
     event = models.ForeignKey(Event, on_delete=None)
     product = models.ForeignKey(Product, on_delete=None)
     product_quantity = models.IntegerField(verbose_name='Product Quantity')
@@ -81,7 +80,7 @@ class Sponsor(BaseModel):
     status = models.CharField(
         max_length=64, blank=False, choices=STATUS_TYPE, default='submitted')
     business = models.ForeignKey(Business, on_delete=None)
-    user = models.ForeignKey(User, on_delete=None)
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=None)
     event = models.ForeignKey(Event, on_delete=None)
     product = models.ForeignKey(Product, on_delete=None)
     product_quantity = models.IntegerField(verbose_name='Product Quantity')

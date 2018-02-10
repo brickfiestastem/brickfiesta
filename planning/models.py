@@ -1,5 +1,7 @@
 from django.db import models
 from event.models import Event
+from django.conf import settings
+
 import uuid
 
 
@@ -25,4 +27,4 @@ class InventoryItem(BaseModel):
     status = models.TextField(verbose_name='Status', max_length=64)
     condition = models.TextField(verbose_name='Condition', max_length=64)
     event = models.ForeignKey(Event, on_delete=None)
-    # user = models.ForeignKey(User, on_delete=None)
+    # user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=None)

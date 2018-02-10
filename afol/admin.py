@@ -1,5 +1,7 @@
 from django.contrib import admin
-from .models import Attendee, Badge, Profile, Shirt
+from django.contrib.auth.admin import UserAdmin
+from .models import Attendee, Badge, User, Shirt
+from django.contrib.auth.models import User
 
 
 class AttendeeAdmin(admin.ModelAdmin):
@@ -16,12 +18,12 @@ class BadgeAdmin(admin.ModelAdmin):
 admin.site.register(Badge, BadgeAdmin)
 
 
-class ProfileAdmin(admin.ModelAdmin):
+class ProfileAdmin(UserAdmin):
     list_display = ('user', 'bricklink_username',
                     'twitter_handle', 'flickr_handle')
 
 
-admin.site.register(Profile, ProfileAdmin)
+admin.site.register(User, ProfileAdmin)
 
 
 class ShirtAdmin(admin.ModelAdmin):

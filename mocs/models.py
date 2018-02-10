@@ -1,8 +1,8 @@
 from django.db import models
 from django.db.models import Count
-
+from django.conf import settings
 from event.models import Event, Space
-from django.contrib.auth.models import User
+from django.conf import settings
 import uuid
 
 
@@ -40,7 +40,8 @@ class EventCategory(BaseModel):
 
 
 class Moc(BaseModel):
-    creator = models.ForeignKey(User, on_delete=models.CASCADE, blank=True)
+    creator = models.ForeignKey(
+        settings.AUTH_USER_MODEL, on_delete=models.CASCADE, blank=True)
     title = models.CharField(verbose_name='Title', unique=True, max_length=64)
     description = models.TextField(verbose_name='Description')
     height = models.IntegerField(verbose_name='Height')
@@ -57,11 +58,13 @@ class Moc(BaseModel):
 
 
 class EventMoc(BaseModel):
-    user = models.ForeignKey(User, on_delete=None)
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=None)
     category = models.ForeignKey(EventCategory, on_delete=None)
     moc = models.ForeignKey(Moc, on_delete=None)
 
     # TODO: Find a way to make the event and moc unique while still using eventcategory
+    class Meta:
+        unique_together = ('category', 'moc')
 
 
 class VoteManager(models.Manager):
@@ -77,7 +80,7 @@ class VoteManager(models.Manager):
 
 
 class Vote(BaseModel):
-    user = models.ForeignKey(User, on_delete=None)
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=None)
     moc = models.ForeignKey(Moc, on_delete=None)
     category = models.ForeignKey(EventCategory, on_delete=None)
     value = models.IntegerField(default=1)
@@ -94,7 +97,7 @@ class Vote(BaseModel):
 
 
 class Layout(BaseModel):
-    user = models.ForeignKey(User, on_delete=None)
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=None)
     category = models.ForeignKey(EventCategory, on_delete=None)
     title = models.CharField(verbose_name='Title', max_length=64)
     space = models.ForeignKey(Space, on_delete=None)

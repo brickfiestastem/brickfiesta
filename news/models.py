@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 import uuid
+from django.conf import settings
 
 
 class BaseModel(models.Model):
@@ -15,7 +16,7 @@ class BaseModel(models.Model):
 
 
 class Article(BaseModel):
-    user = models.ForeignKey(User, on_delete=None)
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=None)
     title = models.CharField(max_length=255, blank=False)
     body = models.TextField()
 
