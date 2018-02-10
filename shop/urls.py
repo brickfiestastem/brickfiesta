@@ -1,5 +1,4 @@
 from django.urls import path
-from django.views.generic.dates import ArchiveIndexView
 from . import views
 app_name = 'shop'
 

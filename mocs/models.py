@@ -1,6 +1,5 @@
 from django.db import models
 from django.db.models import Count
-from django.conf import settings
 from event.models import Event, Space
 from django.conf import settings
 import uuid

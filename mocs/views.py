@@ -1,5 +1,5 @@
 from django.shortcuts import render, get_object_or_404
-from mocs.models import Category, Moc, EventCategory
+from mocs.models import Category, Moc
 
 
 def index(request):
@@ -8,7 +8,7 @@ def index(request):
 
 
 def add(request):
-    #obj_moc = get_object_or_404(Moc, id=moc_id)
+    # obj_moc = get_object_or_404(Moc, id=moc_id)
     return render(request, 'mocs/details.html', {'moc': ''})
 
 
@@ -28,6 +28,4 @@ def categories(request):
 
 def category(request, category_id):
     obj_category = get_object_or_404(Category, id=category_id)
-    return render(request, 'mocs/category.html', {'': 'sample'})
-
-# Create your views here.
+    return render(request, 'mocs/category.html', {'category': obj_category})

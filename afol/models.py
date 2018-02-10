@@ -16,14 +16,17 @@ class BaseModel(models.Model):
         abstract = True
 
 
-class User(BaseModel, AbstractUser):
+class User(AbstractUser):
     birth_date = models.DateField(null=True, blank=True)
     bricklink_username = models.CharField(max_length=64, blank=True)
     twitter_handle = models.CharField(max_length=64, blank=True)
     flickr_handle = models.CharField(max_length=128, blank=True)
 
+    class Meta:
+        ordering = ('first_name', 'last_name')
+
     def __str__(self):
-        return "%s %s - %s".format(self.first_name, self.last_name, self.email)
+        return "{} {} - {}".format(self.first_name, self.last_name, self.email)
 
 
 class Attendee(BaseModel):

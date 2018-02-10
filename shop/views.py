@@ -17,7 +17,9 @@ class EventListView(ListView):
 class EventProductView(View):
     def get(self, request, event_id):
         obj_products = Product.objects.filter(event__id__exact=event_id)
-        return render(request, 'shop/product_list.html', {'object_list': obj_products, 'first': obj_products.first()})
+        return render(request,
+                      'shop/product_list.html',
+                      {'object_list': obj_products, 'first': obj_products.first()})
 
 
 class CartView(View):
@@ -52,5 +54,5 @@ class Details(View):
                                             last_name=post_params.get('last'),
                                             email=post_params.get('email'),
                                             product=obj_product)
-
+        # TODO: Save item to cart
         return render(request, 'shop/product_details.html', {'product': obj_product})

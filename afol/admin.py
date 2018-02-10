@@ -1,7 +1,7 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
 from .models import Attendee, Badge, User, Shirt
-from django.contrib.auth.models import User
+from .forms import AfolUserChangeForm, AfolUserCreateForm
 
 
 class AttendeeAdmin(admin.ModelAdmin):
@@ -18,12 +18,13 @@ class BadgeAdmin(admin.ModelAdmin):
 admin.site.register(Badge, BadgeAdmin)
 
 
-class ProfileAdmin(UserAdmin):
-    list_display = ('user', 'bricklink_username',
-                    'twitter_handle', 'flickr_handle')
+class CustomUserAdmin(UserAdmin):
+    model = User
+    add_form = AfolUserCreateForm
+    form = AfolUserChangeForm
 
 
-admin.site.register(User, ProfileAdmin)
+admin.site.register(User, CustomUserAdmin)
 
 
 class ShirtAdmin(admin.ModelAdmin):

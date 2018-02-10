@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Product, Order, OrderItem, Cart, CartItem, ProductBulletPoint
+from .models import Product, Order, Cart, CartItem, ProductBulletPoint
 
 
 class ProductBulletPointInline(admin.TabularInline):
