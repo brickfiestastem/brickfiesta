@@ -1,36 +1,18 @@
 {% extends "brickfiesta/base.html" %} {% block content %}
 {% load template_extras %}
-
+<h1>{{ first.event.title }} Product List</h1>
+{% regroup object_list by get_product_type_display as product_list %}
 <div class="row">
+    {% for product_type in product_list %}
     <div class="col-12">
-        <h1>{{ first.event.title }} Product List</h1>
+        <hr/>
+        <h3>{{ product_type.grouper }}</h3>
     </div>
-    {% for product in object_list %}
-    <div class="col-4">
-        <div class="card">
-            <h3 class="card-header">{{ product.title }}</h3>
-            <div class="card-body">
-                <h5 class="card-title">{{ product.event.title }}</h5>
-                <h6 class="card-subtitle text-muted">{{ product.product_type.title }}</h6>
-            </div>
-            <img style="height: 150px; width: 100%; display: block;" src="{{ product.image.url }}"
-                 alt="Card image">
-            <div class="card-body">
-                <p class="card-text" align="justified">{{ product.description }}</p>
-            </div>
-            <ul class="list-group list-group-flush">
-                {% for bullet in product.productbulletpoint_set.all %}
-                <li class="list-group-item">{{ bullet.text }}</li>
-                {% endfor %}
-            </ul>
-            {% if product.event.is_upcoming %}
-            <div class="card-body">
-                <a href="#" class="btn btn-info card-link">Add to Cart - {{ product.price|currency }}</a>
-            </div>
-            {% endif %}
-            <div class="card-footer text-muted">{{ product.modified }}</div>
+        {% for product in product_type.list %}
+        <div class="col-4">
+            {% include 'shop/product_card.html' %}
         </div>
-    </div>
+        {% endfor %}
     {% endfor %}
 </div>
 {% endblock content %}

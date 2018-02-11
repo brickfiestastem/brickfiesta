@@ -1,30 +1,22 @@
 {% extends "brickfiesta/base.html" %} {% block content %}
-
+{% with True as template_details %}
+<h1>Add To Cart</h1>
 <div class="row">
-<div class="col-4">
-    <div class="card">
-        <h3 class="card-header">{{ product.title }}</h3>
-        <div class="card-body">
-            <h5 class="card-title">{{ product.event.title }}</h5>
-            <h6 class="card-subtitle text-muted">{{ product.product_type.title }}</h6>
-        </div>
-        <img style="height: 150px; width: 100%; display: block;" src="{{ product.image.url }}"
-             alt="Card image">
-        <div class="card-body">
-            <p class="card-text" align="justified">{{ product.description }}</p>
-        </div>
-        <ul class="list-group list-group-flush">
-            {% for bullet in product.productbulletpoint_set.all %}
-            <li class="list-group-item">{{ bullet.text }}</li>
-            {% endfor %}
-        </ul>
-        {% if product.event.is_upcoming %}
-        <div class="card-body">
-            <a href="#" class="btn btn-info card-link">Add to Cart</a>
-        </div>
-        {% endif %}
-        <div class="card-footer text-muted">{{ product.modified }}</div>
+    <div class="col-2"></div>
+    <div class="col-4">
+        <form action="." method="post">
+            {% csrf_token %}
+
+            {% include 'brickfiesta/form_formatting.html' %}
+            <p align="right">
+                <input class="btn btn-primary" type="submit" value="Add to Cart"/>
+            </p>
+        </form>
     </div>
+    <div class="col-4">
+        {% include 'shop/product_card.html' %}
+    </div>
+    <div class="col-2"></div>
 </div>
-</div>
+{% endwith %}
 {% endblock content %}

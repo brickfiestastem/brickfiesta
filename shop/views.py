@@ -3,6 +3,7 @@ from django.views import View
 from django.views.generic.list import ListView
 from event.models import Event
 from .models import Product, Cart, CartItem
+from .forms import ProfileForm
 import datetime
 
 # Create your views here.
@@ -42,7 +43,8 @@ class CartView(View):
 class Details(View):
     def get(self, request, product_id):
         obj_product = get_object_or_404(Product, id=product_id)
-        return render(request, 'shop/product_details.html', {'product': obj_product})
+        form = ProfileForm()
+        return render(request, 'shop/product_details.html', {'product': obj_product, 'form': form})
 
     def post(self, request, product_id, *args, **kwargs):
         post_params = request.POST.dict()

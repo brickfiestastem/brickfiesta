@@ -1,3 +1,4 @@
+<h4>AFOL</h4>
 <ul class="list-group">
     <li class="list-group-item d-flex justify-content-between align-items-center">
         My MOCs
@@ -8,16 +9,25 @@
         <span class="badge badge-primary badge-pill">0</span>
     </li>
     <li class="list-group-item d-flex justify-content-between align-items-center">
+        Volunteer
+    </li>
+</ul>
+<h4>Vendor/Sponsor</h4>
+<ul class="list-group">
+    <li class="list-group-item d-flex justify-content-between align-items-center">
+        Business Information
+    </li>
+    <li class="list-group-item d-flex justify-content-between align-items-center">
+        History
+    </li>
+    <li class="list-group-item d-flex justify-content-between align-items-center">
         Sponsor Request
     </li>
     <li class="list-group-item d-flex justify-content-between align-items-center">
         Vendor Request
     </li>
-    <li class="list-group-item d-flex justify-content-between align-items-center">
-        Volunteer
-    </li>
 </ul>
-<div><p></p></div>
+<h4>Account</h4>
 <ul class="list-group">
     {% if user.is_authenticated and user.is_staff %}
     <li class="list-group-item d-flex justify-content-between align-items-center">
@@ -26,5 +36,8 @@
     {% endif %}
     <li class="list-group-item d-flex justify-content-between align-items-center">
         <a href="{% url 'afol:password_change' %}">Password Change</a>
+    </li>
+    <li class="list-group-item d-flex justify-content-between align-items-center">
+        <a href="">Update Profile</a>
     </li>
 </ul>
