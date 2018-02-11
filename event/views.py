@@ -4,6 +4,7 @@ from vendor.models import Sponsor, Vendor
 from django.views.generic import DetailView
 from django.views.generic.edit import FormView
 from .forms import ContactForm
+from django.conf import settings
 import datetime
 
 
@@ -53,3 +54,15 @@ class EventDetail(DetailView):
 
 class LocationDetail(DetailView):
     model = Location
+
+    def get_context_data(self, **kwargs):
+        # Call the base implementation first to get a context
+        context = super().get_context_data(**kwargs)
+        # Add in a QuerySet of all the sponsors and vendors
+
+        context['map_search'] = "{}, {}, {}, {}".format(self.object.street,
+                                                        self.object.locality,
+                                                        self.object.region,
+                                                        self.object.country)
+        context['google_key'] = settings.GOOGLE_MAP_KEY
+        return context
