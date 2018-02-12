@@ -41,6 +41,8 @@ Load the fixtures
 ```bash
 python manage.py loaddata event/fixtures/locations.json
 python manage.py loaddata event/fixtures/events.json
+python manage.py loaddata shop/fixtures/products.json
+
 ```
 
 Create super user

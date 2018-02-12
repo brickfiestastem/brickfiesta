@@ -1,9 +1,12 @@
 from django.shortcuts import render, get_object_or_404
+from django.urls import reverse
 from django.views import View
 from django.views.generic.list import ListView
+from django.views.generic.detail import SingleObjectMixin
+from django.views.generic import DetailView, FormView
 from event.models import Event
 from .models import Product, Cart, CartItem
-from .forms import ProfileForm
+from .forms import CartItemForm
 import datetime
 
 # Create your views here.
@@ -40,21 +43,41 @@ class CartView(View):
         return render(request, 'shop/cart_item_added.html', {'cart': obj_cart})
 
 
-class Details(View):
-    def get(self, request, product_id):
-        obj_product = get_object_or_404(Product, id=product_id)
-        form = ProfileForm()
-        return render(request, 'shop/product_details.html', {'product': obj_product, 'form': form})
+class ProductDetailView(DetailView):
+    model = Product
 
-    def post(self, request, product_id, *args, **kwargs):
-        post_params = request.POST.dict()
-        cart = Cart.objects.get(session=request.session.get('id'))
-        obj_product = Product.objects.get(id=post_params.get('product_id'))
-        cart_item = CartItem.objects.create(cart=cart,
-                                            first_name=post_params.get(
-                                                'first'),
-                                            last_name=post_params.get('last'),
-                                            email=post_params.get('email'),
-                                            product=obj_product)
-        # TODO: Save item to cart
-        return render(request, 'shop/product_details.html', {'product': obj_product})
+    def get_context_data(self, **kwargs):
+        context = super(ProductDetailView, self).get_context_data(**kwargs)
+        context['form'] = CartItemForm()
+        return context
+
+
+class ProductCartItemView(SingleObjectMixin, FormView):
+    template_name = 'shop/product_detail.html'
+    form_class = CartItemForm
+    model = Product
+
+    def post(self, request, *args, **kwargs):
+        self.object = self.get_object()
+        form = CartItemForm(request.POST)
+        if form.is_valid():
+            cart = Cart.objects.get(session=request.session.get('id'))
+            cart_item = CartItem.objects.create(cart=cart,
+                                            first_name=form.cleaned_data['first_name'],
+                                            last_name=form.cleaned_data['last_name'],
+                                            email=form.cleaned_data['email'],
+                                            product=self.object)
+        return super(ProductCartItemView, self).post(request, *args, **kwargs)
+
+    def get_success_url(self):
+        return reverse('shop:event', kwargs={'event_id': self.object.event.id})
+
+
+class ProductDetail(View):
+    def get(self, request, *args, **kwargs):
+        view = ProductDetailView.as_view()
+        return view(request, *args, **kwargs)
+
+    def post(self, request, *args, **kwargs):
+        view = ProductCartItemView.as_view()
+        return view(request, *args, **kwargs)

@@ -6,7 +6,7 @@
     <div class="col-4">
         <form action="." method="post">
             {% csrf_token %}
-
+            <input type="hidden" name="product_id" value="{{ product.id }}" />
             {% include 'brickfiesta/form_formatting.html' %}
             <p align="right">
                 <input class="btn btn-primary" type="submit" value="Add to Cart"/>
