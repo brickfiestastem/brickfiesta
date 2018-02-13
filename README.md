@@ -11,10 +11,7 @@ pip install -r requirements.txt
 
 Set Environment Variables
 ```bash
-export DJANGO_SECRET_KEY=
-export GOOGLE_MAP_KEY=
-export SQUARE_CART_KEY=
-export SQUARE_LOCATION_KEY=
+. ./script/development.sh l
 ```
 
 Clear the migrations if there is a major problem but this should NOT happen after deployment.
