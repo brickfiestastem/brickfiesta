@@ -11,8 +11,8 @@ class AfolUserCreateForm(UserCreationForm):
     email = forms.EmailField(required=True)
     birth_date = forms.DateField(
         initial="1932-08-10",
-        help_text="<ul><li>Format: yyyy-mm-dd</li>" +
-                  "<li>Only the year is important so entering yyyy-01-01 is acceptable.</ul>",
+        help_text="<ul><li>Only the year is important so entering yyyy-01-01 is acceptable.</li></ul>",
+        widget=SelectDateWidget(empty_label=("Choose Year", "Choose Month", "Choose Day"),
         required=True)
 
     class Meta:
@@ -25,7 +25,10 @@ class AfolUserChangeForm(forms.ModelForm):
     first_name = forms.CharField(required=True)
     last_name = forms.CharField(required=True)
     email = forms.EmailField(required=True)
-    birth_date = forms.DateField(required=True)
+    birth_date = forms.DateField(
+        help_text="<ul><li>Only the year is important so entering yyyy-01-01 is acceptable.</li></ul>",
+        widget=SelectDateWidget(empty_label=("Choose Year", "Choose Month", "Choose Day"),
+        required=True)
 
     class Meta:
         model = User
