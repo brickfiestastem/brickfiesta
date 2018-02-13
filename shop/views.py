@@ -63,10 +63,10 @@ class ProductCartItemView(SingleObjectMixin, FormView):
         if form.is_valid():
             cart = Cart.objects.get(session=request.session.get('id'))
             cart_item = CartItem.objects.create(cart=cart,
-                                            first_name=form.cleaned_data['first_name'],
-                                            last_name=form.cleaned_data['last_name'],
-                                            email=form.cleaned_data['email'],
-                                            product=self.object)
+                                                first_name=form.cleaned_data['first_name'],
+                                                last_name=form.cleaned_data['last_name'],
+                                                email=form.cleaned_data['email'],
+                                                product=self.object)
         return super(ProductCartItemView, self).post(request, *args, **kwargs)
 
     def get_success_url(self):

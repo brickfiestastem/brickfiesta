@@ -7,17 +7,17 @@
         <fieldset>
             <legend>Sign Up</legend>
             <small class="form-text text-muted">We'll never share your login information with anyone else.</small>
-            <form method="post" action="{% url 'signup' %}">
+            <form method="post" action="">
                 {% csrf_token %}
                 {% include 'brickfiesta/form_formatting.html' %}
                 <div align="right">
                     <input class="btn btn-primary" type="submit" value="Sign Up"/>
-                    <input type="hidden" name="next" value="{{ next }}"/>
                 </div>
             </form>
 
             {# Assumes you setup the password_reset view in your URLconf #}
-            <p><a href="{% url 'password_reset' %}">Lost password?</a></p>
+            <p><a href="{% url 'afol:password_reset' %}">Lost password?</a></p>
+            <p><a href="{% url 'afol:login' %}">Log in</a> to existing account.</p>
         </fieldset>
     </div>
 </div>

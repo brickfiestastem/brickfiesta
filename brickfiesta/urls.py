@@ -21,9 +21,8 @@ from django.contrib.auth import views as auth_views
 
 urlpatterns = [
     path('', main_views.frontpage, name='home'),
-    url(r'password_change_done', auth_views.password_change_done, name='password_change_done'),
-    path('admin/', admin.site.urls),
-    path('afol/', include('afol.urls')),
+    path('brickmaster/', admin.site.urls),
+    path('afol/', include('afol.urls'), name='afol'),
     path('events/', include('event.urls')),
     path('news/', include('news.urls')),
     path('mocs/', include('mocs.urls')),

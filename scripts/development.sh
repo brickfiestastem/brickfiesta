@@ -24,10 +24,20 @@ run_virtualenv() {
 setup_local_settings() {
     echo "Setting up local settings"
     cd $SCRIPT_DIR
-    cd ../brickfiesta
+    cd ../
     NEW_UUID=$(tr -dc '[:alnum:]' < /dev/urandom | head -c 48)
-    echo "Set SECRET_KEY in local_settings."
-    echo "SECRET_KEY = '$NEW_UUID'"
+    echo "Enter Google Map Key: "
+    read GOOGLE_MAP_KEY
+    echo "Enter Square Cart Key: "
+    read SQUARE_CART_KEY
+    echo "Enter Square Location Key: "
+    read SQUARE_LOCATION_KEY
+    echo "{" > settings.json
+    echo "  \"SECRET_KEY\": \"$NEW_UUID\", " >> settings.json
+    echo "  \"GOOGLE_MAP_KEY\": \"$GOOGLE_MAP_KEY\", " >> settings.json
+    echo "  \"SQUARE_CART_KEY\": \"$SQUARE_CART_KEY\", " >> settings.json
+    echo "  \"SQUARE_LOCATION_KEY\": \"$SQUARE_LOCATION_KEY\" " >> settings.json
+    echo "}" >> settings.json
 }
 
 run_autopep8() {

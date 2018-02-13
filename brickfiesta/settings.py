@@ -11,26 +11,32 @@ https://docs.djangoproject.com/en/1.11/ref/settings/
 """
 
 import os
+import json
 from django.core.exceptions import ImproperlyConfigured
 
-def get_env_variable(str_var_name):
+with open("settings.json") as f:
+    settings_keys = json.loads(f.read())
+
+def get_variable(str_var_name, settings=settings_keys):
     """ Get the environment variable needed for by the system. """
     try:
-        return os.environ[str_var_name]
+        return settings[str_var_name]
     except KeyError:
         str_error_msg = "Set the {} environment variable.".format(str_var_name)
         raise ImproperlyConfigured(str_error_msg)
 
+
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
-BASE_DIR = os.path.dirname(os.path.dirname(
-    os.path.join(os.path.abspath(__file__))))
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.join(os.path.abspath(__file__))))
 
-SECRET_KEY = get_env_variable("DJANGO_SECRET_KEY")
-GOOGLE_MAP_KEY = get_env_variable("GOOGLE_MAP_KEY")
-SQUARE_CART_KEY = get_env_variable("SQUARE_CART_KEY")
-SQUARE_LOCATION_KEY = get_env_variable("SQUARE_LOCATION_KEY")
+SECRET_KEY = get_variable("SECRET_KEY")
+GOOGLE_MAP_KEY = get_variable("GOOGLE_MAP_KEY")
+SQUARE_CART_KEY = get_variable("SQUARE_CART_KEY")
+SQUARE_LOCATION_KEY = get_variable("SQUARE_LOCATION_KEY")
 
-LOGIN_REDIRECT_URL = '/'
+LOGIN_REDIRECT_URL = '/afol/profile/'
+LOGIN_URL = '/afol/login/'
+DEFAULT_FROM_EMAIL = 'customer.support@brickfiesta.com'
 SITE_ID = 1
 AUTH_USER_MODEL = 'afol.User'
 # SECURITY WARNING: don't run with debug turned on in production!
@@ -61,7 +67,6 @@ INSTALLED_APPS = [
     'referral.apps.ReferralConfig',
     'shop.apps.ShopConfig',
     'vendor.apps.VendorConfig',
-    'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
@@ -69,6 +74,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'django.contrib.sites',
     'django.contrib.flatpages',
+    'django.contrib.admin',
 ]
 
 MIDDLEWARE = [
