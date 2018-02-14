@@ -5,6 +5,9 @@
 <div class="row">
     <div class="col-6">
         <h2>{{ business.name }}</h2>
+        {% if business_owner %}
+            <a class="btn btn-info" href="{% url 'vendor:edit' business.id %}">Edit Business Information</a>
+        {% endif %}
         <div class="vcard h3">
             <a class="fn org url" href="{{ business.url }}">{{ business.url }}</a>
             <div class="adr">

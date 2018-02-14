@@ -15,7 +15,11 @@
 <h4>Vendor/Sponsor</h4>
 <ul class="list-group">
     <li class="list-group-item d-flex justify-content-between align-items-center">
-        Business Information
+        {% if business_owner %}
+        <a href="{% url 'vendor:edit' business_id %}">Business Information</a>
+        {% else %}
+        <a href="{% url 'vendor:add' %}">Business Information</a>
+        {% endif %}
     </li>
     <li class="list-group-item d-flex justify-content-between align-items-center">
         History

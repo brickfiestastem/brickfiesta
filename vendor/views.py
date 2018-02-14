@@ -19,6 +19,12 @@ class VendorListView(ListView):
 class BusinessDetail(DetailView):
     model = Business
 
+    def get_context_data(self, **kwargs):
+        context = super(BusinessDetail, self).get_context_data(**kwargs)
+        context['business_owner'] = (self.object.user.id == self.request.user.id)
+        return context
+
+
 
 @method_decorator(login_required, name='dispatch')
 class BusinessAddView(CreateView):
