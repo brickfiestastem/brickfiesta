@@ -1,0 +1,80 @@
+{% extends "brickfiesta/base.html" %} {% block content %}
+{% load template_extras %}
+
+<div class="row">
+    <div class="col-12">
+        <h1>Sponsor Request</h1>
+        <p align="justified">Brick Fiesta is proud of the support and generosity of our various sponsors.
+            Without your continued support our convention and exhibition would not be the same. Below is the outlined
+            checklist to apply to be a sponsor.</p>
+    </div>
+
+    <div class="list-group col-12">
+        <div class="list-group-item list-group-item-action flex-column align-items-start">
+            <div class="d-flex w-100 justify-content-between">
+                <h5 class="mb-1">Step One: Account</h5>
+            </div>
+            {% if step_one_signed_in %}
+            <p class="mb-1">You are already signed in!</p>
+            {% else %}
+            <p class="mb-1">You need to <a href="{% url 'afol:login' %}">log in</a>. If you don't have an account <a
+                    href="{% url 'afol:signup' %}">sign up</a>.</p>
+            {% endif %}
+        </div>
+        <div class="list-group-item list-group-item-action flex-column align-items-start">
+            <div class="d-flex w-100 justify-content-between">
+                <h5 class="mb-1">Step Two: Business Information</h5>
+            </div>
+            {% if step_two_business %}
+            <p class="mb-1">You have already entered your <a href="{% url 'vendor:edit' business_id.id %}">business information</a>.</p>
+            {% else %}
+            <p class="mb-1">You need to enter your <a href="{% url 'vendor:add' %}">business information</a>.</p>
+            {% endif %}
+        </div>
+        <div class="list-group-item list-group-item-action flex-column align-items-start">
+            <div class="d-flex w-100 justify-content-between">
+                <h5 class="mb-1">Step Three: Pick Level of Sponsorship</h5>
+            </div>
+            {% if step_one_signed_in %}
+                {% if step_three_register %}
+                <form method="post" action="">
+                    {% csrf_token %}
+                    {% include 'brickfiesta/form_formatting.html' %}
+                    <div align="right">
+                        <input class="btn btn-primary" type="submit" value="Request"/>
+                    </div>
+                </form>
+                {% else %}
+                <p class="mb-1">No upcoming vendor tables are available at this time.</p>
+                {% endif %}
+            {% else %}
+                <p class="mb-1">You need to <a href="{% url 'afol:login' %}">log in</a>. If you don't have an account <a
+                    href="{% url 'afol:signup' %}">sign up</a>.</p>
+            {% endif %}
+        </div>
+    </div>
+    <div class="col-12">&nbsp;</div>
+    {% if step_four_status %}
+    <div class="col-12">
+        <h2>Status of Requests</h2>
+        <table class="table table-hover">
+            <thead>
+            <tr>
+                <th scope="col">Event</th>
+                <th scope="col">Status</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for event_status in step_four_status %}
+            <tr>
+                <td>{{ event_status.event }}</td>
+                <td>{{ event_status.get_status_display }}</td>
+            </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    {% endif %}
+</div>
+{% endblock content %}
+

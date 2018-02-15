@@ -19,7 +19,8 @@ class ProfileView(LoginRequiredMixin, DetailView):
         context['business_id'] = None
         if Business.objects.filter(user=self.request.user).exists():
             context['business_owner'] = True
-            context['business_id'] = Business.objects.filter(user=self.request.user).first().id
+            context['business_id'] = Business.objects.filter(
+                user=self.request.user).first().id
         return context
 
 

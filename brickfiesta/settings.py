@@ -17,6 +17,7 @@ from django.core.exceptions import ImproperlyConfigured
 with open("settings.json") as f:
     settings_keys = json.loads(f.read())
 
+
 def get_variable(str_var_name, settings=settings_keys):
     """ Get the environment variable needed for by the system. """
     try:
@@ -27,7 +28,8 @@ def get_variable(str_var_name, settings=settings_keys):
 
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
-BASE_DIR = os.path.dirname(os.path.dirname(os.path.join(os.path.abspath(__file__))))
+BASE_DIR = os.path.dirname(os.path.dirname(
+    os.path.join(os.path.abspath(__file__))))
 
 SECRET_KEY = get_variable("SECRET_KEY")
 GOOGLE_MAP_KEY = get_variable("GOOGLE_MAP_KEY")
@@ -147,9 +149,9 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.11/howto/static-files/
 
 STATIC_URL = '/static/'
-# STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 MEDIA_URL = '/static/media/'
 MEDIA_ROOT = os.path.join(os.path.join(BASE_DIR, 'static'), 'media')
 STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, "static"),
+    # os.path.join(BASE_DIR, "static"),
 ]

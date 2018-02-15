@@ -1,0 +1,29 @@
+{% extends "brickfiesta/base.html" %} {% block content %}
+{% load template_extras %}
+
+<div class="row">
+    <div class="col-12">
+        <h1>Sponsors and Vendors</h1>
+        <p align="justified">Brick Fiesta is proud of the support and generosity of our various vendor partnerships and
+            sponsorships. Without their continued support our convention and exhibition would not be the same. Below is
+            list of a few of our vendors and sponsors over the years. If you would to be a vendor at one of our upcoming
+            events please create an account and the select
+            <a href="{% url 'vendor:vendor-request' %}">Vendor Request</a> or
+            <a href="{% url 'vendor:sponsor-request' %}">Sponsor Request</a> based on your interest.</p>
+    </div>
+
+    <div class="col-12"><h2>Sponsors</h2></div>
+    {% for obj_sponsor in sponsor_list %}
+    <div class="col-4">
+        {% include "vendor/sponsor_card.html" %}
+    </div>
+    {% endfor %}
+    <hr />
+    <div class="col-12"><h2>Vendors</h2></div>
+    {% for obj_vendor in vendor_list %}
+    <div class="col-4">
+        {% include "vendor/vendor_card.html" %}
+    </div>
+    {% endfor %}
+</div>
+{% endblock content %}

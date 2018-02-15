@@ -21,14 +21,14 @@
         <a href="{% url 'vendor:add' %}">Business Information</a>
         {% endif %}
     </li>
-    <li class="list-group-item d-flex justify-content-between align-items-center">
+    <!-- li class="list-group-item d-flex justify-content-between align-items-center">
         History
+    </li -->
+    <li class="list-group-item d-flex justify-content-between align-items-center">
+        <a href="{% url 'vendor:sponsor-request' %}">Sponsor Request</a>
     </li>
     <li class="list-group-item d-flex justify-content-between align-items-center">
-        Sponsor Request
-    </li>
-    <li class="list-group-item d-flex justify-content-between align-items-center">
-        Vendor Request
+        <a href="{% url 'vendor:vendor-request' %}">Vendor Request</a>
     </li>
 </ul>
 <h4>Account</h4>
