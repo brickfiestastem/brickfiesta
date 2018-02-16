@@ -40,6 +40,7 @@
                 <form method="post" action="">
                     {% csrf_token %}
                     {% include 'brickfiesta/form_formatting.html' %}
+                    {% include 'brickfiesta/google_recaptcha.html' %}
                     <div align="right">
                         <input class="btn btn-primary" type="submit" value="Request"/>
                     </div>

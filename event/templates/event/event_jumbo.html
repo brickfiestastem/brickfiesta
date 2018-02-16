@@ -3,7 +3,8 @@
         <div class="col-md-7">
             <h1 class="display-4"><a href="{% url 'event:details' event.id %}">{{ event.title }}</a></h1>
             <h3>{{ event.theme }}</h3>
-            <p class="lead">{{ event.start_date }} to {{ event.end_date }} at {{ event.location.name }}</p>
+            <p class="lead">{{ event.start_date }} to {{ event.end_date }} at {{ event.location.name }}
+            <br />{{ event.location.locality }}, {{ event.location.region }}</p>
         </div>
         <div class="col-md-5"><img src="{{ event.logo.url }}" alt="Event Logo"/></div>
     </div>

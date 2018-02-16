@@ -32,6 +32,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(
     os.path.join(os.path.abspath(__file__))))
 
 SECRET_KEY = get_variable("SECRET_KEY")
+GOOGLE_RECAPTCHA_KEY = get_variable("GOOGLE_RECAPTCHA_KEY")
 GOOGLE_MAP_KEY = get_variable("GOOGLE_MAP_KEY")
 SQUARE_CART_KEY = get_variable("SQUARE_CART_KEY")
 SQUARE_LOCATION_KEY = get_variable("SQUARE_LOCATION_KEY")
@@ -44,6 +45,8 @@ AUTH_USER_MODEL = 'afol.User'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
+CART_SESSION_ID = 'cart'
 
 DATABASES = {
     'default': {
@@ -88,7 +91,7 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'django.contrib.flatpages.middleware.FlatpageFallbackMiddleware',
-    'shop.cart_middleware.InitializeCart',
+    # 'shop.cart_middleware.InitializeCart',
 ]
 
 ROOT_URLCONF = 'brickfiesta.urls'
@@ -104,6 +107,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'shop.context_processors.cart_count',
             ],
         },
     },

@@ -67,17 +67,8 @@ class OrderItem(BaseModel):
     price = models.FloatField()
 
 
-class Cart(BaseModel):
-    user = models.ForeignKey(settings.AUTH_USER_MODEL,
-                             on_delete=None, null=True)
-    session = models.CharField(max_length=255, blank=True)
-
-    def __str__(self):
-        return self.session
-
-
 class CartItem(BaseModel):
-    cart = models.ForeignKey(Cart, on_delete=None)
+    cart = models.CharField(max_length=64, default=uuid.uuid4())
     first_name = models.CharField(max_length=16, blank=True)
     last_name = models.CharField(max_length=16, blank=True)
     email = models.EmailField(blank=True)

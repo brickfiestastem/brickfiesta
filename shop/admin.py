@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Product, Order, Cart, CartItem, ProductBulletPoint
+from .models import Product, Order, CartItem, ProductBulletPoint
 
 
 class ProductBulletPointInline(admin.TabularInline):
@@ -21,13 +21,6 @@ class OrderAdmin(admin.ModelAdmin):
 
 
 admin.site.register(Order, OrderAdmin)
-
-
-class CartAdmin(admin.ModelAdmin):
-    list_display = ('user', 'session', 'created')
-
-
-admin.site.register(Cart, CartAdmin)
 
 
 class CartItemAdmin(admin.ModelAdmin):

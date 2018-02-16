@@ -8,8 +8,6 @@
     <meta name="author" content="Brick Fiesta STEM">
     <title>Brick Fiesta - {% block subtitle %}A celebration of LEGO in Texas{% endblock subtitle %}</title>
     <link rel="stylesheet" type="text/css" href="{% static 'css/bootswatch/dist/simplex/bootstrap.min.css' %}"/>
-    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet"
-          integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
     {% block extra_css %}{% endblock %}
 </head>
 <body>
@@ -38,7 +36,7 @@
         </ul>
         <ul class="navbar-nav my-2 my-lg-0">
             <li class="nav-item">
-                <a class="nav-link" href="{% url 'shop:cart' %}">Cart</a>
+                <a class="nav-link" href="{% url 'shop:cart' %}">Cart <span class="badge badge-pill badge-dark">{{ cart_count|default:0 }}</span></a>
             </li>
             {% if user.is_authenticated %}
             <li class="nav-item active">

@@ -5,8 +5,9 @@ from django.views.generic.list import ListView
 from django.views.generic.detail import SingleObjectMixin
 from django.views.generic import DetailView, FormView
 from event.models import Event
-from .models import Product, Cart, CartItem
+from .models import Product
 from .forms import CartItemForm
+from .cart import ShoppingCart
 import datetime
 
 # Create your views here.
@@ -27,20 +28,11 @@ class EventProductView(View):
 
 
 class CartView(View):
-    def get_cart(self, request):
-        if request.user.is_authenticated:
-            cart = Cart.objects.get(user=request.user)
-        else:
-            cart = Cart.objects.get(session=request.session.get('id'))
-        return cart
 
     def get(self, request):
-        obj_cart = self.get_cart(request)
-        return render(request, 'shop/cart_contents.html', {'cart': obj_cart})
-
-    def post(self, request, *args, **kwargs):
-        obj_cart = self.get_cart(request)
-        return render(request, 'shop/cart_item_added.html', {'cart': obj_cart})
+        obj_cart = ShoppingCart(request)
+        return render(request, 'shop/cart_contents.html', {'cart': obj_cart.get_basket(),
+                                                           'cart_total': obj_cart.total()})
 
 
 class ProductDetailView(DetailView):
@@ -58,15 +50,14 @@ class ProductCartItemView(SingleObjectMixin, FormView):
     model = Product
 
     def post(self, request, *args, **kwargs):
+        cart = ShoppingCart(request)
         self.object = self.get_object()
         form = CartItemForm(request.POST)
         if form.is_valid():
-            cart = Cart.objects.get(session=request.session.get('id'))
-            cart_item = CartItem.objects.create(cart=cart,
-                                                first_name=form.cleaned_data['first_name'],
-                                                last_name=form.cleaned_data['last_name'],
-                                                email=form.cleaned_data['email'],
-                                                product=self.object)
+            cart.add(first_name=form.cleaned_data['first_name'],
+                     last_name=form.cleaned_data['last_name'],
+                     email=form.cleaned_data['email'],
+                     product=self.object)
         return super(ProductCartItemView, self).post(request, *args, **kwargs)
 
     def get_success_url(self):
