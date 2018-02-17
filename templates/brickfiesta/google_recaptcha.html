@@ -1,2 +1,3 @@
+{% load template_extras %}
 <script src='https://www.google.com/recaptcha/api.js'></script>
-<div class="g-recaptcha" data-sitekey="{{ google_recaptcha_key }}"></div>
+<div class="g-recaptcha" data-sitekey="{% settings_value 'GOOGLE_RECAPTCHA_SITE_KEY' %}"></div>

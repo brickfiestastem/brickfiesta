@@ -1,4 +1,5 @@
 {% extends "brickfiesta/base.html" %}
+{% load template_extras %}
 {% block content %}
 <h1>{{ location.name }}</h1>
 <div class="vcard h3">
@@ -27,7 +28,6 @@
 </ul>
 <h2>Map</h2>
 <div id="map">
-    <iframe width="600" height="450" frameborder="0" style="border:0"
-src="https://www.google.com/maps/embed/v1/search?q={{ map_search|iriencode }}&key={{ google_key }}" allowfullscreen></iframe>
+    {% include 'brickfiesta/google_map.html' %}
 </div>
 {% endblock content %}

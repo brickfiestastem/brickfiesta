@@ -1,4 +1,5 @@
 from django import template
+from django.conf import settings
 import locale
 
 locale.setlocale(locale.LC_ALL, '')
@@ -13,3 +14,8 @@ def currency(value):
 @register.filter()
 def addcss(field, css):
     return field.as_widget(attrs={"class": css})
+
+
+@register.simple_tag()
+def settings_value(name):
+    return getattr(settings, name, "")

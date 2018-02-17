@@ -35,6 +35,7 @@ setup_local_settings() {
     echo "{" > settings.json
     echo "  \"SECRET_KEY\": \"$NEW_UUID\", " >> settings.json
     echo "  \"GOOGLE_RECAPTCHA_KEY\": \"$GOOGLE_RECAPTCHA_KEY\", " >> settings.json
+    echo "  \"GOOGLE_RECAPTCHA_SITE_KEY\": \"$GOOGLE_RECAPTCHA_SITE_KEY\", " >> settings.json
     echo "  \"GOOGLE_MAP_KEY\": \"$GOOGLE_MAP_KEY\", " >> settings.json
     echo "  \"SQUARE_CART_KEY\": \"$SQUARE_CART_KEY\", " >> settings.json
     echo "  \"SQUARE_LOCATION_KEY\": \"$SQUARE_LOCATION_KEY\" " >> settings.json

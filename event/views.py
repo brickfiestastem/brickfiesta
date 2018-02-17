@@ -64,5 +64,5 @@ class LocationDetail(DetailView):
                                                         self.object.locality,
                                                         self.object.region,
                                                         self.object.country)
-        context['google_key'] = settings.GOOGLE_MAP_KEY
+        context['google_map_key'] = settings.GOOGLE_MAP_KEY
         return context

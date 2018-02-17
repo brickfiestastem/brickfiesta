@@ -33,6 +33,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(
 
 SECRET_KEY = get_variable("SECRET_KEY")
 GOOGLE_RECAPTCHA_KEY = get_variable("GOOGLE_RECAPTCHA_KEY")
+GOOGLE_RECAPTCHA_SITE_KEY = get_variable("GOOGLE_RECAPTCHA_SITE_KEY")
 GOOGLE_MAP_KEY = get_variable("GOOGLE_MAP_KEY")
 SQUARE_CART_KEY = get_variable("SQUARE_CART_KEY")
 SQUARE_LOCATION_KEY = get_variable("SQUARE_LOCATION_KEY")

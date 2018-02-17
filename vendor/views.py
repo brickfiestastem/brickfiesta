@@ -9,6 +9,7 @@ from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
 from .forms import SponsorForm, VendorForm
+from shop.utils import check_recaptcha
 import datetime
 
 
@@ -95,16 +96,19 @@ class VendorRequestDetail(View):
                 event__start_date__gt=today).exists()
         form = VendorForm(request.POST)
         if form.is_valid():
-            obj_product = Product.objects.get(id=request.POST['product'])
-            obj_event = obj_product.event
-            if not Vendor.objects.filter(event=obj_event, business=business_id).exists():
-                form.instance.user = self.request.user
-                form.instance.event = obj_event
-                form.instance.business = business_id
-                form.save()
+            if not check_recaptcha(request):
+                form.add_error(None, 'You failed the human test. Try the reCAPTCHA again.')
             else:
-                form.add_error(
-                    'product', 'Already submitted request for this event.')
+                obj_product = Product.objects.get(id=request.POST['product'])
+                obj_event = obj_product.event
+                if not Vendor.objects.filter(event=obj_event, business=business_id).exists():
+                    form.instance.user = self.request.user
+                    form.instance.event = obj_event
+                    form.instance.business = business_id
+                    form.save()
+                else:
+                    form.add_error(
+                        'product', 'Already submitted request for this event.')
         step_four_status = False
         if step_one_signed_in:
             step_four_status = Vendor.objects.filter(user=self.request.user.id)
@@ -168,17 +172,20 @@ class SponsorRequestDetail(View):
                 event__start_date__gt=today).exists()
         form = SponsorForm(request.POST)
         if form.is_valid():
-            obj_product = Product.objects.get(id=request.POST['product'])
-            obj_event = obj_product.event
-            if not Sponsor.objects.filter(event=obj_event, business=business_id).exists():
-                form.instance.user = self.request.user
-                form.instance.event = obj_event
-                form.instance.business = business_id
-                form.instance.product_quantity = 1
-                form.save()
+            if not check_recaptcha(request):
+                form.add_error(None, 'You failed the human test. Try the reCAPTCHA again.')
             else:
-                form.add_error(
-                    'product', 'Already submitted request for this event.')
+                obj_product = Product.objects.get(id=request.POST['product'])
+                obj_event = obj_product.event
+                if not Sponsor.objects.filter(event=obj_event, business=business_id).exists():
+                    form.instance.user = self.request.user
+                    form.instance.event = obj_event
+                    form.instance.business = business_id
+                    form.instance.product_quantity = 1
+                    form.save()
+                else:
+                    form.add_error(
+                        'product', 'Already submitted request for this event.')
         step_four_status = False
         if step_one_signed_in:
             step_four_status = Sponsor.objects.filter(
@@ -202,6 +209,9 @@ class BusinessAddView(CreateView):
 
     def form_valid(self, form):
         form.instance.user = self.request.user
+        if not check_recaptcha(self.request):
+            form.add_error(None, 'You failed the human test. Try the reCAPTCHA again.')
+            return super().form_invalid(form)
         return super().form_valid(form)
 
 
@@ -211,8 +221,11 @@ class BusinessUpdateView(UpdateView):
     fields = ('name', 'description', 'street', 'locality',
               'region', 'postal_code', 'country', 'phone_number',
               'url', 'logo')
-    success_url = '/vendor/'
+    success_url = '/afol/profile/'
 
     def form_valid(self, form):
         form.instance.user = self.request.user
+        if not check_recaptcha(self.request):
+            form.add_error(None, 'You failed the human test. Try the reCAPTCHA again.')
+            return super().form_invalid(form)
         return super().form_valid(form)

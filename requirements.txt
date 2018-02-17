@@ -11,3 +11,4 @@ pytz==2017.3
 six==1.11.0
 wrapt==1.10.11
 ipdb==0.10.3
+squareconnect==2.5.1
