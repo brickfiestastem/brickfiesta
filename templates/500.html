@@ -1,0 +1,18 @@
+{% extends "brickfiesta/base.html" %}
+
+{% block subtitle %} What? Server Error {% block subtitle %}
+
+{% block content %}
+
+<div class="jumbotron alert">
+  <h1 class="display-3">What? Server Error</h1>
+  <p class="lead">It seems we have a problem here with something on the server.
+    I have reported this to the AFOLs in charge and they will have to look into it.</p>
+  <hr class="my-4">
+  <p>Perhaps if start from the beginning we can see if that solved out problem.</p>
+  <p class="lead">
+    <a class="btn btn-primary btn-lg" href="{% url event:index %}" role="button">Start Again</a>
+  </p>
+</div>
+
+{% endblock content %}
