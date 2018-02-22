@@ -9,7 +9,9 @@ setup_virtualenv() {
     echo "Setting up local virtualenv"
     cd $SCRIPT_DIR
     cd ../
-    virtualenv venv
+    sudo apt install virtualenv
+    virtualenv -p python3 venv
+    pip install --upgrade virtualenv
     source venv/bin/activate
     pip install -r requirements.txt
 }
@@ -26,6 +28,10 @@ setup_local_settings() {
     cd $SCRIPT_DIR
     cd ../
     NEW_UUID=$(tr -dc '[:alnum:]' < /dev/urandom | head -c 48)
+    echo "Enter Google Recaptcha Key: "
+    read GOOGLE_RECAPTCHA_KEY
+    echo "Enter Google Recaptcha Site Key: "
+    read GOOGLE_RECAPTCHA_SITE_KEY
     echo "Enter Google Map Key: "
     read GOOGLE_MAP_KEY
     echo "Enter Square Cart Key: "
@@ -63,7 +69,7 @@ clean_database() {
     find . -path "./vendor/migrations/*.py" -delete -print
     find . -path "*/migrations/*.pyc"  -delete -print
     rm *.sqlite3
-    python manage.py makemigrations afol event mocs news planning referral shop vendor
+    python manage.py makemigrations afol event mocs news planning referral shop vendor sessions
     python manage.py migrate
 }
 

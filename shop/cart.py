@@ -28,8 +28,10 @@ class ShoppingCart(object):
         return CartItem.objects.filter(cart=self.cart_id).count()
 
     def total(self):
-        total = CartItem.objects.filter(
-            cart=self.cart_id).aggregate(Sum('product__price'))
+        total = dict()
+        total['product__price__sum'] = 0
+        if CartItem.objects.filter(cart=self.cart_id).exists:
+            total = CartItem.objects.filter(cart=self.cart_id).aggregate(Sum('product__price'))
         return total['product__price__sum']
 
     def get_basket(self):
