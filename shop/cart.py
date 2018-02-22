@@ -29,8 +29,8 @@ class ShoppingCart(object):
 
     def total(self):
         total = dict()
-        total['product__price__sum'] = 0
-        if CartItem.objects.filter(cart=self.cart_id).exists:
+        total['product__price__sum'] = 0.0
+        if CartItem.objects.filter(cart=self.cart_id).exists():
             total = CartItem.objects.filter(cart=self.cart_id).aggregate(Sum('product__price'))
         return total['product__price__sum']
 
