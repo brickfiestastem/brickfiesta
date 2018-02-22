@@ -66,3 +66,15 @@ class LocationDetail(DetailView):
                                                         self.object.country)
         context['google_map_key'] = settings.GOOGLE_MAP_KEY
         return context
+
+
+def handle_error(request, template='brickfiesta/404.html', status_code=404):
+    return render(request, template_name=template, status=status_code)
+
+
+def error404(request):
+    return handle_error(request)
+
+
+def error500(request):
+    return handle_error(request, 'brickfiesta/500.html', 505)

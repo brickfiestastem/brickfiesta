@@ -15,6 +15,7 @@ Including another URLconf
 """
 from django.conf.urls import url
 from django.urls import path, include
+from django.views import defaults
 from django.contrib import admin
 from event import views as main_views
 from django.contrib.auth import views as auth_views
@@ -29,5 +30,4 @@ urlpatterns = [
     path('shop/', include('shop.urls')),
     path('vendor/', include('vendor.urls')),
     path('pages/', include('django.contrib.flatpages.urls')),
-
 ]

@@ -3,6 +3,7 @@ from django.views.generic.dates import ArchiveIndexView
 from .models import Event, Location
 from . import views
 from .views import EventDetail, LocationDetail
+from django.conf.urls import handler400, handler403, handler404, handler500
 
 app_name = 'event'
 
@@ -18,3 +19,6 @@ urlpatterns = [
                                                 allow_future=True), name="locations"),
     path('location/<uuid:pk>/', LocationDetail.as_view(), name="location"),
 ]
+
+handler404 = views.error404
+handler500 = views.error500
