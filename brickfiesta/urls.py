@@ -33,5 +33,5 @@ urlpatterns = [
     path('pages/', include('django.contrib.flatpages.urls')),
 ]
 
-handler404 = 'main_views.error404'
-handler500 = 'main_views.error500'
+handler404 = 'event.views.error404'
+handler500 = 'event.views.error500'
