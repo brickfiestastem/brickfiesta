@@ -20,5 +20,5 @@ urlpatterns = [
     path('location/<uuid:pk>/', LocationDetail.as_view(), name="location"),
 ]
 
-handler404 = views.error404
-handler500 = views.error500
+handler404 = 'event.views.error404'
+handler500 = 'event.views.error500'
