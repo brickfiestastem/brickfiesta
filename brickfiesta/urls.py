@@ -19,6 +19,7 @@ from django.views import defaults
 from django.contrib import admin
 from event import views as main_views
 from django.contrib.auth import views as auth_views
+from django.conf.urls import handler404, handler500
 
 urlpatterns = [
     path('', main_views.frontpage, name='home'),
@@ -31,3 +32,6 @@ urlpatterns = [
     path('vendor/', include('vendor.urls')),
     path('pages/', include('django.contrib.flatpages.urls')),
 ]
+
+handler404 = 'main_views.error404'
+handler500 = 'main_views.error500'
