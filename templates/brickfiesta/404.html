@@ -1,6 +1,6 @@
 {% extends "brickfiesta/base.html" %}
 
-{% block subtitle %}What? Where are we?{% block subtitle %}
+{% block subtitle %}What? Where are we?{% endblock subtitle %}
 
 {% block content %}
 
@@ -10,7 +10,7 @@
   <hr class="my-4">
   <p>Perhaps if we keep looking around we can find what you are looking for.</p>
   <p class="lead">
-    <a class="btn btn-primary btn-lg" href="{% url event:index %}" role="button">Look Around</a>
+    <a class="btn btn-primary btn-lg" href="{% url 'home' %}" role="button">Look Around</a>
   </p>
 </div>
 

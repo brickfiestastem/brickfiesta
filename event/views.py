@@ -77,4 +77,4 @@ def error404(request):
 
 
 def error500(request):
-    return handle_error(request, 'brickfiesta/500.html', 505)
+    return handle_error(request, 'brickfiesta/404.html', 505)
