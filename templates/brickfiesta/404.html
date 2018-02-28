@@ -1,0 +1,17 @@
+{% extends "brickfiesta/base.html" %}
+
+{% block subtitle %}What? Where are we?{% block subtitle %}
+
+{% block content %}
+
+<div class="jumbotron alert">
+  <h1 class="display-3">What? Where are we?</h1>
+  <p class="lead">It seems what you are looking for is not currently here.</p>
+  <hr class="my-4">
+  <p>Perhaps if we keep looking around we can find what you are looking for.</p>
+  <p class="lead">
+    <a class="btn btn-primary btn-lg" href="{% url event:index %}" role="button">Look Around</a>
+  </p>
+</div>
+
+{% endblock content %}
