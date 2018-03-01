@@ -34,7 +34,10 @@ class ContactView(FormView):
     success_url = '/events/'
 
     def form_valid(self, form):
-        form.send_email()
+        if not check_recaptcha(self.request):
+            form.add_error(None, 'You failed the human test. Try the reCAPTCHA again.')
+        else:
+            form.send_email()
         return super().form_valid(form)
 
 
@@ -77,4 +80,4 @@ def error404(request):
 
 
 def error500(request):
-    return handle_error(request, 'brickfiesta/404.html', 505)
+    return handle_error(request, 'brickfiesta/500.html', 500)
