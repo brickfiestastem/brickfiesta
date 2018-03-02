@@ -24,6 +24,7 @@ from django.conf.urls import handler404, handler500
 urlpatterns = [
     path('', main_views.frontpage, name='home'),
     path('brickmaster/', admin.site.urls),
+    path('afol/password_reset_done', auth_views.password_reset_done, name='password_reset_done'),
     path('afol/', include('afol.urls'), name='afol'),
     path('events/', include('event.urls')),
     path('news/', include('news.urls')),

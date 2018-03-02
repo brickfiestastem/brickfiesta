@@ -36,7 +36,13 @@
                 <td>{{ item.product.title }}</td>
                 <td>For {{ item.first_name }} {{ item.last_name }}<br/>Send details to {{ item.email }}</td>
                 <td>{{ item.product.price|currency }}</td>
-                <td></td>
+                <td>
+                  <form action="." method="post">
+                  {% csrf_token %}
+                  <input type="hidden" name="cart_item" value="{{ item.id }}" />
+                  <input class="btn btn-danger" type="submit" value="Delete"/>
+                  </form>
+                </td>
             </tr>
             {% endfor %}
             <tr>
@@ -52,10 +58,6 @@
 </div>
 <div class="row">
     <div id="sq-ccbox">
-  <!--
-    You should replace the action attribute of the form with the path of
-    the URL you want to POST the nonce to (for example, "/process-card")
-  -->
   <form id="nonce-form" novalidate action="." method="post">
     Pay with a Credit Card
     <table>

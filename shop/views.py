@@ -29,6 +29,15 @@ class EventProductView(View):
 
 class CartView(View):
 
+    def post(self, request, *args, **kwargs):
+        # TODO Process checkout
+        # TODO Process remove
+        obj_cart = ShoppingCart(request)
+        if 'cart_item' in request.POST:
+            obj_cart.remove(request.POST['cart_item'])
+        return render(request, 'shop/cart_contents.html', {'cart': obj_cart.get_basket(),
+                                                           'cart_total': obj_cart.total()})
+
     def get(self, request):
         obj_cart = ShoppingCart(request)
         return render(request, 'shop/cart_contents.html', {'cart': obj_cart.get_basket(),
