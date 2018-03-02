@@ -138,8 +138,9 @@ class SponsorRequestDetail(View):
                 user=self.request.user.id).first()
         step_three_register = False
         if step_two_business:
-            step_three_register = Product.objects.all().order_by(
-                'event__start_date').filter(event__start_date__gt=today).exists()
+            step_three_register = Product.objects.filter(
+                product_type='sponsor', event__start_date__gt=today).order_by(
+                    'event__start_date').exists()
         form = None
         if step_three_register:
             form = SponsorForm()
