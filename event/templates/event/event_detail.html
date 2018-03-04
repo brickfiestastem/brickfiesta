@@ -5,14 +5,16 @@
     <div class="col-7">
         <h1>{{ event.title }}</h1>
         <h3>{{ event.start_date }} to {{ event.end_date }}</h3>
+        <h3>{{ event.location.locality }}, {{ event.location.region }}</h3>
         <h2>{{ event.theme }}</h2>
+
     </div>
     <div class="col-5">
         <img style="height: 200px; width: 100%; display: block;" src="{{ event.logo.url }}" alt="Event Logo"/>
     </div>
 </div>
 <div>
-    <p>{{ event.description }}</p>
+    <p>{{ event.description|splitlines }}</p>
     <p class="alert alert-info" align="right">Tag us on social media: #{{ event.hashtag }}</p>
 </div>
 <h2>Sponsors</h2>
