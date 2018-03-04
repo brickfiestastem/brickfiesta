@@ -22,7 +22,7 @@ from django.contrib.auth import views as auth_views
 from django.conf.urls import handler404, handler500
 
 urlpatterns = [
-    path('', main_views.frontpage, name='home'),
+    path('', main_views.FrontPage.as_view(), name='home'),
     path('brickmaster/', admin.site.urls),
     path('afol/password_reset_done', auth_views.password_reset_done, name='password_reset_done'),
     path('afol/', include('afol.urls'), name='afol'),

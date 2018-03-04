@@ -2,6 +2,7 @@
 {% load template_extras %}
 {% block content %}
 <h1>{{ location.name }}</h1>
+<br />
 <div class="vcard h3">
     <a class="fn org url" href="{{ location.url }}">Hotel Website</a>
     <div class="adr">
@@ -16,16 +17,17 @@
         <span class="type">Work</span>: {{ location.phone_number }}
     </div>
 </div>
+<hr />
 <h2>Event History</h2>
 <p>Here is a list of the events we have held at this location.</p>
 <ul>
-    <!-- TODO: Fix location not showing events -->
-    {% for event in location.events %}
+    {% for event in event_list %}
     <li>
         <a href="{% url 'event:details' event.id %}">{{ event.title }}</a>
     </li>
     {% endfor %}
 </ul>
+<hr />
 <h2>Map</h2>
 <div id="map">
     {% include 'brickfiesta/google_map.html' %}

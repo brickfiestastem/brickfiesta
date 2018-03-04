@@ -14,7 +14,7 @@
 {% block content %}
 <div class="row">
     <div class="col-12">
-        <h1>Online Shop - Your Cart</h1>
+        <h1><a href="{% url 'shop:index' %}">Online Shop</a> - Your Cart</h1>
     </div>
 </div>
 <div class="row">
@@ -32,7 +32,7 @@
             <tbody>
             {% for item in cart %}
             <tr>
-                <td>{{ item.product.get_product_type_display }}</td>
+                <td>{{ item.product.event.title }} - {{ item.product.get_product_type_display }}</td>
                 <td>{{ item.product.title }}</td>
                 <td>For {{ item.first_name }} {{ item.last_name }}<br/>Send details to {{ item.email }}</td>
                 <td>{{ item.product.price|currency }}</td>
@@ -40,7 +40,7 @@
                   <form action="." method="post">
                   {% csrf_token %}
                   <input type="hidden" name="cart_item" value="{{ item.id }}" />
-                  <input class="btn btn-danger" type="submit" value="Delete"/>
+                  <input class="btn btn-danger" type="submit" value="Remove" />
                   </form>
                 </td>
             </tr>

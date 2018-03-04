@@ -3,12 +3,11 @@ from django.views.generic.dates import ArchiveIndexView
 from .models import Event, Location
 from . import views
 from .views import EventDetail, LocationDetail
-from django.conf.urls import handler400, handler403, handler404, handler500
 
 app_name = 'event'
 
 urlpatterns = [
-    path('', views.frontpage, name='frontpage'),
+    path('', views.FrontPage.as_view(), name='frontpage'),
     path('contactus/', views.ContactView.as_view(), name='contactus'),
     path('listing/', ArchiveIndexView.as_view(model=Event,
                                               date_field='end_date',

@@ -9,7 +9,7 @@
             <a class="btn btn-info" href="{% url 'vendor:edit' business.id %}">Edit Business Information</a>
         {% endif %}
         <div class="vcard h3">
-            <a class="fn org url" href="{{ business.url }}">{{ business.url }}</a>
+            <a class="fn org url" href="{{ business.url }}" target="_blank">{{ business.url }}</a>
             <div class="adr">
                 <span class="type">Address</span>:
                 <div class="street-address">{{ business.street }}</div>
@@ -29,7 +29,7 @@
 </div>
 
 <div>
-    <p>{{ business.description }}</p>
+    <p>{{ business.description|linebreaks }}</p>
 </div>
 
 {% endblock content %}
