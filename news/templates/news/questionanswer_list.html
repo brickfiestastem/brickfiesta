@@ -1,12 +1,17 @@
 {% extends "brickfiesta/base.html" %}
 {% block content %}
 <h2>Frequently Asked Questions</h2>
+{% regroup object_list by get_question_type_display as question_list %}
+{% for question_type in question_list %}
+<h3>{{ question_list.grouper }}</h3>
+<hr/>
 <dl>
-    {% for question in object_list %}
+    {% for question in question_list.list %}
     <dt>{{ question.question }}
         <!-- {{ question.question_type }} -->
     </dt>
-    <dd>{{ question.answer }}</dd>
+    <dd>{{ question.answer|linebreaks }}</dd>
     {% endfor %}
+{% endfor %}
 </dl>
 {% endblock content %}

@@ -70,6 +70,7 @@ class Event(BaseModel):
     theme = models.CharField(verbose_name='Theme', max_length=128)
     hotel_information = models.TextField(
         verbose_name='Hotel Information', null=True)
+    hotel_code_url = models.URLField(verbose_name='Hotel Reservation Code', blank=True, default='')
     start_date = models.DateField(verbose_name='Start Date')
     end_date = models.DateField(verbose_name='End Date')
     location = models.ForeignKey(Location, on_delete=None)

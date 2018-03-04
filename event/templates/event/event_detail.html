@@ -14,7 +14,7 @@
     </div>
 </div>
 <div>
-    <p>{{ event.description|splitlines }}</p>
+    <p>{{ event.description|linebreaks }}</p>
     <p class="alert alert-info" align="right">Tag us on social media: #{{ event.hashtag }}</p>
 </div>
 <h2>Sponsors</h2>
@@ -50,7 +50,9 @@
 </div>
 {% endif %}
 <h2>Location</h2>
-<p class="h4"><strong><a href="{% url 'event:location' event.location.id %}">{{ event.location.name }}</a></strong></p>
-<p>{{ event.hotel_information }}</p>
+<p class="h4"><strong><a href="{% url 'event:location' event.location.id %}">{{ event.location.name }}</a></strong>
+    {% if event.hotel_code_url %}( <a href="{{ event.hotel_code_url }}" target="_blank">Hotel Reservation Link</a> ){% endif %}
+</p>
+<p>{{ event.hotel_information|linebreaks }}</p>
 
 {% endblock content %}
