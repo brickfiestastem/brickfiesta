@@ -3,10 +3,10 @@
 <h2>Frequently Asked Questions</h2>
 {% regroup object_list by get_question_type_display as question_list %}
 {% for question_type in question_list %}
-<h3>{{ question_list.grouper }}</h3>
+<h3>{{ question_type.grouper }}</h3>
 <hr/>
 <dl>
-    {% for question in question_list.list %}
+    {% for question in question_type.list %}
     <dt>{{ question.question }}
         <!-- {{ question.question_type }} -->
     </dt>
