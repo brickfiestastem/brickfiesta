@@ -97,7 +97,8 @@ class VendorRequestDetail(View):
         form = VendorForm(request.POST)
         if form.is_valid():
             if not check_recaptcha(request):
-                form.add_error(None, 'You failed the human test. Try the reCAPTCHA again.')
+                form.add_error(
+                    None, 'You failed the human test. Try the reCAPTCHA again.')
             else:
                 obj_product = Product.objects.get(id=request.POST['product'])
                 obj_event = obj_product.event
@@ -174,7 +175,8 @@ class SponsorRequestDetail(View):
         form = SponsorForm(request.POST)
         if form.is_valid():
             if not check_recaptcha(request):
-                form.add_error(None, 'You failed the human test. Try the reCAPTCHA again.')
+                form.add_error(
+                    None, 'You failed the human test. Try the reCAPTCHA again.')
             else:
                 obj_product = Product.objects.get(id=request.POST['product'])
                 obj_event = obj_product.event
@@ -211,7 +213,8 @@ class BusinessAddView(CreateView):
     def form_valid(self, form):
         form.instance.user = self.request.user
         if not check_recaptcha(self.request):
-            form.add_error(None, 'You failed the human test. Try the reCAPTCHA again.')
+            form.add_error(
+                None, 'You failed the human test. Try the reCAPTCHA again.')
             return super().form_invalid(form)
         return super().form_valid(form)
 
@@ -227,6 +230,7 @@ class BusinessUpdateView(UpdateView):
     def form_valid(self, form):
         form.instance.user = self.request.user
         if not check_recaptcha(self.request):
-            form.add_error(None, 'You failed the human test. Try the reCAPTCHA again.')
+            form.add_error(
+                None, 'You failed the human test. Try the reCAPTCHA again.')
             return super().form_invalid(form)
         return super().form_valid(form)

@@ -42,7 +42,6 @@ LOGIN_REDIRECT_URL = '/afol/profile/'
 LOGIN_URL = '/afol/login/'
 DEFAULT_FROM_EMAIL = 'customer.support@brickfiesta.com'
 SITE_ID = 1
-AUTH_USER_MODEL = 'afol.User'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'

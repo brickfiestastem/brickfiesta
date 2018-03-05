@@ -17,7 +17,8 @@
     </ul>
     {% if product.event.is_upcoming and not template_details %}
     <div class="card-body">
-        <a href="{% url 'shop:details' product.id %}" class="btn btn-info card-link">Details - {{ product.price|currency }}</a>
+        <a href="{% url 'shop:details' product.id %}" class="btn btn-info card-link">Details -
+            {{ product.price|currency }}</a>
     </div>
     {% else %}
     <div class="card-body">{{ product.price|currency }}</div>

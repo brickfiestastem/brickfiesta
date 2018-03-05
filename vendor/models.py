@@ -3,6 +3,7 @@ from django.conf import settings
 from .utils import upload_path_vendor
 from event.models import Event
 from shop.models import Product
+from django.contrib.auth.models import User
 import uuid
 
 
@@ -18,7 +19,7 @@ class BaseModel(models.Model):
 
 
 class Business(BaseModel):
-    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=None)
+    user = models.ForeignKey(User, on_delete=None)
     name = models.CharField(
         verbose_name='Name of Business', unique=True, max_length=128)
     description = models.TextField(verbose_name='Description')
@@ -41,7 +42,7 @@ class Business(BaseModel):
 
 class BusinessNote(BaseModel):
     business = models.ForeignKey(Business, on_delete=None)
-    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=None)
+    user = models.ForeignKey(User, on_delete=None)
     note = models.TextField(verbose_name='Note')
 
 

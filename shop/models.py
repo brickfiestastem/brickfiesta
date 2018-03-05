@@ -3,6 +3,7 @@ from django.conf import settings
 from event.models import Event
 from shop.utils import upload_path_product
 from referral.models import Referral
+from django.contrib.auth.models import User
 import uuid
 
 
@@ -38,6 +39,7 @@ class Product(BaseModel):
     description = models.TextField()
     price = models.FloatField()
     image = models.ImageField(upload_to=upload_path_product, null=True)
+    quantity_available = models.IntegerField(verbose_name='Quantity Available', default=-1)
     objects = ProductManager()
 
     class Meta:
@@ -54,14 +56,14 @@ class ProductBulletPoint(BaseModel):
 
 
 class Order(BaseModel):
-    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=None)
+    user = models.ForeignKey(User, on_delete=None)
     guest = models.CharField(max_length=255)
     referral = models.ForeignKey(Referral, on_delete=None)
 
 
 class OrderItem(BaseModel):
     order = models.ForeignKey(Order, on_delete=None)
-    user = models.ForeignKey(settings.AUTH_USER_MODEL,
+    user = models.ForeignKey(User,
                              on_delete=None, null=True)
     product = models.ForeignKey(Product, on_delete=None)
     price = models.FloatField()

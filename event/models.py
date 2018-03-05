@@ -1,8 +1,8 @@
 from django.db import models
 from event.utils import upload_path_event
+from django.contrib.auth.models import User
 import datetime
 import uuid
-from django.conf import settings
 
 
 class BaseModel(models.Model):
@@ -62,6 +62,12 @@ class Activity(BaseModel):
         verbose_name_plural = "Activities"
 
 
+class ActivityVolunteers(BaseModel):
+    activity = models.ForeignKey(Activity, on_delete=None)
+    user = models.ForeignKey(User, on_delete=None)
+    order = models.SmallIntegerField(verbose_name='Order')
+
+
 class Event(BaseModel):
     title = models.CharField(verbose_name='Title', unique=True, max_length=64)
     description = models.TextField(verbose_name='Description')
@@ -70,7 +76,8 @@ class Event(BaseModel):
     theme = models.CharField(verbose_name='Theme', max_length=128)
     hotel_information = models.TextField(
         verbose_name='Hotel Information', null=True)
-    hotel_code_url = models.URLField(verbose_name='Hotel Reservation Code', blank=True, default='')
+    hotel_code_url = models.URLField(
+        verbose_name='Hotel Reservation Code', blank=True, default='')
     start_date = models.DateField(verbose_name='Start Date')
     end_date = models.DateField(verbose_name='End Date')
     location = models.ForeignKey(Location, on_delete=None)
@@ -102,7 +109,6 @@ class Schedule(BaseModel):
     event = models.ForeignKey(Event, on_delete=None)
     space = models.ForeignKey(Space, on_delete=None)
     activity = models.ForeignKey(Activity, on_delete=None)
-    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=None)
     start_time = models.TimeField()
     end_time = models.TimeField()
     date = models.DateField()

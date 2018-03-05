@@ -1,6 +1,6 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
-from .models import Attendee, Badge, User, Shirt
+from .models import Attendee, Badge, Profile, Shirt
 from .forms import AfolUserChangeForm, AfolUserCreateForm
 
 
@@ -18,13 +18,13 @@ class BadgeAdmin(admin.ModelAdmin):
 admin.site.register(Badge, BadgeAdmin)
 
 
-class CustomUserAdmin(UserAdmin):
-    model = User
+class CustomUserAdmin(admin.ModelAdmin):
+    model = Profile
     add_form = AfolUserCreateForm
     form = AfolUserChangeForm
 
 
-admin.site.register(User, CustomUserAdmin)
+admin.site.register(Profile, CustomUserAdmin)
 
 
 class ShirtAdmin(admin.ModelAdmin):

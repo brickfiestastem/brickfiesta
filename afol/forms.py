@@ -1,6 +1,7 @@
 from django.contrib.auth.forms import UserCreationForm, UserChangeForm
 from django import forms
-from .models import User
+from django.contrib.auth.models import User
+from .models import Profile
 import datetime
 
 
@@ -17,7 +18,7 @@ class AfolUserCreateForm(UserCreationForm):
         required=True)
 
     class Meta:
-        model = User
+        model = Profile
         fields = ('username', 'first_name', 'last_name', 'email', 'birth_date')
 
 
@@ -33,6 +34,6 @@ class AfolUserChangeForm(forms.ModelForm):
         required=True)
 
     class Meta:
-        model = User
+        model = Profile
         fields = ('username', 'first_name', 'last_name', 'email',
                   'birth_date', 'bricklink_username', 'twitter_handle', 'flickr_handle')

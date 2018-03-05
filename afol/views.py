@@ -3,7 +3,6 @@ from .models import User
 from vendor.models import Business
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views import generic
-from django.urls import reverse_lazy
 from .forms import AfolUserCreateForm, AfolUserChangeForm
 
 
