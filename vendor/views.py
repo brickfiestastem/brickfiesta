@@ -10,6 +10,7 @@ from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
 from .forms import SponsorForm, VendorForm
 from shop.utils import check_recaptcha
+from django.db.models import Count
 import datetime
 
 
@@ -22,10 +23,8 @@ class UpcomingView(TemplateView):
         today = datetime.date.today()
         obj_events_upcoming = Event.objects.all().order_by(
             'start_date').filter(start_date__gt=today)
-        context['sponsor_list'] = Sponsor.objects.all().order_by(
-            'business').filter(event__in=obj_events_upcoming)
-        context['vendor_list'] = Vendor.objects.all().order_by(
-            'business').filter(event__in=obj_events_upcoming)
+        context['sponsor_list'] = Sponsor.objects.filter(status='approved').order_by('business').distinct('business')
+        context['vendor_list'] = Vendor.objects.filter(status='approved').order_by('business').distinct('business')
         return context
 
 

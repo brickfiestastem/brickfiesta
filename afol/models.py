@@ -1,6 +1,8 @@
 from django.db import models
 from django.contrib.auth.models import User
 from event.models import Event
+from django.db.models.signals import post_save
+from django.dispatch import receiver
 import uuid
 
 
@@ -27,6 +29,13 @@ class Profile(BaseModel):
 
     def __str__(self):
         return "{} {} - {}".format(self.user.first_name, self.user.last_name, self.user.email)
+
+
+@receiver(post_save, sender=User)
+def create_or_update_user_profile(sender, instance, created, **kwargs):
+    if created:
+        Profile.objects.create(user=instance)
+    instance.profile.save()
 
 
 class Attendee(BaseModel):

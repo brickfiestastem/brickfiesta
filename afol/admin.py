@@ -1,7 +1,7 @@
 from django.contrib import admin
+from django.contrib.auth.models import User
 from django.contrib.auth.admin import UserAdmin
 from .models import Attendee, Badge, Profile, Shirt
-from .forms import AfolUserChangeForm, AfolUserCreateForm
 
 
 class AttendeeAdmin(admin.ModelAdmin):
@@ -18,13 +18,24 @@ class BadgeAdmin(admin.ModelAdmin):
 admin.site.register(Badge, BadgeAdmin)
 
 
-class CustomUserAdmin(admin.ModelAdmin):
+class ProfileInline(admin.StackedInline):
     model = Profile
-    add_form = AfolUserCreateForm
-    form = AfolUserChangeForm
+    can_delete = False
+    verbose_name_plural = 'Profile'
+    fk_name = 'user'
 
 
-admin.site.register(Profile, CustomUserAdmin)
+class CustomUserAdmin(UserAdmin):
+    inlines = (ProfileInline, )
+
+    def get_inline_instances(self, request, obj=None):
+        if not obj:
+            return list()
+        return super(CustomUserAdmin, self).get_inline_instances(request, obj)
+
+
+admin.site.unregister(User)
+admin.site.register(User, CustomUserAdmin)
 
 
 class ShirtAdmin(admin.ModelAdmin):
