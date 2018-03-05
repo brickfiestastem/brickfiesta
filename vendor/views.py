@@ -1,7 +1,7 @@
 from django.views.generic.list import ListView
 from django.views.generic import DetailView
 from django.views.generic.edit import CreateView, UpdateView
-from django.views.generic.base import View
+from django.views.generic.base import View, TemplateView
 from .models import Business, Vendor, Sponsor
 from event.models import Event
 from shop.models import Product
@@ -13,18 +13,20 @@ from shop.utils import check_recaptcha
 import datetime
 
 
-def upcoming(request):
-    # TODO: Refactor to TemplateView
-    today = datetime.date.today()
-    obj_events_upcoming = Event.objects.all().order_by(
-        'start_date').filter(start_date__gt=today)
-    obj_sponsors = Sponsor.objects.all().order_by(
-        'business').filter(event__in=obj_events_upcoming)
-    obj_vendors = Vendor.objects.all().order_by(
-        'business').filter(event__in=obj_events_upcoming)
+class UpcomingView(TemplateView):
+    template_name = 'vendor/business_list.html'
 
-    return render(request, 'vendor/business_list.html', {'sponsor_list': obj_sponsors,
-                                                         'vendor_list': obj_vendors})
+    def get_context_data(self, **kwargs):
+        # Call the base implementation first to get a context
+        context = super().get_context_data(**kwargs)
+        today = datetime.date.today()
+        obj_events_upcoming = Event.objects.all().order_by(
+            'start_date').filter(start_date__gt=today)
+        context['sponsor_list'] = Sponsor.objects.all().order_by(
+            'business').filter(event__in=obj_events_upcoming)
+        context['vendor_list'] = Vendor.objects.all().order_by(
+            'business').filter(event__in=obj_events_upcoming)
+        return context
 
 
 class SponsorListView(ListView):
@@ -64,7 +66,7 @@ class VendorRequestDetail(View):
         step_three_register = False
         if step_two_business:
             step_three_register = Product.objects.all().order_by(
-                'event__start_date').filter(event__start_date__gt=today).exists()
+                'event__start_date').filter(event__start_date__gt=today, product_type='vendor').exists()
         form = None
         if step_three_register:
             form = VendorForm()
@@ -93,7 +95,7 @@ class VendorRequestDetail(View):
         step_three_register = False
         if step_two_business:
             step_three_register = Product.objects.all().order_by('event__start_date').filter(
-                event__start_date__gt=today).exists()
+                event__start_date__gt=today, product_type='vendor').exists()
         form = VendorForm(request.POST)
         if form.is_valid():
             if not check_recaptcha(request):
@@ -170,8 +172,9 @@ class SponsorRequestDetail(View):
                 user=self.request.user.id).first()
         step_three_register = False
         if step_two_business:
-            step_three_register = Product.objects.all().order_by('event__start_date').filter(
-                event__start_date__gt=today).exists()
+            step_three_register = Product.objects.filter(
+                product_type='sponsor', event__start_date__gt=today).order_by(
+                    'event__start_date').exists()
         form = SponsorForm(request.POST)
         if form.is_valid():
             if not check_recaptcha(request):

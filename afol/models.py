@@ -16,8 +16,7 @@ class BaseModel(models.Model):
 
 
 class Profile(BaseModel):
-    user = models.OneToOneField(
-        User, on_delete=models.CASCADE)
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
     birth_date = models.DateField(null=True, blank=True)
     bricklink_username = models.CharField(max_length=64, blank=True)
     twitter_handle = models.CharField(max_length=64, blank=True)

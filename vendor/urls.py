@@ -3,7 +3,7 @@ from . import views
 app_name = 'vendor'
 
 urlpatterns = [
-    path('', views.upcoming, name='index'),
+    path('', views.UpcomingView.as_view(), name='index'),
     path('details/<uuid:pk>/', views.BusinessDetail.as_view(), name='details'),
     path('edit/<uuid:pk>/', views.BusinessUpdateView.as_view(), name='edit'),
     path('add/', views.BusinessAddView.as_view(), name='add'),

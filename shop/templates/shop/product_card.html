@@ -15,13 +15,13 @@
         <li class="list-group-item">{{ bullet.text }}</li>
         {% endfor %}
     </ul>
-    {% if product.event.is_upcoming and not template_details %}
+    {% if product.event.is_upcoming and not template_details and product.quantity_available != 0 %}
     <div class="card-body">
         <a href="{% url 'shop:details' product.id %}" class="btn btn-info card-link">Details -
             {{ product.price|currency }}</a>
     </div>
     {% else %}
-    <div class="card-body">{{ product.price|currency }}</div>
+    <div class="card-body">{{ product.price|currency }}{% if product.quantity_available == 0 %} - Sold out!{% endif %}</div>
     {% endif %}
     <!-- div class="card-footer text-muted">{{ product.modified }}</div -->
 </div>
