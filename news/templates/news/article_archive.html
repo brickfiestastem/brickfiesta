@@ -3,7 +3,7 @@
 {% for article in object_list %}
 <h3>{{ article.title }}</h3>
 <small>{{ article.created }}</small>
-<p align="justified">{{ article.body }}</p>
+<p align="justified">{{ article.body|linebreaks }}</p>
 {% endfor %} {% if is_paginated %}
 <div>
     <ul class="pagination">
