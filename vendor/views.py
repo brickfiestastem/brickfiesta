@@ -21,10 +21,11 @@ class UpcomingView(TemplateView):
         # Call the base implementation first to get a context
         context = super().get_context_data(**kwargs)
         today = datetime.date.today()
-        obj_events_upcoming = Event.objects.all().order_by(
-            'start_date').filter(start_date__gt=today)
-        context['sponsor_list'] = Sponsor.objects.filter(status='approved').order_by('business').distinct('business')
-        context['vendor_list'] = Vendor.objects.filter(status='approved').order_by('business').distinct('business')
+        # obj_events_upcoming = Event.objects.all().order_by('start_date').filter(start_date__gt=today)
+        context['sponsor_list'] = Sponsor.objects.filter(status='approved',
+                                                         event__start_date__gt=today).order_by('business')
+        context['vendor_list'] = Vendor.objects.filter(status='approved',
+                                                       event__start_date__gt=today).order_by('business')
         return context
 
 
