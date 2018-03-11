@@ -35,17 +35,17 @@
     </div>
     {% endfor %}
 </div>
-<h2>Passes</h2>
+<h2>Purchase Options</h2>
 {% if event.is_upcoming %}
-<a class="btn btn-info btn-lg" href="{% url 'shop:event' event.id %}" role="button">Purchase Passes</a>
+<a class="btn btn-info btn-lg" href="{% url 'shop:event' event.id %}" role="button">Online Shop</a>
 {% elif event.is_current %}
 <div class="alert alert-warning">
     <strong>Purchasing online for this event is now closed.</strong> Please visit the registration booth at the event to
-    pickup or purchase passes.
+    pickup or purchases.
 </div>
 {% else %}
 <div class="alert alert-warning">
-    <strong>This is a past event and passes are no longer available find out about our <a
+    <strong>This is a past event and purchasing is no longer available find out about our <a
             href="{% url 'event:index' %}">next event</a>.</strong>
 </div>
 {% endif %}
