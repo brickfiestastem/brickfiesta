@@ -18,10 +18,13 @@ from django.contrib import admin
 from event import views as main_views
 from django.contrib.auth import views as auth_views
 from django.conf.urls import handler404, handler500
+from django.views.generic import TemplateView
 
 urlpatterns = [
     path('', main_views.FrontPage.as_view(), name='home'),
     path('brickmaster/', admin.site.urls),
+    path('about/', TemplateView.as_view(template_name='brickfiesta/about.html'), name='about'),
+    path('privacy_policy/', TemplateView.as_view(template_name='brickfiesta/privacy_policy.html'), name='privacy_policy'),
     path('afol/password_reset_done', auth_views.password_reset_done,
          name='password_reset_done'),
     path('afol/', include('afol.urls'), name='afol'),
