@@ -4,16 +4,22 @@
 <div class="row">
     <div class="col-2"></div>
     <div class="col-4">
-        {% if product.quantity_available != 0 %}
-        <form action="." method="post">
-            {% csrf_token %}
-            <input type="hidden" name="product_id" value="{{ product.id }}" />
-            {% include 'brickfiesta/form_formatting.html' %}
-            {% include 'brickfiesta/google_recaptcha.html' %}
-            <p align="right">
-                <input class="btn btn-primary" type="submit" value="Add to Cart"/>
-            </p>
-        </form>
+        {% if product.product_type == 'vendor' %}
+            <p>Request to be a vendor by filling out our <a href="{% url 'vendor:vendor-request' %}">Vendor Request</a>.</p>
+        {% elif product.product_type == 'sponsor' %}
+            <p>Request to be a sponsor by filling out our <a href="{% url 'vendor:sponsor-request' %}">Sponsor Request</a>.</p>
+        {% else %}
+            {% if product.quantity_available != 0 %}
+            <form action="." method="post">
+                {% csrf_token %}
+                <input type="hidden" name="product_id" value="{{ product.id }}" />
+                {% include 'brickfiesta/form_formatting.html' %}
+                {% include 'brickfiesta/google_recaptcha.html' %}
+                <p align="right">
+                    <input class="btn btn-primary" type="submit" value="Add to Cart"/>
+                </p>
+            </form>
+            {% endif %}
         {% endif %}
     </div>
     <div class="col-4">
