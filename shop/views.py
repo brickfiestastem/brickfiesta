@@ -5,6 +5,7 @@ from django.views.generic.list import ListView
 from django.views.generic.detail import SingleObjectMixin
 from django.views.generic import DetailView, FormView
 from event.models import Event
+from shop.utils import check_recaptcha
 from .models import Product
 from .forms import CartItemForm
 from .cart import ShoppingCart
@@ -30,11 +31,16 @@ class EventProductView(View):
 class CartView(View):
 
     def post(self, request, *args, **kwargs):
-        # TODO Process checkout
-        # TODO Process remove
         obj_cart = ShoppingCart(request)
         if 'cart_item' in request.POST:
             obj_cart.remove(request.POST['cart_item'])
+        if 'cart' in request.POST:
+            obj_products = obj_cart.get_basket()
+            # TODO generate json objects
+            # TODO send request for objects
+            # TODO get response
+            # TODO response good add information to email address accounts listed
+
         return render(request, 'shop/cart_contents.html', {'cart': obj_cart.get_basket(),
                                                            'cart_total': obj_cart.total()})
 
@@ -62,6 +68,11 @@ class ProductCartItemView(SingleObjectMixin, FormView):
         cart = ShoppingCart(request)
         self.object = self.get_object()
         form = CartItemForm(request.POST)
+
+        if not check_recaptcha(request):
+            form.add_error(
+                None, 'You failed the human test. Try the reCAPTCHA again.')
+
         if form.is_valid():
             cart.add(first_name=form.cleaned_data['first_name'],
                      last_name=form.cleaned_data['last_name'],
