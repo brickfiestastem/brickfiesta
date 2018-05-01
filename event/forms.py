@@ -1,5 +1,6 @@
 from django import forms
 from django.core.mail import send_mail
+from django.core.mail import EmailMessage
 
 
 class ContactForm(forms.Form):
@@ -8,9 +9,16 @@ class ContactForm(forms.Form):
     message = forms.CharField(widget=forms.Textarea)
 
     def send_email(self):
-        send_mail(subject="Brick Fiesta - Contact Us",
-                  message=self.cleaned_data['message'],
-                  from_email=self.cleaned_data['email'],
-                  recipient_list=['customer.support@brickfiesta.com', self.cleaned_data['email']],
-                  fail_silently=False)
+        str_from = "{} <{}>".format(self.cleaned_data['name'],
+                                    self.cleaned_data['email'])
+        email = EmailMessage(
+            subject="Brick Fiesta - Contact Us",
+            body=self.cleaned_data['message'],
+            from_email=str_from,
+            to=['customer.support@brickfiesta.com'],
+            cc=[str_from],
+            reply_to=['customer.support@brickfiesta.com',
+                      str_from]
+        )
+        email.send()
         pass
