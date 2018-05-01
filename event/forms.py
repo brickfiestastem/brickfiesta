@@ -8,9 +8,9 @@ class ContactForm(forms.Form):
     message = forms.CharField(widget=forms.Textarea)
 
     def send_email(self):
-        send_mail("Brick Fiesta Contact Us",
-                  self.cleaned_data['message'],
-                  self.cleaned_data['email'],
-                  ['customer.support@brickfiesta.com'],
+        send_mail(subject="Brick Fiesta - Contact Us",
+                  message=self.cleaned_data['message'],
+                  from_email=self.cleaned_data['email'],
+                  recipient_list=['customer.support@brickfiesta.com', self.cleaned_data['email']],
                   fail_silently=False)
         pass

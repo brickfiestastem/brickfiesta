@@ -19,7 +19,8 @@ class ProfileView(LoginRequiredMixin, DetailView):
         context = super(ProfileView, self).get_context_data(**kwargs)
         context['business_owner'] = False
         context['business_id'] = None
-        context['profile'] = Profile.objects.filter(user=self.request.user).first()
+        context['profile'] = Profile.objects.filter(
+            user=self.request.user).first()
         if Business.objects.filter(user=self.request.user).exists():
             context['business_owner'] = True
             context['business_id'] = Business.objects.filter(
@@ -39,7 +40,8 @@ class ProfileEditView(LoginRequiredMixin, generic.UpdateView):
     def form_valid(self, form):
         profile = self.get_object()
         profile.birth_date = form.cleaned_data.get('birth_date')
-        profile.bricklink_username = form.cleaned_data.get('bricklink_username')
+        profile.bricklink_username = form.cleaned_data.get(
+            'bricklink_username')
         profile.flickr_handle = form.cleaned_data.get('flickr_handle')
         profile.twitter_handle = form.cleaned_data.get('twitter_handle')
         profile.save()
@@ -60,7 +62,8 @@ class SignUpView(generic.CreateView):
         user.refresh_from_db()
         # profile = Profile.objects.create(user=user)
         user.profile.birth_date = form.cleaned_data.get('birth_date')
-        user.profile.bricklink_username = form.cleaned_data.get('bricklink_username')
+        user.profile.bricklink_username = form.cleaned_data.get(
+            'bricklink_username')
         user.profile.flickr_handle = form.cleaned_data.get('flickr_handle')
         user.profile.twitter_handle = form.cleaned_data.get('twitter_handle')
         user.save()

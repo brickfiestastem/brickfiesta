@@ -45,4 +45,5 @@ class AfolUserChangeForm(forms.ModelForm):
 
     class Meta:
         model = Profile
-        fields = {'birth_date', 'bricklink_username', 'flickr_handle', 'twitter_handle'}
+        fields = {'birth_date', 'bricklink_username',
+                  'flickr_handle', 'twitter_handle'}

@@ -39,7 +39,8 @@ class Product(BaseModel):
     description = models.TextField()
     price = models.FloatField()
     image = models.ImageField(upload_to=upload_path_product, null=True)
-    quantity_available = models.IntegerField(verbose_name='Quantity Available', default=-1)
+    quantity_available = models.IntegerField(
+        verbose_name='Quantity Available', default=-1)
     objects = ProductManager()
 
     class Meta:
