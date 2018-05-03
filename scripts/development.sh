@@ -34,6 +34,8 @@ setup_local_settings() {
     read GOOGLE_RECAPTCHA_SITE_KEY
     echo "Enter Google Map Key: "
     read GOOGLE_MAP_KEY
+    echo "Enter Google Email Host Password: "
+    read GOOGLE_EMAIL_HOST_PASSWORD
     echo "Enter Square Cart Key: "
     read SQUARE_CART_KEY
     echo "Enter Square Location Key: "
@@ -43,6 +45,7 @@ setup_local_settings() {
     echo "  \"GOOGLE_RECAPTCHA_KEY\": \"$GOOGLE_RECAPTCHA_KEY\", " >> settings.json
     echo "  \"GOOGLE_RECAPTCHA_SITE_KEY\": \"$GOOGLE_RECAPTCHA_SITE_KEY\", " >> settings.json
     echo "  \"GOOGLE_MAP_KEY\": \"$GOOGLE_MAP_KEY\", " >> settings.json
+    echo "  \"GOOGLE_EMAIL_HOST_PASSWORD\": \"$GOOGLE_EMAIL_HOST_PASSWORD\", " >> settings.json
     echo "  \"SQUARE_CART_KEY\": \"$SQUARE_CART_KEY\", " >> settings.json
     echo "  \"SQUARE_LOCATION_KEY\": \"$SQUARE_LOCATION_KEY\" " >> settings.json
     echo "}" >> settings.json
