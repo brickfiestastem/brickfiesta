@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.urls import reverse
 from django.views import View
 from django.views.generic.list import ListView
@@ -9,7 +9,13 @@ from shop.utils import check_recaptcha
 from .models import Product
 from .forms import CartItemForm
 from .cart import ShoppingCart
+from django.conf import settings
+import json
 import datetime
+import urllib.parse
+import urllib.request
+import urllib.error
+from django.core.mail import EmailMessage
 
 # Create your views here.
 
@@ -28,20 +34,53 @@ class EventProductView(View):
                       {'object_list': obj_products, 'first': obj_products.first()})
 
 
+class CartCheckoutView(View):
+    def get(self, request, cart_id):
+        obj_cart = ShoppingCart(request)
+        return render(request, 'shop/cart_contents.html', {'cart': obj_cart.get_basket(),
+                                                           'cart_total': obj_cart.total()})
+
 class CartView(View):
 
+
     def post(self, request, *args, **kwargs):
+        str_error_message = False
         obj_cart = ShoppingCart(request)
         if 'cart_item' in request.POST:
             obj_cart.remove(request.POST['cart_item'])
         if 'cart' in request.POST:
-            obj_products = obj_cart.get_basket()
-            # TODO generate json objects
-            # TODO send request for objects
-            # TODO get response
-            # TODO response good add information to email address accounts listed
+            # generate json objects
+            str_json = obj_cart.get_json()
+            str_json = str_json.encode('utf-8')
+            print(str_json)
+            str_url = "https://connect.squareup.com/v2/locations/" + settings.SQUARE_LOCATION_KEY + "/checkouts"
+            # send request for objects
+            obj_request = urllib.request.Request(url=str_url)
+            obj_request.add_header('Authorization', 'Bearer ' + settings.SQUARE_CART_KEY)
+            obj_request.add_header('Content-Type', 'application/json; charset=utf-8')
+            obj_request.add_header('Accept', 'application/json')
+            # get response
+            try:
+                obj_response = urllib.request.urlopen(obj_request, data=str_json)
+            except urllib.error.URLError as obj_error:
+                # print(obj_error.reason)
+                str_error_message = "Unable to reach payment server. Please try again later."
+                pass
+            except urllib.error.HTTPError as obj_error:
+                str_error_message = "Unable to process payment correctly. Error sent to event organizers."
+                str_body = "URL: " + str_url + "\n\nJSON: " + str_json
+                email = EmailMessage('Brick Fiesta - Check Out Error', str_body, to=[settings.DEFAULT_FROM_EMAIL])
+                email.send()
+                # print(obj_error.code)
+                # print(obj_error.read())
+                pass
+            else:
+                result = json.loads(obj_response.read().decode())
+                print(result)
+                return redirect(result['checkout']['checkout_page_url'])
 
-        return render(request, 'shop/cart_contents.html', {'cart': obj_cart.get_basket(),
+        return render(request, 'shop/cart_contents.html', {'error_message': str_error_message,
+                                                           'cart': obj_cart.get_basket(),
                                                            'cart_total': obj_cart.total()})
 
     def get(self, request):
@@ -68,7 +107,6 @@ class ProductCartItemView(SingleObjectMixin, FormView):
         cart = ShoppingCart(request)
         self.object = self.get_object()
         form = CartItemForm(request.POST)
-
         if not check_recaptcha(request):
             form.add_error(
                 None, 'You failed the human test. Try the reCAPTCHA again.')
