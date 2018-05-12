@@ -2,6 +2,10 @@ import os
 from django.conf import settings
 
 
+def upload_path_activity(instance, filename):
+    return upload_path('activity/', filename, instance.id)
+
+
 def upload_path_event(instance, filename):
     return upload_path('events/', filename, instance.id)
 

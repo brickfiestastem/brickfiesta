@@ -6,21 +6,21 @@ from .models import Business, Vendor, Sponsor
 class BusinessAdmin(admin.ModelAdmin):
     ordering = ('name', 'locality', 'region')
     list_filter = ('locality', 'region')
-    list_display = ('user', 'name', 'phone_number', 'locality', 'url')
-    list_display_links = ('user', 'name',)
+    list_display = ('name', 'phone_number', 'street', 'locality', 'region', 'country', 'url')
+    list_display_links = ('name',)
 
 
 class SponsorAdmin(admin.ModelAdmin):
     ordering = ('event', 'business', 'status')
     list_filter = ('event', 'status')
-    list_display = ('event', 'business', 'status')
+    list_display = ('event', 'user', 'business', 'product', 'product_quantity', 'status')
     list_display_links = ('business',)
 
 
 class VendorAdmin(admin.ModelAdmin):
     ordering = ('event', 'business', 'status')
     list_filter = ('event', 'status')
-    list_display = ('event', 'business', 'status')
+    list_display = ('event', 'user', 'business', 'product', 'product_quantity', 'status')
     list_display_links = ('business',)
 
 

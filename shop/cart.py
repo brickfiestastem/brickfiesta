@@ -12,6 +12,8 @@ class ShoppingCart(object):
         request.session['cart'] = self.cart_id
         self.host_url = request.session.get('host_url', request.get_host())
         request.session['host_url'] = self.host_url
+        self.checkout_key = request.session.get('checkout_key', str(uuid.uuid4()))
+        request.session['checkout_key'] = self.checkout_key
 
     def add(self,  first_name, last_name, email, product):
         basket_item, created = CartItem.objects.get_or_create(cart=self.cart_id,
@@ -66,5 +68,8 @@ class ShoppingCart(object):
         # str_line_items.append(str_taxes)
         str_order['line_items'] = str_line_items
         str_json['order'] = str_order
-        str_json['redirect_url'] = "https://" + self.host_url + "/shop/cartcheckout"
+        str_json['redirect_url'] = "https://" + self.host_url + "/shop/cartcheckout/" + self.checkout_key
         return json.dumps(str_json)
+
+    def check_key(self, str_key):
+        return str_key == self.checkout_key

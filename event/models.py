@@ -1,5 +1,5 @@
 from django.db import models
-from event.utils import upload_path_event
+from event.utils import upload_path_event, upload_path_activity
 from django.contrib.auth.models import User
 import datetime
 import uuid
@@ -38,7 +38,7 @@ class Space(BaseModel):
     location = models.ForeignKey(Location, on_delete=None)
     name = models.CharField(verbose_name='Venue Space Name', max_length=64)
     description = models.TextField(verbose_name='Description')
-    image = models.ImageField(null=True)
+    map = models.ImageField(verbose_name='Map', null=True)
     max_seating = models.IntegerField(verbose_name='Max Seating')
     latitude = models.FloatField(
         verbose_name='Latitude', blank=True, null=True)
@@ -54,6 +54,7 @@ class Activity(BaseModel):
     description = models.TextField(verbose_name='Description')
     rules = models.TextField(verbose_name='Rules')
     materials_list = models.TextField(verbose_name='Materials List')
+    picture = models.ImageField(upload_to=upload_path_activity, null=True)
     signup_required = models.BooleanField(verbose_name='Sign Up Required')
     min_people = models.IntegerField(verbose_name='Minimum People')
     max_people = models.IntegerField(verbose_name='Maximum People')
