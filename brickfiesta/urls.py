@@ -26,8 +26,14 @@ urlpatterns = [
     path('about/', TemplateView.as_view(template_name='brickfiesta/about.html'), name='about'),
     path('privacy_policy/', TemplateView.as_view(template_name='brickfiesta/privacy_policy.html'),
          name='privacy_policy'),
+    path('afol/password_reset_done', auth_views.password_reset_done,
+         name='password_reset_done'),
     path('afol/password_reset_complete', auth_views.password_reset_complete,
          name='password_reset_complete'),
+    path('afol/reset/(?P<uidb64>[0-9A-Za-z_\-]+)/(?P<token>[0-9A-Za-z]{1,13}-[0-9A-Za-z]{1,20})/$',
+        auth_views.password_reset_confirm, {
+         'post_reset_redirect': 'afol/password_reset_done'
+    }, name='password_reset_confirm')
     path('afol/', include('afol.urls'), name='afol'),
     path('events/', include('event.urls')),
     path('news/', include('news.urls')),
