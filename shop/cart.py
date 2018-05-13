@@ -12,8 +12,8 @@ class ShoppingCart(object):
         request.session['cart'] = self.cart_id
         self.host_url = request.session.get('host_url', request.get_host())
         request.session['host_url'] = self.host_url
-        self.checkout_key = request.session.get('checkout_key', str(uuid.uuid4()))
-        request.session['checkout_key'] = self.checkout_key
+        self.checkout_id = request.session.get('checkout_id', "NA")
+        request.session['checkout_id'] = self.checkout_id
 
     def add(self,  first_name, last_name, email, product):
         basket_item, created = CartItem.objects.get_or_create(cart=self.cart_id,
@@ -48,7 +48,8 @@ class ShoppingCart(object):
         str_json = dict()
         str_json['idempotency_key'] = str(uuid.uuid4())
         str_json['merchant_support_email'] = settings.DEFAULT_FROM_EMAIL
-        cart_items = CartItem.objects.filter(cart=self.cart_id).prefetch_related('product')
+        cart_items = CartItem.objects.filter(
+            cart=self.cart_id).prefetch_related('product')
         str_order = dict()
         str_order['reference_id'] = str(self.cart_id)
         str_line_items = list()
@@ -57,7 +58,8 @@ class ShoppingCart(object):
             str_item['name'] = str(cart_item.product.title)
             str_item['quantity'] = "1"
             str_base_price_money = dict()
-            str_base_price_money['amount'] = int(round(cart_item.product.price * 100))
+            str_base_price_money['amount'] = int(
+                round(cart_item.product.price * 100))
             str_base_price_money['currency'] = "USD"
             str_item['base_price_money'] = str_base_price_money
             str_line_items.append(str_item)
@@ -68,8 +70,13 @@ class ShoppingCart(object):
         # str_line_items.append(str_taxes)
         str_order['line_items'] = str_line_items
         str_json['order'] = str_order
-        str_json['redirect_url'] = "https://" + self.host_url + "/shop/cartcheckout/" + self.checkout_key
+        str_json['redirect_url'] = "https://" + \
+            self.host_url + "/shop/cartcheckout/"
         return json.dumps(str_json)
 
-    def check_key(self, str_key):
-        return str_key == self.checkout_key
+    def set_checkout_id(self, request, checkout_id):
+        request.session['checkout_id'] = checkout_id
+        self.checkout_id = request.session.get('checkout_id', "NA")
+
+    def check_checkout_id(self, str_key):
+        return str_key == self.checkout_id

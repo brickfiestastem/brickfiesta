@@ -6,6 +6,13 @@ from django.dispatch import receiver
 import uuid
 
 
+def get_user_string(self):
+    return self.first_name + " " + self.last_name + " (" + self.email + ")"
+
+
+User.add_to_class("__str__", get_user_string)
+
+
 class BaseModel(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     created = models.DateTimeField(

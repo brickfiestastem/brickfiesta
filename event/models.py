@@ -54,7 +54,8 @@ class Activity(BaseModel):
     description = models.TextField(verbose_name='Description')
     rules = models.TextField(verbose_name='Rules')
     materials_list = models.TextField(verbose_name='Materials List')
-    picture = models.ImageField(upload_to=upload_path_activity, null=True)
+    picture = models.ImageField(
+        upload_to=upload_path_activity, null=True, blank=True)
     signup_required = models.BooleanField(verbose_name='Sign Up Required')
     min_people = models.IntegerField(verbose_name='Minimum People')
     max_people = models.IntegerField(verbose_name='Maximum People')

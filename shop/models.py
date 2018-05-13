@@ -58,21 +58,26 @@ class ProductBulletPoint(BaseModel):
 
 class Order(BaseModel):
     user = models.ForeignKey(User, on_delete=None)
+    transaction_id = models.CharField(max_length=128)
+    reference_id = models.CharField(max_length=128)
     guest = models.CharField(max_length=255)
-    referral = models.ForeignKey(Referral, on_delete=None)
+    referral = models.ForeignKey(
+        Referral, on_delete=None, blank=True, null=True)
 
 
 class OrderItem(BaseModel):
     order = models.ForeignKey(Order, on_delete=None)
     user = models.ForeignKey(User,
                              on_delete=None, null=True)
+    first_name = models.CharField(max_length=32, blank=True)
+    last_name = models.CharField(max_length=64, blank=True)
     product = models.ForeignKey(Product, on_delete=None)
     price = models.FloatField()
 
 
 class CartItem(BaseModel):
     cart = models.CharField(max_length=64, default=uuid.uuid4())
-    first_name = models.CharField(max_length=16, blank=True)
-    last_name = models.CharField(max_length=16, blank=True)
+    first_name = models.CharField(max_length=32, blank=True)
+    last_name = models.CharField(max_length=64, blank=True)
     email = models.EmailField(blank=True)
     product = models.ForeignKey(Product, on_delete=None)

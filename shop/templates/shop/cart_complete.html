@@ -1,0 +1,15 @@
+{% extends "brickfiesta/base.html" %}
+{% block content %}
+<div class="row">
+    <div class="col-12">
+        <h1>Online Shop</h1>
+    </div>
+    <p>
+        <ul>
+        {% for line in message %}
+            <li>{{ line }}</li>
+        {% endfor %}
+        </ul>
+    </p>
+</div>
+{% endblock content %}

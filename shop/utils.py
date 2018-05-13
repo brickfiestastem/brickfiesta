@@ -22,5 +22,3 @@ def check_recaptcha(request):
 
 def upload_path_product(instance, filename):
     return upload_path('products/', filename, instance.id)
-
-

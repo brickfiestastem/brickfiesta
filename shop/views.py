@@ -6,7 +6,7 @@ from django.views.generic.detail import SingleObjectMixin
 from django.views.generic import DetailView, FormView
 from event.models import Event
 from shop.utils import check_recaptcha
-from .models import Product
+from .models import Product, Order, OrderItem
 from .forms import CartItemForm
 from .cart import ShoppingCart
 from django.conf import settings
@@ -16,6 +16,8 @@ import urllib.parse
 import urllib.request
 import urllib.error
 from django.core.mail import EmailMessage
+from django.contrib.auth.models import User
+from afol.models import Attendee
 
 # Create your views here.
 
@@ -35,13 +37,90 @@ class EventProductView(View):
 
 
 class CartCheckoutView(View):
-    def get(self, request, cart_id):
+
+    def get(self, request):
+        list_message = list()
         obj_cart = ShoppingCart(request)
-        return render(request, 'shop/cart_contents.html', {'cart': obj_cart.get_basket(),
-                                                           'cart_total': obj_cart.total()})
+        str_checkout_id = request.GET.get('checkoutId', "INVALID")
+        str_reference_id = request.GET.get('referenceId', "INVALID")
+        str_transaction_id = request.GET.get('transactionId', "INVALID")
+        if obj_cart.set_checkout_id(request, str_checkout_id):
+            # valid save everything in the users
+            obj_order = None
+            obj_basket = obj_cart.get_basket()
+            for obj_item in obj_basket:
+                obj_user = None
+                try:
+                    obj_user = User.object.get(email=obj_item.email)
+                    list_message.append(
+                        "Found existing customer information " + obj_user + ".")
+                except User.DoesNotExist:
+                    obj_user = User.objects.create_user(username=obj_item.email,
+                                                        email=obj_item.email,
+                                                        first_name=obj_item.first_name,
+                                                        last_name=obj_item.last_name)
+                    list_message.append("Created a user for " + obj_user + ".")
+                if obj_order is None:
+                    if request.user.is_authenticated():
+                        obj_order = Order(user=request.user,
+                                          transaction_id=str_transaction_id,
+                                          reference_id=str_reference_id,
+                                          guest="")
+                    else:
+                        obj_order = Order(user=obj_user,
+                                          transaction_id=str_transaction_id,
+                                          reference_id=str_reference_id,
+                                          guest="")
+                    obj_order.save()
+                    list_message.append(
+                        "Order data associated with " + obj_user + ".")
+                obj_order_item = OrderItem(order=obj_order,
+                                           user=obj_user,
+                                           first_name=obj_item.first_name,
+                                           last_name=obj_item.last_name,
+                                           product=obj_item.product,
+                                           price=obj_item.product.price)
+                obj_order_item.save()
+                list_message.append(
+                    "Order item data " + obj_order_item.product + " associated with " + obj_user + ".")
+                if obj_item.product.product_type == 'vendor':
+                    obj_attendee = Attendee(event=obj_item.product.event,
+                                            user=obj_user,
+                                            role='vendor')
+                    obj_attendee.save()
+                if obj_item.product.product_type == 'sponsor':
+                    obj_attendee = Attendee(event=obj_item.product.event,
+                                            user=obj_user,
+                                            role='sponsor')
+                    obj_attendee.save()
+                if obj_item.product.product_type == 'convention':
+                    obj_attendee = Attendee(event=obj_item.product.event,
+                                            user=obj_user,
+                                            role='attendee')
+                    obj_attendee.save()
+
+            list_message.append(
+                "We appreciate your interest in Brick Fiesta and look forward to seeing you there.")
+            obj_cart.clear()
+        else:
+            list_message.append(
+                "It looks like there was an problem with your cart and processing it.")
+            list_message.append(
+                "We have gathered the data and have sent an email to look into the issue.")
+            list_message.append(
+                "If you do not hear back in a few days please contact us using the contact form.")
+
+            str_body = "JSON: " + obj_cart.get_json() + "\n\nReference: " + str_reference_id + \
+                "\n\nTransaction: " + str_transaction_id
+            email = EmailMessage(
+                'Brick Fiesta - URGENT - Cart Error', str_body, to=[settings.DEFAULT_FROM_EMAIL])
+            email.send()
+            obj_cart.clear()
+
+        return render(request, 'shop/cart_complete.html', {'message': list_message, })
+
 
 class CartView(View):
-
 
     def post(self, request, *args, **kwargs):
         str_error_message = False
@@ -53,30 +132,42 @@ class CartView(View):
             str_json = obj_cart.get_json()
             str_json = str_json.encode('utf-8')
             print(str_json)
-            str_url = "https://connect.squareup.com/v2/locations/" + settings.SQUARE_LOCATION_KEY + "/checkouts"
+            str_url = "https://connect.squareup.com/v2/locations/" + \
+                settings.SQUARE_LOCATION_KEY + "/checkouts"
             # send request for objects
             obj_request = urllib.request.Request(url=str_url)
-            obj_request.add_header('Authorization', 'Bearer ' + settings.SQUARE_CART_KEY)
-            obj_request.add_header('Content-Type', 'application/json; charset=utf-8')
+            obj_request.add_header(
+                'Authorization', 'Bearer ' + settings.SQUARE_CART_KEY)
+            obj_request.add_header(
+                'Content-Type', 'application/json; charset=utf-8')
             obj_request.add_header('Accept', 'application/json')
             # get response
             try:
-                obj_response = urllib.request.urlopen(obj_request, data=str_json)
+                obj_response = urllib.request.urlopen(
+                    obj_request, data=str_json)
             except urllib.error.URLError as obj_error:
                 # print(obj_error.reason)
                 str_error_message = "Unable to reach payment server. Please try again later."
+                str_body = "URL: " + str_url + "\n\nJSON: " + \
+                    str_json + "\n\nRESPONSE:" + obj_response
+                email = EmailMessage(
+                    'Brick Fiesta - Check Out URL Error', str_body, to=[settings.DEFAULT_FROM_EMAIL])
+                email.send()
                 pass
             except urllib.error.HTTPError as obj_error:
                 str_error_message = "Unable to process payment correctly. Error sent to event organizers."
-                str_body = "URL: " + str_url + "\n\nJSON: " + str_json
-                email = EmailMessage('Brick Fiesta - Check Out Error', str_body, to=[settings.DEFAULT_FROM_EMAIL])
+                str_body = "URL: " + str_url + "\n\nJSON: " + \
+                    str_json + "\n\nRESPONSE:" + obj_response
+                email = EmailMessage(
+                    'Brick Fiesta - Check Out HTTP Error', str_body, to=[settings.DEFAULT_FROM_EMAIL])
                 email.send()
                 # print(obj_error.code)
                 # print(obj_error.read())
                 pass
             else:
                 result = json.loads(obj_response.read().decode())
-                print(result)
+                # print(result)
+                obj_cart.set_checkout_id(request, result['checkout']['id'])
                 return redirect(result['checkout']['checkout_page_url'])
 
         return render(request, 'shop/cart_contents.html', {'error_message': str_error_message,

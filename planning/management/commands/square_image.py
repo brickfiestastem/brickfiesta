@@ -12,4 +12,3 @@ class Command(BaseCommand):
         for image_path in options['image_path']:
             new_square = image_square(image_path)
             new_square.save(image_path)
-
