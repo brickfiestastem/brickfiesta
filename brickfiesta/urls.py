@@ -28,6 +28,8 @@ urlpatterns = [
          name='privacy_policy'),
     path('afol/password_reset_done', auth_views.password_reset_done,
          name='password_reset_done'),
+    path('afol/password_reset_complete', auth_views.password_reset_complete,
+         name='password_reset_complete'),
     path('afol/', include('afol.urls'), name='afol'),
     path('events/', include('event.urls')),
     path('news/', include('news.urls')),

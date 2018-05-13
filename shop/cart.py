@@ -78,5 +78,18 @@ class ShoppingCart(object):
         request.session['checkout_id'] = checkout_id
         self.checkout_id = request.session.get('checkout_id', "NA")
 
+    def get_debug(self, request):
+        obj_return = list()
+        obj_items = self.get_basket()
+        for obj_item in obj_items:
+            obj_json = dict()
+            obj_json['first_name'] = obj_item.first_name
+            obj_json['last_name'] = obj_item.last_name
+            obj_json['email'] = obj_item.email
+            obj_json['product_id'] = str(obj_item.product.id)
+            obj_return.append(obj_json)
+
+        return json.dumps(obj_return) + "\n\n" + self.get_json() + "\n\n {'checkout_id', " + request.session.get('checkout_id', "NA") + "}"
+
     def check_checkout_id(self, str_key):
         return str_key == self.checkout_id

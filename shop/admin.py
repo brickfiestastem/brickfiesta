@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Product, Order, CartItem, ProductBulletPoint
+from .models import Product, Order, OrderItem, CartItem, ProductBulletPoint
 
 
 class ProductBulletPointInline(admin.TabularInline):
@@ -15,8 +15,14 @@ class ProductAdmin(admin.ModelAdmin):
 admin.site.register(Product, ProductAdmin)
 
 
+class OrderItemInLine(admin.TabularInline):
+    model = OrderItem
+    max_num = 1
+
+
 class OrderAdmin(admin.ModelAdmin):
     # List display for the admin
+    inlines = (OrderItemInLine, )
     list_display = ('id', 'user', 'created')
 
 

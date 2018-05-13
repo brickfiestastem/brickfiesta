@@ -1,0 +1,48 @@
+{% extends "brickfiesta/base.html" %}
+{% load staticfiles %}
+{% load template_extras %}
+
+{% block content %}
+<div class="row">
+    <div class="col-12">
+        <h1><a href="{% url 'shop:index' %}">Online Shop</a> - Testing Cart</h1>
+    </div>
+</div>
+<div class="row">
+    <div class="col-12">
+        <table class="table table-hover">
+            <thead>
+            <tr>
+                <th>Product Type</th>
+                <th>Product</th>
+                <th>Details</th>
+                <th>Price</th>
+                <th>Action</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for item in cart %}
+            <tr>
+                <td>{{ item.product.event.title }} - {{ item.product.get_product_type_display }}</td>
+                <td>{{ item.product.title }}</td>
+                <td>For {{ item.first_name }} {{ item.last_name }}<br/>Send details to {{ item.email }}</td>
+                <td>{{ item.product.price|currency }}</td>
+                <td>
+                </td>
+            </tr>
+            {% endfor %}
+            {% if error_message %}
+            <tr class="text-warning">
+                <td></td>
+                <td>Debug</td>
+                <td>{{ error_message }}</td>
+                <td></td>
+                <td>
+                </td>
+            </tr>
+            {% endif %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock content %}

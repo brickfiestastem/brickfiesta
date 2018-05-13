@@ -57,6 +57,10 @@ class Attendee(BaseModel):
     user = models.ForeignKey(User, on_delete=None)
     role = models.CharField(max_length=16, choices=ROLES)
 
+    class Meta:
+        ordering = ("event__title", "user__last_name", "user__first_name")
+        unique_together = ("event", "user", "role")
+
 
 class Badge(BaseModel):
     user = models.ForeignKey(User, on_delete=None)
@@ -72,8 +76,14 @@ class ShirtSizesAvailable(BaseModel):
     event = models.ForeignKey(Event, on_delete=None)
     shirt_size = models.CharField(max_length=8)
 
+    class Meta:
+        unique_together = ("event", "shirt_size")
+
 
 class Shirt(BaseModel):
     user = models.ForeignKey(User, on_delete=None)
     event = models.ForeignKey(Event, on_delete=None)
     shirt_size = models.CharField(max_length=8)
+
+    class Meta:
+        unique_together = ("event", "user")

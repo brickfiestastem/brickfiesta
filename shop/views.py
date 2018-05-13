@@ -36,6 +36,22 @@ class EventProductView(View):
                       {'object_list': obj_products, 'first': obj_products.first()})
 
 
+class CartTestView(View):
+
+    def get(self, request):
+        str_checkout_id = request.GET.get('checkoutId', None)
+        str_reference_id = request.GET.get('referenceId', None)
+        if str_reference_id:
+            request.session['cart_id'] = str_reference_id
+        if str_checkout_id:
+            request.session['checkout_id'] = str_checkout_id
+        obj_cart = ShoppingCart(request)
+
+        return render(request, 'shop/cart_contents.html', {'error_message': obj_cart.get_debug(request),
+                                                           'cart': obj_cart.get_basket(),
+                                                           'cart_total': obj_cart.total()})
+
+
 class CartCheckoutView(View):
 
     def get(self, request):
@@ -44,24 +60,25 @@ class CartCheckoutView(View):
         str_checkout_id = request.GET.get('checkoutId', "INVALID")
         str_reference_id = request.GET.get('referenceId', "INVALID")
         str_transaction_id = request.GET.get('transactionId', "INVALID")
-        if obj_cart.set_checkout_id(request, str_checkout_id):
+        if obj_cart.check_checkout_id(str_checkout_id):
             # valid save everything in the users
             obj_order = None
             obj_basket = obj_cart.get_basket()
             for obj_item in obj_basket:
                 obj_user = None
                 try:
-                    obj_user = User.object.get(email=obj_item.email)
+                    obj_user = User.objects.get(email=obj_item.email)
                     list_message.append(
-                        "Found existing customer information " + obj_user + ".")
+                        "Found existing customer information " + obj_item.email + ".")
                 except User.DoesNotExist:
                     obj_user = User.objects.create_user(username=obj_item.email,
                                                         email=obj_item.email,
                                                         first_name=obj_item.first_name,
                                                         last_name=obj_item.last_name)
-                    list_message.append("Created a user for " + obj_user + ".")
+                    list_message.append(
+                        "Created a user for " + obj_item.email + ". Please check your email for password instructions.")
                 if obj_order is None:
-                    if request.user.is_authenticated():
+                    if request.user.is_authenticated:
                         obj_order = Order(user=request.user,
                                           transaction_id=str_transaction_id,
                                           reference_id=str_reference_id,
@@ -73,7 +90,7 @@ class CartCheckoutView(View):
                                           guest="")
                     obj_order.save()
                     list_message.append(
-                        "Order data associated with " + obj_user + ".")
+                        "Order data associated with " + obj_item.email + ".")
                 obj_order_item = OrderItem(order=obj_order,
                                            user=obj_user,
                                            first_name=obj_item.first_name,
@@ -82,7 +99,7 @@ class CartCheckoutView(View):
                                            price=obj_item.product.price)
                 obj_order_item.save()
                 list_message.append(
-                    "Order item data " + obj_order_item.product + " associated with " + obj_user + ".")
+                    "Order item data " + obj_order_item.product.title + " associated with " + obj_item.email + ".")
                 if obj_item.product.product_type == 'vendor':
                     obj_attendee = Attendee(event=obj_item.product.event,
                                             user=obj_user,
@@ -110,7 +127,7 @@ class CartCheckoutView(View):
             list_message.append(
                 "If you do not hear back in a few days please contact us using the contact form.")
 
-            str_body = "JSON: " + obj_cart.get_json() + "\n\nReference: " + str_reference_id + \
+            str_body = "JSON: " + obj_cart.get_debug(request) + "\n\nReference: " + str_reference_id + \
                 "\n\nTransaction: " + str_transaction_id
             email = EmailMessage(
                 'Brick Fiesta - URGENT - Cart Error', str_body, to=[settings.DEFAULT_FROM_EMAIL])
