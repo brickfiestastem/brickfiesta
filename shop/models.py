@@ -58,8 +58,8 @@ class ProductBulletPoint(BaseModel):
 
 class Order(BaseModel):
     user = models.ForeignKey(User, on_delete=None)
-    transaction_id = models.CharField(max_length=128)
-    reference_id = models.CharField(max_length=128)
+    transaction_id = models.CharField(max_length=128, null=True)
+    reference_id = models.CharField(max_length=128, null=True)
     guest = models.CharField(max_length=255)
     referral = models.ForeignKey(
         Referral, on_delete=None, blank=True, null=True)
