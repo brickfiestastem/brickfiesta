@@ -26,7 +26,7 @@ class ProductManager(models.Manager):
 
 
 class Product(BaseModel):
-    event = models.ForeignKey(Event, on_delete=None)
+    event = models.ForeignKey(Event, on_delete=models.CASCADE)
     PRODUCT_TYPE = (
         ('convention', 'Fan Convention'),
         ('exhibition', 'Public Exhibition'),
@@ -52,26 +52,29 @@ class Product(BaseModel):
 
 
 class ProductBulletPoint(BaseModel):
-    product = models.ForeignKey(Product, on_delete=None)
+    product = models.ForeignKey(Product, on_delete=models.CASCADE)
     text = models.CharField(max_length=64, blank=True)
 
 
 class Order(BaseModel):
-    user = models.ForeignKey(User, on_delete=None)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
     transaction_id = models.CharField(max_length=128, null=True)
     reference_id = models.CharField(max_length=128, null=True)
     guest = models.CharField(max_length=255)
     referral = models.ForeignKey(
         Referral, on_delete=None, blank=True, null=True)
 
+    def __str__(self):
+        return self.reference_id + " on " + str(self.created)
+
 
 class OrderItem(BaseModel):
-    order = models.ForeignKey(Order, on_delete=None)
+    order = models.ForeignKey(Order, on_delete=models.CASCADE)
     user = models.ForeignKey(User,
-                             on_delete=None, null=True)
+                             on_delete=models.CASCADE, null=True)
     first_name = models.CharField(max_length=32, blank=True)
     last_name = models.CharField(max_length=64, blank=True)
-    product = models.ForeignKey(Product, on_delete=None)
+    product = models.ForeignKey(Product, on_delete=models.CASCADE)
     price = models.FloatField()
 
 
@@ -80,4 +83,4 @@ class CartItem(BaseModel):
     first_name = models.CharField(max_length=32, blank=True)
     last_name = models.CharField(max_length=64, blank=True)
     email = models.EmailField(blank=True)
-    product = models.ForeignKey(Product, on_delete=None)
+    product = models.ForeignKey(Product, on_delete=models.CASCADE)

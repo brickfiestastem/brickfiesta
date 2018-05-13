@@ -30,8 +30,8 @@ class Category(BaseModel):
 
 
 class EventCategory(BaseModel):
-    category = models.ForeignKey(Category, on_delete=None)
-    event = models.ForeignKey(Event, on_delete=None)
+    category = models.ForeignKey(Category, on_delete=models.CASCADE)
+    event = models.ForeignKey(Event, on_delete=models.CASCADE)
 
     class Meta:
         verbose_name_plural = 'EventCategories'
@@ -56,9 +56,9 @@ class Moc(BaseModel):
 
 
 class EventMoc(BaseModel):
-    user = models.ForeignKey(User, on_delete=None)
-    category = models.ForeignKey(EventCategory, on_delete=None)
-    moc = models.ForeignKey(Moc, on_delete=None)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    category = models.ForeignKey(EventCategory, on_delete=models.CASCADE)
+    moc = models.ForeignKey(Moc, on_delete=models.CASCADE)
 
     # TODO: Find a way to make the event and moc unique while still using eventcategory
     class Meta:
@@ -78,9 +78,9 @@ class VoteManager(models.Manager):
 
 
 class Vote(BaseModel):
-    user = models.ForeignKey(User, on_delete=None)
-    moc = models.ForeignKey(Moc, on_delete=None)
-    category = models.ForeignKey(EventCategory, on_delete=None)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    moc = models.ForeignKey(Moc, on_delete=models.CASCADE)
+    category = models.ForeignKey(EventCategory, on_delete=models.CASCADE)
     value = models.IntegerField(default=1)
 
     class Meta:
@@ -95,10 +95,10 @@ class Vote(BaseModel):
 
 
 class Layout(BaseModel):
-    user = models.ForeignKey(User, on_delete=None)
-    category = models.ForeignKey(EventCategory, on_delete=None)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    category = models.ForeignKey(EventCategory, on_delete=models.CASCADE)
     title = models.CharField(verbose_name='Title', max_length=64)
-    space = models.ForeignKey(Space, on_delete=None)
+    space = models.ForeignKey(Space, on_delete=models.CASCADE)
     length = models.IntegerField()
     width = models.IntegerField()
 
@@ -107,8 +107,8 @@ class Layout(BaseModel):
 
 
 class LayoutMoc(BaseModel):
-    layout = models.ForeignKey(Layout, on_delete=None)
-    moc = models.ForeignKey(Moc, on_delete=None)
+    layout = models.ForeignKey(Layout, on_delete=models.CASCADE)
+    moc = models.ForeignKey(Moc, on_delete=models.CASCADE)
     x = models.IntegerField()
     y = models.IntegerField()
 

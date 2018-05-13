@@ -90,7 +90,7 @@ class CartCheckoutView(View):
                                           guest="")
                     obj_order.save()
                     list_message.append(
-                        "Order data associated with " + obj_item.email + ".")
+                        "Order associated with " + obj_item.email + ".")
                 obj_order_item = OrderItem(order=obj_order,
                                            user=obj_user,
                                            first_name=obj_item.first_name,
@@ -99,25 +99,26 @@ class CartCheckoutView(View):
                                            price=obj_item.product.price)
                 obj_order_item.save()
                 list_message.append(
-                    "Order item data " + obj_order_item.product.title + " associated with " + obj_item.email + ".")
+                    "Order item " + obj_order_item.product.title + " associated with " + obj_item.email + ".")
                 if obj_item.product.product_type == 'vendor':
-                    obj_attendee = Attendee(event=obj_item.product.event,
-                                            user=obj_user,
-                                            role='vendor')
-                    obj_attendee.save()
+                    obj_attendee, is_created = Attendee.objects.get_or_create(event=obj_item.product.event,
+                                                                              user=obj_user,
+                                                                              role='vendor')
+                    if is_created:
+                        obj_attendee.save()
                 if obj_item.product.product_type == 'sponsor':
-                    obj_attendee = Attendee(event=obj_item.product.event,
-                                            user=obj_user,
-                                            role='sponsor')
-                    obj_attendee.save()
+                    obj_attendee, is_created = Attendee.objects.get_or_create(event=obj_item.product.event,
+                                                                              user=obj_user,
+                                                                              role='sponsor')
+                    if is_created:
+                        obj_attendee.save()
                 if obj_item.product.product_type == 'convention':
-                    obj_attendee = Attendee(event=obj_item.product.event,
-                                            user=obj_user,
-                                            role='attendee')
-                    obj_attendee.save()
+                    obj_attendee, is_created = Attendee.objects.get_or_create(event=obj_item.product.event,
+                                                                              user=obj_user,
+                                                                              role='attendee')
+                    if is_created:
+                        obj_attendee.save()
 
-            list_message.append(
-                "We appreciate your interest in Brick Fiesta and look forward to seeing you there.")
             obj_cart.clear()
         else:
             list_message.append(

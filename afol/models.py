@@ -53,18 +53,17 @@ class Attendee(BaseModel):
         ('vendor', 'Vendor'),
         ('attendee', 'Attendee'),
     )
-    event = models.ForeignKey(Event, on_delete=None)
-    user = models.ForeignKey(User, on_delete=None)
+    event = models.ForeignKey(Event, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
     role = models.CharField(max_length=16, choices=ROLES)
 
     class Meta:
-        ordering = ("event__title", "user__last_name", "user__first_name")
         unique_together = ("event", "user", "role")
 
 
 class Badge(BaseModel):
-    user = models.ForeignKey(User, on_delete=None)
-    event = models.ForeignKey(Event, on_delete=None)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    event = models.ForeignKey(Event, on_delete=models.CASCADE)
     badge_name = models.CharField(max_length=32, blank=False)
     rlug_name = models.CharField(max_length=32, blank=False)
     locality = models.CharField(max_length=32, blank=False)
@@ -73,7 +72,7 @@ class Badge(BaseModel):
 
 
 class ShirtSizesAvailable(BaseModel):
-    event = models.ForeignKey(Event, on_delete=None)
+    event = models.ForeignKey(Event, on_delete=models.CASCADE)
     shirt_size = models.CharField(max_length=8)
 
     class Meta:
@@ -81,8 +80,8 @@ class ShirtSizesAvailable(BaseModel):
 
 
 class Shirt(BaseModel):
-    user = models.ForeignKey(User, on_delete=None)
-    event = models.ForeignKey(Event, on_delete=None)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    event = models.ForeignKey(Event, on_delete=models.CASCADE)
     shirt_size = models.CharField(max_length=8)
 
     class Meta:

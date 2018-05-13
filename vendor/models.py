@@ -19,7 +19,7 @@ class BaseModel(models.Model):
 
 
 class Business(BaseModel):
-    user = models.ForeignKey(User, on_delete=None)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
     name = models.CharField(
         verbose_name='Name of Business', unique=True, max_length=128)
     description = models.TextField(verbose_name='Description')
@@ -41,8 +41,8 @@ class Business(BaseModel):
 
 
 class BusinessNote(BaseModel):
-    business = models.ForeignKey(Business, on_delete=None)
-    user = models.ForeignKey(User, on_delete=None)
+    business = models.ForeignKey(Business, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
     note = models.TextField(verbose_name='Note')
 
 
@@ -56,10 +56,11 @@ class Vendor(BaseModel):
     )
     status = models.CharField(
         max_length=64, blank=False, choices=STATUS_TYPE, default='submitted')
-    business = models.ForeignKey(Business, on_delete=None)
-    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=None)
-    event = models.ForeignKey(Event, on_delete=None)
-    product = models.ForeignKey(Product, on_delete=None)
+    business = models.ForeignKey(Business, on_delete=models.CASCADE)
+    user = models.ForeignKey(settings.AUTH_USER_MODEL,
+                             on_delete=models.CASCADE)
+    event = models.ForeignKey(Event, on_delete=models.CASCADE)
+    product = models.ForeignKey(Product, on_delete=models.CASCADE)
     product_quantity = models.IntegerField(verbose_name='Product Quantity')
 
     class Meta:
@@ -67,7 +68,7 @@ class Vendor(BaseModel):
         unique_together = ('business', 'event')
 
     def __str__(self):
-        return self.business.name
+        return self.business.name + " Vendor " + self.event.title
 
 
 class Sponsor(BaseModel):
@@ -80,10 +81,11 @@ class Sponsor(BaseModel):
     )
     status = models.CharField(
         max_length=64, blank=False, choices=STATUS_TYPE, default='submitted')
-    business = models.ForeignKey(Business, on_delete=None)
-    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=None)
-    event = models.ForeignKey(Event, on_delete=None)
-    product = models.ForeignKey(Product, on_delete=None)
+    business = models.ForeignKey(Business, on_delete=models.CASCADE)
+    user = models.ForeignKey(settings.AUTH_USER_MODEL,
+                             on_delete=models.CASCADE)
+    event = models.ForeignKey(Event, on_delete=models.CASCADE)
+    product = models.ForeignKey(Product, on_delete=models.CASCADE)
     product_quantity = models.IntegerField(verbose_name='Product Quantity')
 
     class Meta:
@@ -91,4 +93,4 @@ class Sponsor(BaseModel):
         unique_together = ('business', 'event')
 
     def __str__(self):
-        return self.business.name
+        return self.business.name + " Sponsor " + self.event.title

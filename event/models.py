@@ -35,10 +35,10 @@ class Location(BaseModel):
 
 
 class Space(BaseModel):
-    location = models.ForeignKey(Location, on_delete=None)
+    location = models.ForeignKey(Location, on_delete=models.CASCADE)
     name = models.CharField(verbose_name='Venue Space Name', max_length=64)
     description = models.TextField(verbose_name='Description')
-    map = models.ImageField(verbose_name='Map', null=True)
+    map = models.ImageField(verbose_name='Map', null=True, blank=True)
     max_seating = models.IntegerField(verbose_name='Max Seating')
     latitude = models.FloatField(
         verbose_name='Latitude', blank=True, null=True)
@@ -46,7 +46,7 @@ class Space(BaseModel):
         verbose_name='Longitude', blank=True, null=True)
 
     def __str__(self):
-        return self.name
+        return self.location.name + " - " + self.name
 
 
 class Activity(BaseModel):
@@ -63,10 +63,13 @@ class Activity(BaseModel):
     class Meta:
         verbose_name_plural = "Activities"
 
+    def __str__(self):
+        return self.title
+
 
 class ActivityVolunteers(BaseModel):
-    activity = models.ForeignKey(Activity, on_delete=None)
-    user = models.ForeignKey(User, on_delete=None)
+    activity = models.ForeignKey(Activity, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
     order = models.SmallIntegerField(verbose_name='Order')
 
 
@@ -82,7 +85,7 @@ class Event(BaseModel):
         verbose_name='Hotel Reservation Code', blank=True, default='')
     start_date = models.DateField(verbose_name='Start Date')
     end_date = models.DateField(verbose_name='End Date')
-    location = models.ForeignKey(Location, on_delete=None)
+    location = models.ForeignKey(Location, on_delete=models.CASCADE)
     logo = models.ImageField(upload_to=upload_path_event, null=True)
 
     class Meta:
@@ -108,11 +111,17 @@ class Event(BaseModel):
 
 
 class Schedule(BaseModel):
-    event = models.ForeignKey(Event, on_delete=None)
-    space = models.ForeignKey(Space, on_delete=None)
-    activity = models.ForeignKey(Activity, on_delete=None)
+    event = models.ForeignKey(Event, on_delete=models.CASCADE)
+    space = models.ForeignKey(Space, on_delete=models.CASCADE)
+    activity = models.ForeignKey(Activity, on_delete=models.CASCADE)
     start_time = models.TimeField()
     end_time = models.TimeField()
     date = models.DateField()
 
+    def __str__(self):
+        return str(self.activity) + " in " + str(self.space) + " on " + str(self.date) + " @ " + str(self.start_time)
+
+    class Meta:
+        ordering = ("date", "event__title", "space__name", "start_time")
+        unique_together = ("event", "space", "start_time", "date")
     # TODO: Event, Space, Date, and Time can't conflict.

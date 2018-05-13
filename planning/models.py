@@ -26,5 +26,5 @@ class InventoryItem(BaseModel):
     purchase_date = models.DateField(verbose_name='Date of Purchase')
     status = models.TextField(verbose_name='Status', max_length=64)
     condition = models.TextField(verbose_name='Condition', max_length=64)
-    event = models.ForeignKey(Event, on_delete=None)
+    event = models.ForeignKey(Event, on_delete=models.CASCADE)
     # user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=None)

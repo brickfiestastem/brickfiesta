@@ -15,7 +15,7 @@ class BaseModel(models.Model):
 
 
 class Article(BaseModel):
-    user = models.ForeignKey(User, on_delete=None)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
     title = models.CharField(max_length=255, blank=False)
     body = models.TextField()
 

@@ -5,6 +5,8 @@ from .models import Attendee, Badge, Profile, Shirt
 
 
 class AttendeeAdmin(admin.ModelAdmin):
+    ordering = ("event__title", "user__last_name", "user__first_name")
+    list_filter = ("event", "role")
     list_display = ('event', 'user', 'role')
 
 
@@ -12,6 +14,7 @@ admin.site.register(Attendee, AttendeeAdmin)
 
 
 class BadgeAdmin(admin.ModelAdmin):
+    list_filter = ("event", )
     list_display = ('event', 'user', 'badge_name', 'date_ordered')
 
 
@@ -39,6 +42,7 @@ admin.site.register(User, CustomUserAdmin)
 
 
 class ShirtAdmin(admin.ModelAdmin):
+    list_filter = ('event', 'shirt_size')
     list_display = ('event', 'user', 'shirt_size')
 
 

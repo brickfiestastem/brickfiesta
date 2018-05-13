@@ -9,6 +9,7 @@ class ProductBulletPointInline(admin.TabularInline):
 
 class ProductAdmin(admin.ModelAdmin):
     inlines = (ProductBulletPointInline,)
+    list_filter = ('event', 'product_type')
     list_display = ('title', 'event', 'product_type', 'price')
 
 
@@ -30,6 +31,7 @@ admin.site.register(Order, OrderAdmin)
 
 
 class CartItemAdmin(admin.ModelAdmin):
+    list_filter = ('product__event', 'product__product_type')
     list_display = ('cart', 'first_name', 'last_name', 'email', 'product')
 
 

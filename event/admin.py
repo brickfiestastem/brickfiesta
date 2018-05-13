@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Activity, Event, Location, Space
+from .models import Activity, Event, Location, Space, Schedule
 
 
 class ActivityAdmin(admin.ModelAdmin):
@@ -28,7 +28,18 @@ admin.site.register(Location, LocationAdmin)
 
 class SpaceAdmin(admin.ModelAdmin):
     # List display for the admin
+    list_filter = ('location',)
     list_display = ('location', 'name', 'max_seating')
 
 
 admin.site.register(Space, SpaceAdmin)
+
+
+class ScheduleAdmin(admin.ModelAdmin):
+    # List display for the admin
+    list_filter = ('event', 'space', 'date')
+    list_display = ('event', 'activity', 'space',
+                    'date', 'start_time', 'end_time')
+
+
+admin.site.register(Schedule, ScheduleAdmin)
