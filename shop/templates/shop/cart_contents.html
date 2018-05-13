@@ -52,11 +52,13 @@
                 <td align="right">Total:</td>
                 <td>{{ cart_total|currency }}</td>
                 <td>
+                    {% if cart_total > 0.0 %}
                     <form action="." method="post">
                         {% csrf_token %} {% with cart|first as first_object %}
                         <input type="hidden" name="cart" value="{{ first_object.cart }}"/> {% endwith %}
                         <input class="btn btn-info" type="submit" value="Check Out"/>
                     </form>
+                    {% endif %}
                 </td>
             </tr>
             </tbody>
