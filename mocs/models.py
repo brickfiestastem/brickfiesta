@@ -33,6 +33,9 @@ class EventCategory(BaseModel):
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
     event = models.ForeignKey(Event, on_delete=models.CASCADE)
 
+    def __str__(self):
+        return self.event.title + " " + self.category.title
+
     class Meta:
         verbose_name_plural = 'EventCategories'
         unique_together = ('category', 'event')
