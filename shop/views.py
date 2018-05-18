@@ -20,6 +20,7 @@ from django.core.mail import EmailMessage
 from django.contrib.auth.models import User
 from afol.models import Attendee
 from django.core.mail import send_mail
+from django.template import loader
 
 # Create your views here.
 
@@ -81,15 +82,8 @@ class CartCheckoutView(View):
                     list_message.append(
                         "Created a user for " + obj_item.email + ". Please check your email for password instructions.")
                     send_mail(subject="Brick Fiesta - New Account Created",
-                              message="Yourself or someone you know has purchased a product from Brick Fiesta that "
-                                      "requires an account. We have created an account for you and set a random "
-                                      "password. You will need to go to "
-                                      "https://www.brickfiesta.com/afol/password_reset/"
-                                      " and enter the email that received this message to start the password reset "
-                                      "process."
-                                      " Once the password is reset you will be able to log in and have access to"
-                                      " all the different options the product enabled in your account.",
-                              from_email='customer.support@gmail.com',
+                              message=loader.render_to_string("afol/new_account_email.html"),
+                              from_email=settings.DEFAULT_FROM_EMAIL,
                               recipient_list=[obj_item.email])
                 if obj_order is None:
                     if request.user.is_authenticated:

@@ -3,6 +3,8 @@ from django.contrib.auth.models import User
 from django.contrib.auth.admin import UserAdmin
 from .models import Attendee, Badge, Profile, Shirt
 from django.core.mail import send_mail
+from django.template import loader
+from django.conf import settings
 import uuid
 
 
@@ -36,15 +38,8 @@ def fix_order_password(modeladmin, request, queryset):
         obj_user.set_password(uuid.uuid4())
         obj_user.save()
         send_mail(subject="Brick Fiesta - New Account Created",
-                  message="Yourself or someone you know has purchased a product from Brick Fiesta that "
-                          "requires an account. We have created an account for you and set a random "
-                          "password. You will need to go to "
-                          "https://www.brickfiesta.com/afol/password_reset/"
-                          " and enter the email that received this message to start the password reset "
-                          "process."
-                          " Once the password is reset you will be able to log in and have access to"
-                          " all the different options the product enabled in your account.",
-                  from_email='customer.support@gmail.com',
+                  message=loader.render_to_string("afol/new_account_email.html"),
+                  from_email=settings.DEFAULT_FROM_EMAIL,
                   recipient_list=[obj_user.email])
 
 
