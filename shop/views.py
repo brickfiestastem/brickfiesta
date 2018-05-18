@@ -84,10 +84,12 @@ class CartCheckoutView(View):
                               message="Yourself or someone you know has purchased a product from Brick Fiesta that "
                                       "requires an account. We have created an account for you and set a random "
                                       "password. You will need to go to "
-                                      "https://www.brickfiesta.com/afol/password_reset/" 
-                                      " and enter the email that received this message to start the process."
+                                      "https://www.brickfiesta.com/afol/password_reset/"
+                                      " and enter the email that received this message to start the password reset "
+                                      "process."
                                       " Once the password is reset you will be able to log in and have access to"
                                       " all the different options the product enabled in your account.",
+                              from_email='customer.support@gmail.com',
                               recipient_list=[obj_item.email])
                 if obj_order is None:
                     if request.user.is_authenticated:
