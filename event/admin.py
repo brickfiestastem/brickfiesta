@@ -40,6 +40,7 @@ class ScheduleAdmin(admin.ModelAdmin):
     list_filter = ('event', 'space', 'date')
     list_display = ('event', 'activity', 'space',
                     'date', 'start_time', 'end_time')
+    list_display_links = ('activity',)
 
 
 admin.site.register(Schedule, ScheduleAdmin)

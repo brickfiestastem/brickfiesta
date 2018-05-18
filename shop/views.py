@@ -15,9 +15,11 @@ import datetime
 import urllib.parse
 import urllib.request
 import urllib.error
+import uuid
 from django.core.mail import EmailMessage
 from django.contrib.auth.models import User
 from afol.models import Attendee
+from django.core.mail import send_mail
 
 # Create your views here.
 
@@ -74,9 +76,19 @@ class CartCheckoutView(View):
                     obj_user = User.objects.create_user(username=obj_item.email,
                                                         email=obj_item.email,
                                                         first_name=obj_item.first_name,
-                                                        last_name=obj_item.last_name)
+                                                        last_name=obj_item.last_name,
+                                                        password=uuid.uuid4())
                     list_message.append(
                         "Created a user for " + obj_item.email + ". Please check your email for password instructions.")
+                    send_mail(subject="Brick Fiesta - New Account Created",
+                              message="Yourself or someone you know has purchased a product from Brick Fiesta that "
+                                      "requires an account. We have created an account for you and set a random "
+                                      "password. You will need to go to "
+                                      "https://www.brickfiesta.com/afol/password_reset/" 
+                                      " and enter the email that received this message to start the process."
+                                      " Once the password is reset you will be able to log in and have access to"
+                                      " all the different options the product enabled in your account.",
+                              recipient_list=[obj_item.email])
                 if obj_order is None:
                     if request.user.is_authenticated:
                         obj_order = Order(user=request.user,

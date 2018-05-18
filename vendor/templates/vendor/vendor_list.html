@@ -10,7 +10,7 @@
             events please create an account and the select <a href="{% url 'vendor:vendor-request' %}">Vendor Request</a>.</p>
     </div>
     {% for obj_vendor in object_list %}
-    <div class="col-4">
+    <div class="col-sm-3">
         {% include "vendor/vendor_card.html" %}
     </div>
     {% endfor %}

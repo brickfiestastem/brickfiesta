@@ -10,7 +10,7 @@
             events please create an account and the select <a href="{% url 'vendor:sponsor-request' %}">Sponsor Request</a>.</p>
     </div>
     {% for obj_sponsor in object_list %}
-    <div class="col-4">
+    <div class="col-sm-4">
         {% include "vendor/sponsor_card.html" %}
     </div>
     {% endfor %}

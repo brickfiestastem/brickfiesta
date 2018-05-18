@@ -14,11 +14,11 @@
 <h2>Upcoming Events</h2>
 <div class="row">
     {% for event in events_upcoming %}
-    <div class="col-12">
+    <div class="col-sm-12">
         {% include 'event/event_jumbo.html' %}
     </div>
     {% empty %}
-    <div class="col-12">
+    <div class="col-sm-12">
         <h3>No upcoming events scheduled. Please check back later.</h3>
     </div>
     {% endfor %}
@@ -27,7 +27,7 @@
 <h2>Current Sponsors</h2>
 <div class="row">
     {% for obj_sponsor in sponsor_list %}
-    <div class="col-4">
+    <div class="col-sm-4">
         {% include "vendor/sponsor_card.html" %}
     </div>
     {% endfor %}
@@ -36,11 +36,11 @@
 <h2>Past Events</h2>
 <div class="row">
     {% for event in events_past %}
-    <div class="col-4">
+    <div class="col-sm-4">
         {% include 'event/event_card.html' %}
     </div>
     {% empty %}
-    <div class="col-12">
+    <div class="col-sm-12">
         <h3>No previous events entered.</h3>
     </div>
     {% endfor %}
@@ -49,7 +49,7 @@
 <h2>Current Vendors</h2>
 <div class="row">
     {% for obj_vendor in vendor_list %}
-    <div class="col-3">
+    <div class="col-sm-3">
         {% include "vendor/vendor_card.html" %}
     </div>
     {% endfor %}

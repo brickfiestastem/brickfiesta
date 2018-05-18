@@ -8,6 +8,7 @@ class AttendeeAdmin(admin.ModelAdmin):
     ordering = ("event__title", "user__last_name", "user__first_name")
     list_filter = ("event", "role")
     list_display = ('event', 'user', 'role')
+    list_display_links = ('role', )
 
 
 admin.site.register(Attendee, AttendeeAdmin)

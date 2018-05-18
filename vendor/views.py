@@ -64,7 +64,7 @@ class VendorRequestDetail(View):
             business_id = Business.objects.filter(
                 user=self.request.user.id).first()
         step_three_register = Product.objects.all().order_by(
-                'event__start_date').filter(event__start_date__gt=today, product_type='vendor').exists()
+            'event__start_date').filter(event__start_date__gt=today, product_type='vendor').exists()
         form = None
         if step_two_business and step_three_register:
             form = VendorForm()
@@ -91,7 +91,7 @@ class VendorRequestDetail(View):
             business_id = Business.objects.filter(
                 user=self.request.user.id).first()
         step_three_register = Product.objects.all().order_by('event__start_date').filter(
-                event__start_date__gt=today, product_type='vendor').exists()
+            event__start_date__gt=today, product_type='vendor').exists()
         form = VendorForm(request.POST)
         if form.is_valid():
             if not check_recaptcha(request):
@@ -136,8 +136,8 @@ class SponsorRequestDetail(View):
             business_id = Business.objects.filter(
                 user=self.request.user.id).first()
         step_three_register = Product.objects.filter(
-                product_type='sponsor', event__start_date__gt=today).order_by(
-                    'event__start_date').exists()
+            product_type='sponsor', event__start_date__gt=today).order_by(
+            'event__start_date').exists()
         form = None
         if step_two_business and step_three_register:
             form = SponsorForm()
@@ -165,8 +165,8 @@ class SponsorRequestDetail(View):
             business_id = Business.objects.filter(
                 user=self.request.user.id).first()
         step_three_register = Product.objects.filter(
-                product_type='sponsor', event__start_date__gt=today).order_by(
-                    'event__start_date').exists()
+            product_type='sponsor', event__start_date__gt=today).order_by(
+            'event__start_date').exists()
         form = SponsorForm(request.POST)
         if form.is_valid():
             if not check_recaptcha(request):
