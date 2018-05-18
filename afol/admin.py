@@ -9,9 +9,9 @@ import uuid
 
 
 class AttendeeAdmin(admin.ModelAdmin):
-    ordering = ("event__title", "user__last_name", "user__first_name")
+    ordering = ("event__title", "fan__last_name", "fan__first_name")
     list_filter = ("event", "role")
-    list_display = ('event', 'user', 'role')
+    list_display = ('event', 'fan', 'role')
     list_display_links = ('role', )
 
 
@@ -20,7 +20,7 @@ admin.site.register(Attendee, AttendeeAdmin)
 
 class BadgeAdmin(admin.ModelAdmin):
     list_filter = ("event", )
-    list_display = ('event', 'user', 'badge_name', 'date_ordered')
+    list_display = ('event', 'fan', 'badge_name', 'date_ordered')
 
 
 admin.site.register(Badge, BadgeAdmin)
@@ -38,7 +38,8 @@ def fix_order_password(modeladmin, request, queryset):
         obj_user.set_password(uuid.uuid4())
         obj_user.save()
         send_mail(subject="Brick Fiesta - New Account Created",
-                  message=loader.render_to_string("afol/new_account_email.html"),
+                  message=loader.render_to_string(
+                      "afol/new_account_email.html"),
                   from_email=settings.DEFAULT_FROM_EMAIL,
                   recipient_list=[obj_user.email])
 
@@ -62,7 +63,7 @@ admin.site.register(User, CustomUserAdmin)
 
 class ShirtAdmin(admin.ModelAdmin):
     list_filter = ('event', 'shirt_size')
-    list_display = ('event', 'user', 'shirt_size')
+    list_display = ('event', 'fan', 'shirt_size')
 
 
 admin.site.register(Shirt, ShirtAdmin)
