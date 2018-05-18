@@ -9,7 +9,7 @@
         <h3>{{ product_type.grouper }}</h3>
     </div>
         {% for product in product_type.list %}
-        <div class="col-4">
+        <div class="col-sm-4">
             {% include 'shop/product_card.html' %}
         </div>
         {% endfor %}
