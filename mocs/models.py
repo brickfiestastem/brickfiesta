@@ -2,6 +2,7 @@ from django.db import models
 from django.db.models import Count
 from event.models import Event, Space
 from django.contrib.auth.models import User
+from .utils import upload_path_mocs
 import uuid
 
 
@@ -21,6 +22,7 @@ class Category(BaseModel):
     description = models.TextField(verbose_name='Description')
     age_limit_min = models.IntegerField(verbose_name='Minimum Age Limit')
     age_limit_max = models.IntegerField(verbose_name='Maximum Age Limit')
+    logo = models.ImageField(upload_to=upload_path_mocs, null=True)
 
     def __str__(self):
         return self.title
