@@ -79,7 +79,7 @@ class OrderItem(BaseModel):
 
 
 class CartItem(BaseModel):
-    cart = models.CharField(max_length=64, default=uuid.uuid4())
+    cart = models.CharField(max_length=64, default=uuid.uuid4)
     first_name = models.CharField(max_length=32, blank=True)
     last_name = models.CharField(max_length=64, blank=True)
     email = models.EmailField(blank=True)
