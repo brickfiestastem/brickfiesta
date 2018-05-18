@@ -30,12 +30,12 @@ class UpcomingView(TemplateView):
 
 
 class SponsorListView(ListView):
-    queryset = Sponsor.objects.all()
+    queryset = Sponsor.objects.filter(status='approved').order_by('business')
     template_name = 'vendor/sponsor_list.html'
 
 
 class VendorListView(ListView):
-    queryset = Vendor.objects.all()
+    queryset = Vendor.objects.filter(status='approved').order_by('business')
     template_name = 'vendor/vendor_list.html'
 
 
@@ -63,12 +63,10 @@ class VendorRequestDetail(View):
         if step_two_business:
             business_id = Business.objects.filter(
                 user=self.request.user.id).first()
-        step_three_register = False
-        if step_two_business:
-            step_three_register = Product.objects.all().order_by(
+        step_three_register = Product.objects.all().order_by(
                 'event__start_date').filter(event__start_date__gt=today, product_type='vendor').exists()
         form = None
-        if step_three_register:
+        if step_two_business and step_three_register:
             form = VendorForm()
         step_four_status = False
         if step_one_signed_in:
@@ -92,9 +90,7 @@ class VendorRequestDetail(View):
         if step_two_business:
             business_id = Business.objects.filter(
                 user=self.request.user.id).first()
-        step_three_register = False
-        if step_two_business:
-            step_three_register = Product.objects.all().order_by('event__start_date').filter(
+        step_three_register = Product.objects.all().order_by('event__start_date').filter(
                 event__start_date__gt=today, product_type='vendor').exists()
         form = VendorForm(request.POST)
         if form.is_valid():
@@ -139,13 +135,11 @@ class SponsorRequestDetail(View):
         if step_two_business:
             business_id = Business.objects.filter(
                 user=self.request.user.id).first()
-        step_three_register = False
-        if step_two_business:
-            step_three_register = Product.objects.filter(
+        step_three_register = Product.objects.filter(
                 product_type='sponsor', event__start_date__gt=today).order_by(
                     'event__start_date').exists()
         form = None
-        if step_three_register:
+        if step_two_business and step_three_register:
             form = SponsorForm()
         step_four_status = False
         if step_one_signed_in:
@@ -170,9 +164,7 @@ class SponsorRequestDetail(View):
         if step_two_business:
             business_id = Business.objects.filter(
                 user=self.request.user.id).first()
-        step_three_register = False
-        if step_two_business:
-            step_three_register = Product.objects.filter(
+        step_three_register = Product.objects.filter(
                 product_type='sponsor', event__start_date__gt=today).order_by(
                     'event__start_date').exists()
         form = SponsorForm(request.POST)

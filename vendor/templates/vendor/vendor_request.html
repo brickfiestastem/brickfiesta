@@ -36,7 +36,7 @@
                 <h5 class="mb-1">Step Three: Pick Event and Number of Vendor Areas</h5>
             </div>
             {% if step_one_signed_in %}
-                {% if step_three_register %}
+                {% if step_two_business and step_three_register %}
                 <form method="post" action="">
                     {% csrf_token %}
                     {% include 'brickfiesta/form_formatting.html' %}
@@ -45,6 +45,8 @@
                         <input class="btn btn-primary" type="submit" value="Request"/>
                     </div>
                 </form>
+                {% elif step_three_register %}
+                <p class="mb-1">Upcoming vendor options are available at this time. Please complete your business information.</p>
                 {% else %}
                 <p class="mb-1">No upcoming vendor tables are available at this time.</p>
                 {% endif %}
@@ -62,6 +64,7 @@
             <thead>
             <tr>
                 <th scope="col">Event</th>
+                <th scope="col">Product</th>
                 <th scope="col">Number of Areas</th>
                 <th scope="col">Status</th>
             </tr>
@@ -70,6 +73,7 @@
             {% for event_status in step_four_status %}
             <tr>
                 <td>{{ event_status.event }}</td>
+                <td>{{ event_status.product }}</td>
                 <td>{{ event_status.product_quantity }}</td>
                 <td>{{ event_status.get_status_display }}</td>
             </tr>
