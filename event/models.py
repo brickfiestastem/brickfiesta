@@ -1,5 +1,5 @@
 from django.db import models
-from event.utils import upload_path_event, upload_path_activity
+from event.utils import upload_path_event, upload_path_activity, upload_path_space
 from django.contrib.auth.models import User
 import datetime
 import uuid
@@ -38,7 +38,8 @@ class Space(BaseModel):
     location = models.ForeignKey(Location, on_delete=models.CASCADE)
     name = models.CharField(verbose_name='Venue Space Name', max_length=64)
     description = models.TextField(verbose_name='Description')
-    map = models.ImageField(verbose_name='Map', null=True, blank=True)
+    map = models.ImageField(verbose_name='Map', null=True, blank=True,
+                            upload_to=upload_path_event)
     max_seating = models.IntegerField(verbose_name='Max Seating')
     latitude = models.FloatField(
         verbose_name='Latitude', blank=True, null=True)

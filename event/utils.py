@@ -10,6 +10,10 @@ def upload_path_event(instance, filename):
     return upload_path('events/', filename, instance.id)
 
 
+def upload_path_space(instance, filename):
+    return upload_path('spaces/', filename, instance.id)
+
+
 def upload_path(dir_name, filename, record_uuid):
     file_name, file_extension = os.path.splitext(filename)
     file_name = str(record_uuid)
