@@ -21,6 +21,8 @@ from django.contrib.auth.models import User
 from afol.models import Attendee
 from django.core.mail import send_mail
 from django.template import loader
+from django.contrib import messages
+from django.utils.html import format_html
 
 # Create your views here.
 
@@ -234,6 +236,7 @@ class ProductCartItemView(SingleObjectMixin, FormView):
                      last_name=form.cleaned_data['last_name'],
                      email=form.cleaned_data['email'],
                      product=self.object)
+            messages.info(request, format_html('Product added to <a href="{}">cart</a>.', reverse('shop:cart')))
         return super(ProductCartItemView, self).post(request, *args, **kwargs)
 
     def get_success_url(self):

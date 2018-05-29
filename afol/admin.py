@@ -1,7 +1,7 @@
 from django.contrib import admin
 from django.contrib.auth.models import User
 from django.contrib.auth.admin import UserAdmin
-from .models import Attendee, Badge, Profile, Shirt
+from .models import Attendee, Badge, Fan, Profile, Shirt
 from django.core.mail import send_mail
 from django.template import loader
 from django.conf import settings
@@ -26,6 +26,14 @@ class BadgeAdmin(admin.ModelAdmin):
 admin.site.register(Badge, BadgeAdmin)
 
 
+class FanAdmin(admin.ModelAdmin):
+    list_filter = ("user",)
+    list_display = ('user', 'first_name', 'last_name')
+
+
+admin.site.register(Fan, FanAdmin)
+
+
 class ProfileInline(admin.StackedInline):
     model = Profile
     can_delete = False
@@ -44,7 +52,7 @@ def fix_order_password(modeladmin, request, queryset):
                   recipient_list=[obj_user.email])
 
 
-fix_order_password.short_description = "Fix users order password problem"
+fix_order_password.short_description = "Fix users password problem"
 
 
 class CustomUserAdmin(UserAdmin):

@@ -9,8 +9,8 @@ class ProductBulletPointInline(admin.TabularInline):
 
 class ProductAdmin(admin.ModelAdmin):
     inlines = (ProductBulletPointInline,)
-    list_filter = ('event', 'product_type')
-    list_display = ('title', 'event', 'product_type', 'price')
+    list_filter = ('event', 'product_type', 'is_public')
+    list_display = ('title', 'event', 'product_type', 'is_public', 'price')
 
 
 admin.site.register(Product, ProductAdmin)

@@ -30,6 +30,9 @@ class Fan(BaseModel):
     last_name = models.CharField(max_length=128)
     birth_date = models.DateField(null=True, blank=True)
 
+    def __str__(self):
+        return "{} {} - {}".format(self.first_name, self.last_name, self.user.email)
+
 
 class Profile(BaseModel):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
@@ -48,6 +51,7 @@ class Profile(BaseModel):
 @receiver(post_save, sender=User)
 def create_or_update_user_profile(sender, instance, created, **kwargs):
     if created:
+        Fan.objects.create(user=instance, first_name=instance.first_name, last_name=instance.last_name)
         Profile.objects.create(user=instance)
     instance.profile.save()
 
@@ -61,7 +65,7 @@ class Attendee(BaseModel):
         ('attendee', 'Attendee'),
     )
     event = models.ForeignKey(Event, on_delete=models.CASCADE)
-    fan = models.ForeignKey(User, on_delete=models.CASCADE)
+    fan = models.ForeignKey(Fan, on_delete=models.CASCADE)
     role = models.CharField(max_length=16, choices=ROLES)
 
     class Meta:
@@ -69,7 +73,7 @@ class Attendee(BaseModel):
 
 
 class Badge(BaseModel):
-    fan = models.ForeignKey(User, on_delete=models.CASCADE)
+    fan = models.ForeignKey(Fan, on_delete=models.CASCADE)
     event = models.ForeignKey(Event, on_delete=models.CASCADE)
     badge_name = models.CharField(max_length=32, blank=False)
     rlug_name = models.CharField(max_length=32, blank=False)
@@ -87,7 +91,7 @@ class ShirtSizesAvailable(BaseModel):
 
 
 class Shirt(BaseModel):
-    fan = models.ForeignKey(User, on_delete=models.CASCADE)
+    fan = models.ForeignKey(Fan, on_delete=models.CASCADE)
     event = models.ForeignKey(Event, on_delete=models.CASCADE)
     shirt_size = models.CharField(max_length=8)
 

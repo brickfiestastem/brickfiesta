@@ -3,7 +3,13 @@
     <h3 class="card-header">{{ product.title }}</h3>
     <div class="card-body">
         <h5 class="card-title">{{ product.event.title }}</h5>
-        <h6 class="card-subtitle text-muted">{{ product.get_product_type_display }}</h6>
+        <p>{{ product.get_product_type_display }}</p>
+        {% if product.event.is_upcoming and not template_details and product.quantity_available != 0 %}
+        <a href="{% url 'shop:details' product.id %}" class="btn btn-info card-link">Details -
+            {{ product.price|currency }}</a>
+        {% else %}
+            {{ product.price|currency }}{% if product.quantity_available == 0 %} - Sold out!{% endif %}
+        {% endif %}
     </div>
     <img style="height: 200px; width: 100%; display: block;" src="{{ product.image.url }}"
          alt="Card image">
@@ -15,13 +21,4 @@
         <li class="list-group-item">{{ bullet.text }}</li>
         {% endfor %}
     </ul>
-    {% if product.event.is_upcoming and not template_details and product.quantity_available != 0 %}
-    <div class="card-body">
-        <a href="{% url 'shop:details' product.id %}" class="btn btn-info card-link">Details -
-            {{ product.price|currency }}</a>
-    </div>
-    {% else %}
-    <div class="card-body">{{ product.price|currency }}{% if product.quantity_available == 0 %} - Sold out!{% endif %}</div>
-    {% endif %}
-    <!-- div class="card-footer text-muted">{{ product.modified }}</div -->
 </div>
