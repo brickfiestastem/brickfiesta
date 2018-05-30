@@ -3,7 +3,7 @@
 {% block content %}
 <div class="row">
     {% for event in events_current %}
-    <div class="col-12">
+    <div class="col-sm-12">
         <h2>Current Event</h2>
         {% include 'event/event_jumbo.html' %}
     </div>
@@ -23,12 +23,20 @@
     </div>
     {% endfor %}
 </div>
-
 <h2>Current Sponsors</h2>
 <div class="row">
     {% for obj_sponsor in sponsor_list %}
     <div class="col-sm-4">
         {% include "vendor/sponsor_card.html" %}
+    </div>
+    {% endfor %}
+</div>
+<br />
+<h2>Current Vendors</h2>
+<div class="row">
+    {% for obj_vendor in vendor_list %}
+    <div class="col-sm-3">
+        {% include "vendor/vendor_card.html" %}
     </div>
     {% endfor %}
 </div>
@@ -46,12 +54,4 @@
     {% endfor %}
 </div>
 
-<h2>Current Vendors</h2>
-<div class="row">
-    {% for obj_vendor in vendor_list %}
-    <div class="col-sm-3">
-        {% include "vendor/vendor_card.html" %}
-    </div>
-    {% endfor %}
-</div>
 {% endblock content %}

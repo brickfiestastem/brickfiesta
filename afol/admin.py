@@ -6,6 +6,7 @@ from django.core.mail import send_mail
 from django.template import loader
 from django.conf import settings
 import uuid
+from django.contrib import messages
 
 
 class AttendeeAdmin(admin.ModelAdmin):
@@ -27,9 +28,7 @@ admin.site.register(Badge, BadgeAdmin)
 
 
 class FanAdmin(admin.ModelAdmin):
-    list_filter = ("user",)
     list_display = ('user', 'first_name', 'last_name')
-
 
 admin.site.register(Fan, FanAdmin)
 
@@ -50,6 +49,7 @@ def fix_order_password(modeladmin, request, queryset):
                       "afol/new_account_email.html"),
                   from_email=settings.DEFAULT_FROM_EMAIL,
                   recipient_list=[obj_user.email])
+        messages.info(request, "Email sent to %s." % obj_user.email)
 
 
 fix_order_password.short_description = "Fix users password problem"

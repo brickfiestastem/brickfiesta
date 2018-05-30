@@ -1,6 +1,7 @@
 from django.db import models
 from django.db.models import Count
 from event.models import Event, Space
+from afol.models import Fan
 from django.contrib.auth.models import User
 from .utils import upload_path_mocs
 from django import forms
@@ -38,7 +39,7 @@ class EventCategory(BaseModel):
     event = models.ForeignKey(Event, on_delete=models.CASCADE)
 
     def __str__(self):
-        return self.event.title + " " + self.category.title
+        return self.event.title + " - " + self.category.title
 
     class Meta:
         verbose_name_plural = 'EventCategories'
@@ -64,25 +65,29 @@ class Moc(BaseModel):
         (SIDE_LEFT, 'Left'),
         (SIDE_FRONT_LEFT, 'Front & Left'),
     )
-    creator = models.ForeignKey(User, on_delete=models.CASCADE, blank=True)
+    creator = models.ForeignKey(Fan, on_delete=models.CASCADE, blank=True)
     title = models.CharField(verbose_name='Title', unique=True, max_length=64)
     description = models.TextField(verbose_name='Description')
-    height = models.IntegerField(verbose_name='Height', default=10, help_text="<ul><li>Enter in inches rounded up to the nearest inch.</li></ul>")
-    length = models.IntegerField(verbose_name='Length', default=10, help_text="<ul><li>Enter in inches rounded up to the nearest inch.</li><li>This value is important as the software will not calculate the correct table space if this value is inaccurate.</li></ul>")
-    width = models.IntegerField(verbose_name='Width', default=10, help_text="<ul><li>Enter in inches rounded up to the nearest inch.</li><li>This value is important as the software will not calculate the correct table space if this value is inaccurate.</li></ul>")
-    viewable_sides = models.IntegerField(verbose_name='Viewable Sides', choices=SIDES, default=SIDE_FRONT)
-    url_photo = models.URLField(verbose_name='URL Photo')
-    url_flickr = models.URLField(verbose_name='URL Flicker')
-    year_build = models.DateField(verbose_name='Year Build')
-    year_retired = models.DateField(verbose_name='Year Retired')
-    public = models.BooleanField(verbose_name='Display Publicly')
+    height = models.IntegerField(verbose_name='Height', default=10,
+                                 help_text="<ul><li>Enter in inches rounded up to the nearest inch.</li></ul>")
+    length = models.IntegerField(verbose_name='Length', default=10,
+                                 help_text="<ul><li>Enter in inches rounded up to the nearest inch.</li><li>This value is important as the software will not calculate the correct table space if this value is inaccurate.</li></ul>")
+    width = models.IntegerField(verbose_name='Width', default=10,
+                                help_text="<ul><li>Enter in inches rounded up to the nearest inch.</li><li>This value is important as the software will not calculate the correct table space if this value is inaccurate.</li></ul>")
+    viewable_sides = models.IntegerField(
+        verbose_name='Viewable Sides', choices=SIDES, default=SIDE_FRONT)
+    url_photo = models.URLField(verbose_name='URL Photo', blank=True, null=True)
+    url_flickr = models.URLField(verbose_name='URL Flicker', blank=True, null=True)
+    year_built = models.DateField(verbose_name='Year Build')
+    year_retired = models.DateField(verbose_name='Year Retired', blank=True, null=True)
+    is_public = models.BooleanField(verbose_name='Display Publicly')
 
     def __str__(self):
         return self.title
 
 
 class EventMoc(BaseModel):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    fan = models.ForeignKey(Fan, on_delete=models.CASCADE)
     category = models.ForeignKey(EventCategory, on_delete=models.CASCADE)
     moc = models.ForeignKey(Moc, on_delete=models.CASCADE)
 
@@ -121,7 +126,7 @@ class Vote(BaseModel):
 
 
 class Layout(BaseModel):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    fan = models.ForeignKey(Fan, on_delete=models.CASCADE)
     category = models.ForeignKey(EventCategory, on_delete=models.CASCADE)
     title = models.CharField(verbose_name='Title', max_length=64)
     space = models.ForeignKey(Space, on_delete=models.CASCADE)

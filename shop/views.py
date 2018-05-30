@@ -18,7 +18,7 @@ import urllib.error
 import uuid
 from django.core.mail import EmailMessage
 from django.contrib.auth.models import User
-from afol.models import Attendee
+from afol.models import Fan, Attendee
 from django.core.mail import send_mail
 from django.template import loader
 from django.contrib import messages
@@ -111,21 +111,28 @@ class CartCheckoutView(View):
                 obj_order_item.save()
                 list_message.append(
                     "Order item " + obj_order_item.product.title + " associated with " + obj_item.email + ".")
+
+                obj_fan, is_created = Fan.objects.get_or_create(user=obj_user,
+                                                    first_name=obj_item.first_name,
+                                                    last_name=obj_item.last_name)
+                if is_created:
+                    obj_fan.save()
+
                 if obj_item.product.product_type == 'vendor':
                     obj_attendee, is_created = Attendee.objects.get_or_create(event=obj_item.product.event,
-                                                                              user=obj_user,
+                                                                              fan=obj_fan,
                                                                               role='vendor')
                     if is_created:
                         obj_attendee.save()
                 if obj_item.product.product_type == 'sponsor':
                     obj_attendee, is_created = Attendee.objects.get_or_create(event=obj_item.product.event,
-                                                                              user=obj_user,
+                                                                              fan=obj_fan,
                                                                               role='sponsor')
                     if is_created:
                         obj_attendee.save()
                 if obj_item.product.product_type == 'convention':
                     obj_attendee, is_created = Attendee.objects.get_or_create(event=obj_item.product.event,
-                                                                              user=obj_user,
+                                                                              fan=obj_fan,
                                                                               role='attendee')
                     if is_created:
                         obj_attendee.save()
@@ -236,7 +243,8 @@ class ProductCartItemView(SingleObjectMixin, FormView):
                      last_name=form.cleaned_data['last_name'],
                      email=form.cleaned_data['email'],
                      product=self.object)
-            messages.info(request, format_html('Product added to <a href="{}">cart</a>.', reverse('shop:cart')))
+            messages.info(request, format_html(
+                'Product added to <a href="{}">cart</a>.', reverse('shop:cart')))
         return super(ProductCartItemView, self).post(request, *args, **kwargs)
 
     def get_success_url(self):

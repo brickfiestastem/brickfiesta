@@ -41,11 +41,12 @@ class Product(BaseModel):
     image = models.ImageField(upload_to=upload_path_product, null=True)
     quantity_available = models.IntegerField(
         verbose_name='Quantity Available', default=-1)
-    has_tshirt = models.BooleanField(verbose_name="Has T-Shirt?", default=False)
+    has_tshirt = models.BooleanField(
+        verbose_name="Has T-Shirt?", default=False)
     has_badge = models.BooleanField(verbose_name="Has Badge?", default=False)
-    is_public = models.BooleanField(verbose_name="Is Public on Site?", default=True)
+    is_public = models.BooleanField(
+        verbose_name="Is Public on Site?", default=True)
     objects = ProductManager()
-
 
     class Meta:
         ordering = ['product_type', 'title']

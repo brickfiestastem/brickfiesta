@@ -9,15 +9,19 @@ from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
 
 
-
 class CategoriesListView(ListView):
     queryset = Category.objects.all()
     template_name = 'mocs/categories.html'
 
 
 class CategoryListView(ListView):
-    queryset = Category.objects.all()
+    model = Moc
     template_name = 'mocs/category.html'
+    paginate_by = 10
+
+    def get_queryset(self):
+        return EventMoc.objects.filter(category__in=EventCategory.objects.filter(category_id=self.kwargs['pk'])).distinct()
+
 
 
 class EventListView(ListView):
@@ -27,7 +31,8 @@ class EventListView(ListView):
 
 class EventCategoriesListView(ListView):
     def get(self, request, event_id):
-        obj_eventcategory = EventCategory.objects.filter(event__id__exact=event_id)
+        obj_eventcategory = EventCategory.objects.filter(
+            event__id__exact=event_id)
         return render(request,
                       'mocs/categories.html',
                       {'object_list': obj_eventcategory, })
@@ -39,7 +44,7 @@ class MocDetail(DetailView):
     def get_context_data(self, **kwargs):
         context = super(MocDetail, self).get_context_data(**kwargs)
         context['moc_owner'] = (
-                self.object.user.id == self.request.user.id)
+            self.object.user.id == self.request.user.id)
         return context
 
 

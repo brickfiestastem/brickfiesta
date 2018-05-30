@@ -31,7 +31,7 @@ class Fan(BaseModel):
     birth_date = models.DateField(null=True, blank=True)
 
     def __str__(self):
-        return "{} {} - {}".format(self.first_name, self.last_name, self.user.email)
+        return "{} {}".format(self.first_name, self.last_name)
 
 
 class Profile(BaseModel):
@@ -51,7 +51,8 @@ class Profile(BaseModel):
 @receiver(post_save, sender=User)
 def create_or_update_user_profile(sender, instance, created, **kwargs):
     if created:
-        Fan.objects.create(user=instance, first_name=instance.first_name, last_name=instance.last_name)
+        Fan.objects.create(
+            user=instance, first_name=instance.first_name, last_name=instance.last_name)
         Profile.objects.create(user=instance)
     instance.profile.save()
 
@@ -70,6 +71,9 @@ class Attendee(BaseModel):
 
     class Meta:
         unique_together = ("event", "fan", "role")
+
+    def __str__(self):
+        return "{} {} - {}, {}".format(self.fan.first_name, self.fan.last_name, self.get_role_display(), self.event.title)
 
 
 class Badge(BaseModel):
