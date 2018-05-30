@@ -1,0 +1,54 @@
+{% extends "brickfiesta/base.html" %}
+
+{% block content %}
+<div class="col-sm-12">
+    <h2>My Own Creation Details</h2>
+    <h2>{{ object.title }}</h2>
+    <h4>By: {{ object.creator.first_name }}</h4>
+    <p align="justified">{{ object.description }}</p>
+    <ul>
+        {% if object.url_photo %}
+        <li><a href="{{ object.url_photo }}" target="_blank">{{ object.url_photo }}</a></li>
+        {% endif %}
+        {% if object.url_flickr %}
+        <li><a href="{{ object.url_flickr }}" target="_blank">{{ object.url_flickr }}</a></li>
+        {% endif %}
+    </ul>
+    <table class="table">
+        <caption>MOC Stats</caption>
+        <thead class="thead-dark">
+            <tr>
+                <th>Stat</th>
+                <th>Value</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Best Viewing Angle</td>
+                <td>{{ object.get_viewable_sides_display }}</td>
+            </tr>
+            <tr>
+                <td>Year Build</td>
+                <td>{{ object.year_built|date:'Y' }}</td>
+            </tr>
+            <tr>
+                <td>Year Retired</td>
+                <td>{{ object.year_retired|date:'Y'|default:'N/A' }}</td>
+            </tr>
+            <tr>
+                <td>Height</td>
+                <td>{{ object.height }}</td>
+            </tr>
+            <tr>
+                <td>Width</td>
+                <td>{{ object.width }}</td>
+            </tr>
+            <tr>
+                <td>Length</td>
+                <td>{{ object.length }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+</div>
+{% endblock content %}

@@ -1,14 +1,20 @@
 {% extends "brickfiesta/base.html" %}
-
+{% load template_extras %}
 {% block content %}
 <ul class="row">
     <div class="col-12">
-        <h1>### Category</h1>
+        <h1><a href="{% url 'mocs:index' %}">{{ obj_event.event.title }}</a> - <a href="{% url 'mocs:eventcategories' obj_event.event.id %}">{{ obj_event.category.title }}</a> MOCs</h1>
     </div>
-    {% for obj_moc in object_list %}
+
     <ul class="list-unstyled col-sm-12">
-        {% include "mocs/moc_card.html" %}
+        {% for obj_eventmocs in object_list %}
+            <li class="media">
+              <div class="media-body">
+                  <h5 class="mt-0"><a href="{% url 'mocs:details' obj_eventmocs.moc.id %}">{{ obj_eventmocs.moc.title }}</a></h5>
+                <p>{{ obj_eventmocs.moc.description }}</p>
+              </div>
+            </li>
+        {% endfor %}
     </ul>
-    {% endfor %}
 </div>
 {% endblock content %}

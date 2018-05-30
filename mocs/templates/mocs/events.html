@@ -1,0 +1,21 @@
+{% extends "brickfiesta/base.html" %}
+{% load template_extras %}
+{% block content %}
+<ul class="row">
+    <div class="col-12">
+        <h1>Events - My Own Creations (MOCs)</h1>
+    </div>
+    <ul class="list-unstyled col-sm-12">
+        {% for obj_event in object_list %}
+        <li class="media">
+          <img class="align-self-center mr-3" src="{{ ob_event.logo.url }}" alt="{{ obj_event.title }} Image">
+          <div class="media-body">
+              <h5 class="mt-0"><a href="{% url 'mocs:eventcategories' obj_event.id %}">{{ obj_event.title }}</a></h5>
+              <p>{{ obj_event.theme }}</p>
+          </div>
+        </li>
+        {% endfor %}
+    </ul>
+
+</div>
+{% endblock content %}

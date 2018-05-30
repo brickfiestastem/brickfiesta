@@ -2,40 +2,42 @@ from django.views.generic.list import ListView
 from django.views.generic import DetailView
 from django.views.generic.edit import CreateView, UpdateView
 from django.views.generic.base import View, TemplateView
+from afol.models import Fan
 from mocs.models import Category, Moc, EventMoc, EventCategory
+from event.models import Event
 from django.shortcuts import render, redirect
 from shop.utils import check_recaptcha
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
 
 
-class CategoriesListView(ListView):
-    queryset = Category.objects.all()
-    template_name = 'mocs/categories.html'
-
-
 class CategoryListView(ListView):
     model = Moc
     template_name = 'mocs/category.html'
-    paginate_by = 10
+    paginate_by = 20
 
-    def get_queryset(self):
-        return EventMoc.objects.filter(category__in=EventCategory.objects.filter(category_id=self.kwargs['pk'])).distinct()
-
+    def get(self, request, event_id, category_id):
+        obj_eventcategory = EventCategory.objects.filter(
+            event=event_id,
+            category=category_id).get()
+        obj_mocs = EventMoc.objects.filter(category=obj_eventcategory, moc__is_public=True).distinct()
+        return render(request,
+                      'mocs/category.html',
+                      {'object_list': obj_mocs, 'obj_event': obj_eventcategory})
 
 
 class EventListView(ListView):
-    queryset = Category.objects.all()
-    template_name = 'mocs/category.html'
+    queryset = Event.objects.all().order_by('-start_date')
+    template_name = 'mocs/events.html'
 
 
 class EventCategoriesListView(ListView):
     def get(self, request, event_id):
         obj_eventcategory = EventCategory.objects.filter(
-            event__id__exact=event_id)
+            event__id__exact=event_id).order_by('category__title')
         return render(request,
                       'mocs/categories.html',
-                      {'object_list': obj_eventcategory, })
+                      {'object_list': obj_eventcategory, 'obj_event': obj_eventcategory.first()})
 
 
 class MocDetail(DetailView):
@@ -43,8 +45,9 @@ class MocDetail(DetailView):
 
     def get_context_data(self, **kwargs):
         context = super(MocDetail, self).get_context_data(**kwargs)
-        context['moc_owner'] = (
-            self.object.user.id == self.request.user.id)
+        obj_fan = Fan.objects.filter(id=self.object.creator.id).get()
+        if obj_fan.user == self.request.user:
+            context['moc_owner'] = True
         return context
 
 

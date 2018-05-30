@@ -1,14 +1,14 @@
 from django.urls import path
-from mocs.views import CategoriesListView, CategoryListView, EventCategoriesListView, EventListView, MocAddView, MocDetail, MocUpdateView
+from mocs.views import CategoryListView, EventCategoriesListView, EventListView, MocAddView, MocDetail, MocUpdateView
 
 app_name = 'mocs'
 
 urlpatterns = [
-    path('', CategoriesListView.as_view(), name='index'),
-    path('events/', EventListView.as_view(), name='events'),
-    path('category/<uuid:pk>/', CategoryListView.as_view(), name='category'),
-    path('eventcategories/<uuid:pk>/',
+    path('', EventListView.as_view(), name='index'),
+    path('eventcategories/<uuid:event_id>/',
          EventCategoriesListView.as_view(), name='eventcategories'),
+    path('category/<uuid:event_id>/<uuid:category_id>/',
+         CategoryListView.as_view(), name='category'),
     path('details/<uuid:pk>/', MocDetail.as_view(), name='details'),
     path('edit/<uuid:pk>/', MocUpdateView.as_view(), name='edit'),
     path('add/', MocAddView.as_view(), name='add'),

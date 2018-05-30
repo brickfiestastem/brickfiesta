@@ -23,8 +23,8 @@ class BaseModel(models.Model):
 class Category(BaseModel):
     title = models.CharField(verbose_name='Title', unique=True, max_length=64)
     description = models.TextField(verbose_name='Description')
-    age_limit_min = models.IntegerField(verbose_name='Minimum Age Limit')
-    age_limit_max = models.IntegerField(verbose_name='Maximum Age Limit')
+    age_limit_min = models.IntegerField(verbose_name='Minimum Age Limit', default=0)
+    age_limit_max = models.IntegerField(verbose_name='Maximum Age Limit', default=128)
     logo = models.ImageField(upload_to=upload_path_mocs, blank=True, null=True)
 
     def __str__(self):
