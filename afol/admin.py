@@ -30,6 +30,7 @@ admin.site.register(Badge, BadgeAdmin)
 class FanAdmin(admin.ModelAdmin):
     list_display = ('user', 'first_name', 'last_name')
 
+
 admin.site.register(Fan, FanAdmin)
 
 

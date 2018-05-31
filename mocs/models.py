@@ -23,8 +23,10 @@ class BaseModel(models.Model):
 class Category(BaseModel):
     title = models.CharField(verbose_name='Title', unique=True, max_length=64)
     description = models.TextField(verbose_name='Description')
-    age_limit_min = models.IntegerField(verbose_name='Minimum Age Limit', default=0)
-    age_limit_max = models.IntegerField(verbose_name='Maximum Age Limit', default=128)
+    age_limit_min = models.IntegerField(
+        verbose_name='Minimum Age Limit', default=0)
+    age_limit_max = models.IntegerField(
+        verbose_name='Maximum Age Limit', default=128)
     logo = models.ImageField(upload_to=upload_path_mocs, blank=True, null=True)
 
     def __str__(self):
@@ -76,10 +78,13 @@ class Moc(BaseModel):
                                 help_text="<ul><li>Enter in inches rounded up to the nearest inch.</li><li>This value is important as the software will not calculate the correct table space if this value is inaccurate.</li></ul>")
     viewable_sides = models.IntegerField(
         verbose_name='Viewable Sides', choices=SIDES, default=SIDE_FRONT)
-    url_photo = models.URLField(verbose_name='URL Photo', blank=True, null=True)
-    url_flickr = models.URLField(verbose_name='URL Flicker', blank=True, null=True)
+    url_photo = models.URLField(
+        verbose_name='URL Photo', blank=True, null=True)
+    url_flickr = models.URLField(
+        verbose_name='URL Flicker', blank=True, null=True)
     year_built = models.DateField(verbose_name='Year Build')
-    year_retired = models.DateField(verbose_name='Year Retired', blank=True, null=True)
+    year_retired = models.DateField(
+        verbose_name='Year Retired', blank=True, null=True)
     is_public = models.BooleanField(verbose_name='Display Publicly')
 
     def __str__(self):

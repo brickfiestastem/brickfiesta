@@ -113,8 +113,8 @@ class CartCheckoutView(View):
                     "Order item " + obj_order_item.product.title + " associated with " + obj_item.email + ".")
 
                 obj_fan, is_created = Fan.objects.get_or_create(user=obj_user,
-                                                    first_name=obj_item.first_name,
-                                                    last_name=obj_item.last_name)
+                                                                first_name=obj_item.first_name,
+                                                                last_name=obj_item.last_name)
                 if is_created:
                     obj_fan.save()
 

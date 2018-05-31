@@ -20,7 +20,8 @@ class CategoryListView(ListView):
         obj_eventcategory = EventCategory.objects.filter(
             event=event_id,
             category=category_id).get()
-        obj_mocs = EventMoc.objects.filter(category=obj_eventcategory, moc__is_public=True).distinct()
+        obj_mocs = EventMoc.objects.filter(
+            category=obj_eventcategory, moc__is_public=True).distinct()
         return render(request,
                       'mocs/category.html',
                       {'object_list': obj_mocs, 'obj_event': obj_eventcategory})

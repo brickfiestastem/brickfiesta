@@ -52,7 +52,8 @@ def reprocess_order(modeladmin, request, queryset):
                                                                           role='attendee')
                 if is_created:
                     obj_attendee.save()
-            messages.info(request, "Added fan {} and attendee {}.".format(str(obj_fan), str(obj_attendee)))
+            messages.info(request, "Added fan {} and attendee {}.".format(
+                str(obj_fan), str(obj_attendee)))
 
 
 reprocess_order.short_description = "Reprocess order items for fan and attendee linkage"
@@ -63,8 +64,6 @@ class OrderAdmin(admin.ModelAdmin):
     inlines = (OrderItemInLine, )
     list_display = ('id', 'user', 'created')
     actions = [reprocess_order]
-
-
 
 
 admin.site.register(Order, OrderAdmin)
