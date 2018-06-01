@@ -42,7 +42,7 @@ admin.site.register(Moc, MocAdmin)
 
 class VoteAdmin(admin.ModelAdmin):
     # List display for the admin
-    list_display = ('user', 'moc', 'category', 'value')
+    list_display = ('fan', 'moc', 'category', 'value')
 
 
 admin.site.register(Vote, VoteAdmin)

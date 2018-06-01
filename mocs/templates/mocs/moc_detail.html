@@ -2,8 +2,8 @@
 
 {% block content %}
 <div class="col-sm-12">
-    <h2>My Own Creation Details</h2>
-    <h2>{{ object.title }}</h2>
+    <h2>My Own Creation Details (MOC)</h2>
+    <h1>{{ object.title }}</h1>
     <h4>By: {{ object.creator.first_name }}</h4>
     <p align="justified">{{ object.description }}</p>
     <ul>
@@ -14,8 +14,8 @@
         <li><a href="{{ object.url_flickr }}" target="_blank">{{ object.url_flickr }}</a></li>
         {% endif %}
     </ul>
+    <h3>MOC Stats</h3>
     <table class="table">
-        <caption>MOC Stats</caption>
         <thead class="thead-dark">
             <tr>
                 <th>Stat</th>

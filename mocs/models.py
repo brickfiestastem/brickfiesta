@@ -67,7 +67,7 @@ class Moc(BaseModel):
         (SIDE_LEFT, 'Left'),
         (SIDE_FRONT_LEFT, 'Front & Left'),
     )
-    creator = models.ForeignKey(Fan, on_delete=models.CASCADE, blank=True)
+    creator = models.ForeignKey(Fan, on_delete=models.CASCADE, default=uuid.uuid4)
     title = models.CharField(verbose_name='Title', unique=True, max_length=64)
     description = models.TextField(verbose_name='Description')
     height = models.IntegerField(verbose_name='Height', default=10,
@@ -85,20 +85,27 @@ class Moc(BaseModel):
     year_built = models.DateField(verbose_name='Year Build')
     year_retired = models.DateField(
         verbose_name='Year Retired', blank=True, null=True)
-    is_public = models.BooleanField(verbose_name='Display Publicly')
+    is_public = models.BooleanField(verbose_name='Display Publicly', default=False)
+
+    class Meta:
+        verbose_name_plural = 'MOCs'
 
     def __str__(self):
         return self.title
 
 
 class EventMoc(BaseModel):
-    fan = models.ForeignKey(Fan, on_delete=models.CASCADE)
+    fan = models.ForeignKey(Fan, on_delete=models.CASCADE, default=uuid.uuid4)
     category = models.ForeignKey(EventCategory, on_delete=models.CASCADE)
     moc = models.ForeignKey(Moc, on_delete=models.CASCADE)
 
     # TODO: Find a way to make the event and moc unique while still using eventcategory
     class Meta:
+        verbose_name_plural = 'EventMOCs'
         unique_together = ('category', 'moc')
+
+    def __str__(self):
+        return "{} {} {}".format(self.fan, self.category, self.moc.title)
 
 
 class VoteManager(models.Manager):
@@ -114,13 +121,13 @@ class VoteManager(models.Manager):
 
 
 class Vote(BaseModel):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    fan = models.ForeignKey(Fan, on_delete=models.CASCADE, default=uuid.uuid4)
     moc = models.ForeignKey(Moc, on_delete=models.CASCADE)
     category = models.ForeignKey(EventCategory, on_delete=models.CASCADE)
     value = models.IntegerField(default=1)
 
     class Meta:
-        unique_together = ('user', 'category')
+        unique_together = ('fan', 'category')
 
     objects = VoteManager()
 
@@ -131,7 +138,7 @@ class Vote(BaseModel):
 
 
 class Layout(BaseModel):
-    fan = models.ForeignKey(Fan, on_delete=models.CASCADE)
+    fan = models.ForeignKey(Fan, on_delete=models.CASCADE, default=uuid.uuid4)
     category = models.ForeignKey(EventCategory, on_delete=models.CASCADE)
     title = models.CharField(verbose_name='Title', max_length=64)
     space = models.ForeignKey(Space, on_delete=models.CASCADE)

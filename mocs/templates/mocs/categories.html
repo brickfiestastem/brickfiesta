@@ -9,7 +9,9 @@
     <ul class="list-unstyled col-sm-12">
         {% for obj_eventcategory in object_list %}
             <li class="media">
+                {% if obj_eventcategory.category.logo %}
               <img class="align-self-center mr-3" src="{{ obj_eventcategory.category.logo.url }}" alt="{{ obj_eventcategory.category.title }} Image">
+                {% endif %}
               <div class="media-body">
                   <h5 class="mt-0"><a href="{% url 'mocs:category' obj_eventcategory.event.id obj_eventcategory.category.id %}">{{ obj_eventcategory.category.title }}</a></h5>
                 <p>{{ obj_eventcategory.category.description }}</p>
