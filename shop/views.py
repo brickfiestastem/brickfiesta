@@ -82,7 +82,8 @@ class CartCheckoutView(View):
                     list_message.append(
                         "Created a user for " + obj_item.email + ". Please check your email for password instructions.")
                     send_mail(subject="Brick Fiesta - New Account Created",
-                              message=loader.render_to_string("afol/new_account_email.html"),
+                              message=loader.render_to_string(
+                                  "afol/new_account_email.html"),
                               from_email=settings.DEFAULT_FROM_EMAIL,
                               recipient_list=[obj_item.email])
                 if obj_order is None:

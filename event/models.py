@@ -1,6 +1,7 @@
 from django.db import models
 from event.utils import upload_path_event, upload_path_activity, upload_path_space
 from django.contrib.auth.models import User
+from django.utils.text import Truncator
 import datetime
 import uuid
 
@@ -94,6 +95,34 @@ class Event(BaseModel):
 
     def __str__(self):
         return self.title
+
+    @property
+    def is_current(self):
+        today = datetime.date.today()
+        return self.start_date <= today and self.end_date >= today
+
+    @property
+    def is_past(self):
+        today = datetime.date.today()
+        return self.end_date < today
+
+    @property
+    def is_upcoming(self):
+        today = datetime.date.today()
+        return self.start_date > today
+
+
+class Announcement(BaseModel):
+    event = models.ForeignKey(Event, on_delete=models.CASCADE)
+    description = models.TextField(verbose_name='Description')
+    start_date = models.DateField(verbose_name='Start Date')
+    end_date = models.DateField(verbose_name='End Date')
+
+    class Meta:
+        ordering = ['start_date']
+
+    def __str__(self):
+        return Truncator(self.description).words(7)
 
     @property
     def is_current(self):

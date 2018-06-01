@@ -38,7 +38,8 @@ def fix_order_password(modeladmin, request, queryset):
         obj_user.set_password(uuid.uuid4())
         obj_user.save()
         send_mail(subject="Brick Fiesta - New Account Created",
-                  message=loader.render_to_string("afol/new_account_email.html"),
+                  message=loader.render_to_string(
+                      "afol/new_account_email.html"),
                   from_email=settings.DEFAULT_FROM_EMAIL,
                   recipient_list=[obj_user.email])
 

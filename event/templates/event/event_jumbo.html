@@ -10,6 +10,11 @@
     </div>
     <hr class="my-4">
     <p>{{ event.description|linebreaks }}</p>
+    {% for announcement in announcements %}
+        {% if announcement.event == event %}
+            <p class="alert alert-danger" role="alert">{{ announcement.description }}</p>
+        {% endif %}
+    {% endfor %}
     <p class="lead">
         <a class="btn btn-primary btn-lg" href="{% url 'event:details' event.id %}" role="button">More Information</a>
         {% if event.is_upcoming %}
