@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from event.models import Event, Location
+from event.models import Announcement, Event, Location
 from shop.utils import check_recaptcha
 from vendor.models import Sponsor, Vendor
 from django.views.generic import DetailView, TemplateView
@@ -15,6 +15,7 @@ class FrontPage(TemplateView):
     def get_context_data(self, **kwargs):
         today = datetime.date.today()
         context = super().get_context_data(**kwargs)
+        context['announcements'] = Announcement.objects.filter(end_date__gte=today)
         context['events_current'] = Event.objects.all().order_by(
             '-start_date').filter(start_date__lte=today, end_date__gte=today)
         obj_events_upcoming = Event.objects.all().order_by(
@@ -47,9 +48,11 @@ class EventDetail(DetailView):
     model = Event
 
     def get_context_data(self, **kwargs):
+        today = datetime.date.today()
         # Call the base implementation first to get a context
         context = super().get_context_data(**kwargs)
         # Add in a QuerySet of all the sponsors and vendors
+        context['announcements'] = Announcement.objects.filter(event=self.object, end_date__gte=today)
         context['sponsor_list'] = Sponsor.objects.filter(
             event=self.object, status='approved')
         context['vendor_list'] = Vendor.objects.filter(

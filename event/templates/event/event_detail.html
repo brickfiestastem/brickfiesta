@@ -15,6 +15,11 @@
 </div>
 <div>
     <p>{{ event.description|linebreaks }}</p>
+    {% for announcement in announcements %}
+        {% if announcement.event == event %}
+    <p class="alert alert-danger font-weight-bold" role="alert">{{ announcement.description }}</p>
+        {% endif %}
+    {% endfor %}
     <p class="alert alert-info" align="right">Tag us on social media: #{{ event.hashtag }}</p>
 </div>
 <h2>Sponsors</h2>
