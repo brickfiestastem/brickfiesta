@@ -1,0 +1,14 @@
+{% extends "brickfiesta/base.html" %}
+{% block content %}
+
+<h1>Event Planning</h1>
+<ul>
+{% for object in object_list %}
+    <li>{{ object.title }}
+        <ul>
+            <li><a href="{% url 'planning:shirt' object.id %}">Shirt Summary</a></li>
+        </ul>
+    </li>
+{% endfor %}
+</ul>
+{% endblock content %}

@@ -4,6 +4,9 @@
 <div class="col-sm-12">
     <h2>My Own Creation Details (MOC)</h2>
     <h1>{{ object.title }}</h1>
+    {% if moc_owner %}
+            <a class="btn btn-info" href="{% url 'mocs:edit' object.id %}">Edit MOC Information</a>
+    {% endif %}
     <h4>By: {{ object.creator.first_name }}</h4>
     <p align="justified">{{ object.description }}</p>
     <ul>

@@ -67,7 +67,8 @@ class Moc(BaseModel):
         (SIDE_LEFT, 'Left'),
         (SIDE_FRONT_LEFT, 'Front & Left'),
     )
-    creator = models.ForeignKey(Fan, on_delete=models.CASCADE, default=uuid.uuid4)
+    creator = models.ForeignKey(
+        Fan, on_delete=models.CASCADE, default=uuid.uuid4)
     title = models.CharField(verbose_name='Title', unique=True, max_length=64)
     description = models.TextField(verbose_name='Description')
     height = models.IntegerField(verbose_name='Height', default=10,
@@ -85,7 +86,8 @@ class Moc(BaseModel):
     year_built = models.DateField(verbose_name='Year Build')
     year_retired = models.DateField(
         verbose_name='Year Retired', blank=True, null=True)
-    is_public = models.BooleanField(verbose_name='Display Publicly', default=False)
+    is_public = models.BooleanField(
+        verbose_name='Display Publicly', default=False)
 
     class Meta:
         verbose_name_plural = 'MOCs'

@@ -85,19 +85,31 @@ class Badge(BaseModel):
     region = models.CharField(max_length=32, blank=False)
     date_ordered = models.DateField(verbose_name='Date Ordered', null=True)
 
-
-class ShirtSizesAvailable(BaseModel):
-    event = models.ForeignKey(Event, on_delete=models.CASCADE)
-    shirt_size = models.CharField(max_length=8)
-
     class Meta:
-        unique_together = ("event", "shirt_size")
+        unique_together = ("event", "fan")
 
 
 class Shirt(BaseModel):
+    SHIRT_SIZES = (
+        ('AS', 'Adult S'),
+        ('AM', 'Adult M'),
+        ('AL', 'Adult L'),
+        ('AXL', 'Adult XL'),
+        ('A2XL', 'Adult 2XL'),
+        ('A3XL', 'Adult 3XL'),
+        ('A4XL', 'Adult 4XL'),
+        ('A5XL', 'Adult 5XL'),
+        ('YXS', 'Youth XS'),
+        ('YS', 'Youth S'),
+        ('YM', 'Youth M'),
+        ('YL', 'Youth L'),
+    )
     fan = models.ForeignKey(Fan, on_delete=models.CASCADE, default=uuid.uuid4)
     event = models.ForeignKey(Event, on_delete=models.CASCADE)
-    shirt_size = models.CharField(max_length=8)
+    shirt_size = models.CharField(max_length=8, choices=SHIRT_SIZES)
 
     class Meta:
         unique_together = ("event", "fan")
+
+    def __str__(self):
+        return "{} {} - {}, {}".format(self.fan.first_name, self.fan.last_name, self.get_shirt_size_display(), self.event.title)

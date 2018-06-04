@@ -20,7 +20,6 @@ admin.site.register(Product, ProductAdmin)
 
 class OrderItemInLine(admin.TabularInline):
     model = OrderItem
-    max_num = 1
 
 
 def reprocess_order(modeladmin, request, queryset):

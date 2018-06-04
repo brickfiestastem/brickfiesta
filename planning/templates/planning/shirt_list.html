@@ -1,0 +1,21 @@
+{% extends "brickfiesta/base.html" %}
+{% block content %}
+
+<h1>Shirt Summary for {{ event.title }}</h1>
+<table class="table">
+        <thead class="thead-dark">
+            <tr>
+                <th>Size</th>
+                <th>Quantity</th>
+            </tr>
+        </thead>
+        <tbody>
+{% for object in object_list %}
+            <tr>
+                <td>{{ object.shirt_size }}</td>
+                <td>{{ object.shirt_count }}</td>
+            </tr>
+{% endfor %}
+        </tbody>
+</table>
+{% endblock content %}

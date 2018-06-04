@@ -11,8 +11,8 @@ admin.site.register(Activity, ActivityAdmin)
 
 class AnnouncementsInLine(admin.TabularInline):
     model = Announcement
-    min_num = 1
     extra = 0
+
 
 class EventAdmin(admin.ModelAdmin):
     # List display for the admin

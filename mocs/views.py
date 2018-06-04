@@ -9,6 +9,7 @@ from django.shortcuts import render, redirect
 from shop.utils import check_recaptcha
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
+from mocs.forms import MOCsForm
 
 
 class CategoryListView(ListView):
@@ -57,7 +58,7 @@ class MocAddView(CreateView):
     model = Moc
     fields = ('title', 'description', 'height', 'length',
               'width', 'viewable_sides', 'url_photo', 'url_flickr',
-              'year_build', 'year_retired')
+              'year_built', 'year_retired')
     success_url = '/mocs/afol'
 
     def form_valid(self, form):
@@ -72,9 +73,10 @@ class MocAddView(CreateView):
 @method_decorator(login_required, name='dispatch')
 class MocUpdateView(UpdateView):
     model = Moc
+    form_class = MOCsForm
     fields = ('title', 'description', 'height', 'length',
               'width', 'viewable_sides', 'url_photo', 'url_flickr',
-              'year_build', 'year_retired')
+              'year_built', 'year_retired')
 
     def form_valid(self, form):
         form.instance.user = self.request.user

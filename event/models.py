@@ -147,6 +147,7 @@ class Schedule(BaseModel):
     start_time = models.TimeField()
     end_time = models.TimeField()
     date = models.DateField()
+    is_public = models.BooleanField(default=False)
 
     def __str__(self):
         return str(self.activity) + " in " + str(self.space) + " on " + str(self.date) + " @ " + str(self.start_time)

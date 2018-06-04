@@ -39,6 +39,7 @@ urlpatterns = [
     path('events/', include('event.urls')),
     path('news/', include('news.urls')),
     path('mocs/', include('mocs.urls')),
+    path('planning/', include('planning.urls')),
     path('shop/', include('shop.urls')),
     path('vendor/', include('vendor.urls')),
     path('pages/', include('django.contrib.flatpages.urls')),
