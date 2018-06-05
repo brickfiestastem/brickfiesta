@@ -1,0 +1,37 @@
+{% extends "brickfiesta/base.html" %}
+{% block content %}
+
+<div class="row">
+    <div class="col-lg-12"><h1>MOCs</h1></div>
+</div>
+<div class="row">
+    <div class="col-lg-4">
+        {% include 'afol/option_menu.html' %}
+    </div>
+    <div class="col-lg-8">
+        <p align="right">
+
+        </p>
+        <table class="table table-hover" width="100%">
+            <thead>
+            <tr>
+                <th scope="col">Fan</th>
+                <th scope="col">Title</th>
+                <th scope="col">Year Built</th>
+                <th scope="col">Is Public</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for moc in object_list %}
+            <tr>
+                <td>{{ moc.creator }}</td>
+                <td><a href="{% url 'mocs:details' moc.id %}">{{ moc.title }}</a></td>
+                <td>{{ moc.year_built }}</td>
+                <td>{{ moc.is_public }}</td>
+            </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock content %}

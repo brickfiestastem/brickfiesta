@@ -87,7 +87,7 @@ class Moc(BaseModel):
     year_retired = models.DateField(
         verbose_name='Year Retired', blank=True, null=True)
     is_public = models.BooleanField(
-        verbose_name='Display Publicly', default=False)
+        verbose_name='Display Publicly On Brick Fiesta', default=False)
 
     class Meta:
         verbose_name_plural = 'MOCs'
@@ -107,7 +107,7 @@ class EventMoc(BaseModel):
         unique_together = ('category', 'moc')
 
     def __str__(self):
-        return "{} {} {}".format(self.fan, self.category, self.moc.title)
+        return "{}, {}, {}".format(self.category, self.fan, self.moc.title)
 
 
 class VoteManager(models.Manager):

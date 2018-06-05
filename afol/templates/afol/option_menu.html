@@ -1,7 +1,8 @@
 <h4>AFOL</h4>
 <ul class="list-group">
     <li class="list-group-item d-flex justify-content-between align-items-center">
-        My MOCs
+        <a href="{% url 'afol:mocs' %}">My MOCs</a>
+        <a class="btn btn-success" href="{% url 'mocs:add' %}">Add MOC</a>
         <span class="badge badge-primary badge-pill">0</span>
     </li>
     <li class="list-group-item d-flex justify-content-between align-items-center">
@@ -33,11 +34,6 @@
 </ul>
 <h4>Account</h4>
 <ul class="list-group">
-    {% if user.is_authenticated and user.is_staff %}
-    <li class="list-group-item d-flex justify-content-between align-items-center">
-        <a href="{% url 'admin:index' %}">Administrate Site</a>
-    </li>
-    {% endif %}
     <li class="list-group-item d-flex justify-content-between align-items-center">
         <a href="{% url 'afol:password_change' %}">Password Change</a>
     </li>
@@ -45,3 +41,12 @@
         <a href="{% url 'afol:edit' %}">Update Profile</a>
     </li>
 </ul>
+{% if user.is_authenticated and user.is_staff %}
+<h4>Administration</h4>
+    <li class="list-group-item d-flex justify-content-between align-items-center">
+        <a href="{% url 'admin:index' %}">Administrate Site</a>
+    </li>
+    <li class="list-group-item d-flex justify-content-between align-items-center">
+        <a href="{% url 'planning:index' %}">Planning</a>
+    </li>
+{% endif %}

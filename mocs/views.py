@@ -48,6 +48,11 @@ class MocDetail(DetailView):
     def get_context_data(self, **kwargs):
         context = super(MocDetail, self).get_context_data(**kwargs)
         obj_fan = Fan.objects.filter(id=self.object.creator.id).get()
+        obj_moc = self.get_object()
+        context['not_retired'] = False
+        context['moc_owner'] = False
+        if obj_moc.year_built > obj_moc.year_retired:
+            context['not_retired'] = True
         if obj_fan.user == self.request.user:
             context['moc_owner'] = True
         return context
@@ -56,13 +61,15 @@ class MocDetail(DetailView):
 @method_decorator(login_required, name='dispatch')
 class MocAddView(CreateView):
     model = Moc
-    fields = ('title', 'description', 'height', 'length',
-              'width', 'viewable_sides', 'url_photo', 'url_flickr',
-              'year_built', 'year_retired')
-    success_url = '/mocs/afol'
+    form_class = MOCsForm
+    success_url = '/afol/mocs'
+
+    def get_form_kwargs(self):
+        kwargs = super(MocAddView, self).get_form_kwargs()
+        kwargs['user'] = self.request.user
+        return kwargs
 
     def form_valid(self, form):
-        form.instance.user = self.request.user
         if not check_recaptcha(self.request):
             form.add_error(
                 None, 'You failed the human test. Try the reCAPTCHA again.')
@@ -74,12 +81,14 @@ class MocAddView(CreateView):
 class MocUpdateView(UpdateView):
     model = Moc
     form_class = MOCsForm
-    fields = ('title', 'description', 'height', 'length',
-              'width', 'viewable_sides', 'url_photo', 'url_flickr',
-              'year_built', 'year_retired')
+    success_url = '/afol/mocs'
+
+    def get_form_kwargs(self):
+        kwargs = super(MocUpdateView, self).get_form_kwargs()
+        kwargs['user'] = self.request.user
+        return kwargs
 
     def form_valid(self, form):
-        form.instance.user = self.request.user
         if not check_recaptcha(self.request):
             form.add_error(
                 None, 'You failed the human test. Try the reCAPTCHA again.')

@@ -80,13 +80,17 @@ class Badge(BaseModel):
     fan = models.ForeignKey(Fan, on_delete=models.CASCADE, default=uuid.uuid4)
     event = models.ForeignKey(Event, on_delete=models.CASCADE)
     badge_name = models.CharField(max_length=32, blank=False)
-    rlug_name = models.CharField(max_length=32, blank=False)
-    locality = models.CharField(max_length=32, blank=False)
-    region = models.CharField(max_length=32, blank=False)
-    date_ordered = models.DateField(verbose_name='Date Ordered', null=True)
+    rlug_name = models.CharField(max_length=32, blank=True)
+    locality = models.CharField(max_length=32, blank=True)
+    region = models.CharField(max_length=32, blank=True)
+    date_ordered = models.DateField(
+        verbose_name='Date Ordered', null=True, blank=True)
 
     class Meta:
         unique_together = ("event", "fan")
+
+    def __str__(self):
+        return "{} - Badge {}".format(self.fan, self.event.title)
 
 
 class Shirt(BaseModel):

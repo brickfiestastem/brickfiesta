@@ -1,12 +1,16 @@
-from django.views.generic.detail import DetailView
+from django.views.generic import DetailView, ListView
 from django.contrib.auth import login
 from django.contrib.auth.models import User
 from django.shortcuts import redirect
-from .models import Profile
+from .models import Profile, Fan
+from mocs.models import Moc
 from vendor.models import Business
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views import generic
+from django.shortcuts import render
 from .forms import AfolUserCreateForm, AfolUserChangeForm
+from django.contrib.auth.decorators import login_required
+from django.utils.decorators import method_decorator
 
 
 class ProfileView(LoginRequiredMixin, DetailView):
@@ -69,3 +73,14 @@ class SignUpView(generic.CreateView):
         user.save()
         login(self.request, user)
         return redirect('afol:profile')
+
+
+@method_decorator(login_required, name='dispatch')
+class AFOLMOCsView(ListView):
+    model = Moc
+
+    def get(self, request):
+        obj_mocs = Moc.objects.filter(
+            creator__in=Fan.objects.filter(user=request.user))
+        return render(request,
+                      'afol/moc_list.html', {'object_list': obj_mocs})

@@ -36,7 +36,7 @@
             </tr>
             <tr>
                 <td>Year Retired</td>
-                <td>{{ object.year_retired|date:'Y'|default:'N/A' }}</td>
+                <td>{% if not not_retired %}{{ object.year_retired|date:'Y'|default:'N/A' }}{% endif %}</td>
             </tr>
             <tr>
                 <td>Height</td>
