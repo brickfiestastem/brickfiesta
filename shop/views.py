@@ -160,7 +160,7 @@ class CartView(View):
                 # print(obj_error.reason)
                 str_error_message = "Unable to reach payment server. Please try again later."
                 str_body = "URL: " + str_url + "\n\nJSON: " + \
-                    str_json + "\n\nRESPONSE:" + obj_response.decode('utf8')
+                    str_json.decode('ascii') + "\n\nRESPONSE:" + obj_response
                 email = EmailMessage(
                     'Brick Fiesta - Check Out URL Error', str_body, to=[settings.DEFAULT_FROM_EMAIL])
                 email.send()
@@ -168,7 +168,7 @@ class CartView(View):
             except urllib.error.HTTPError as obj_error:
                 str_error_message = "Unable to process payment correctly. Error sent to event organizers."
                 str_body = "URL: " + str_url + "\n\nJSON: " + \
-                    str_json + "\n\nRESPONSE:" + obj_response.decode('utf8')
+                    str_json.decode('ascii') + "\n\nRESPONSE:" + obj_response
                 email = EmailMessage(
                     'Brick Fiesta - Check Out HTTP Error', str_body, to=[settings.DEFAULT_FROM_EMAIL])
                 email.send()
