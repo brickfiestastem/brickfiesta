@@ -58,12 +58,22 @@ def create_or_update_user_profile(sender, instance, created, **kwargs):
 
 
 class Attendee(BaseModel):
+    ROLE_COCHAIR = 'co-chair'
+    ROLE_VOLUNTEER = 'volunteer'
+    ROLE_SPONSOR = 'sponsor'
+    ROLE_VENDOR = 'vendor'
+    ROLE_ATTENDEE = 'attendee'
+    ROLE_ALLACCESS = 'allaccess'
+    ROLE_COMPANION = 'companion'
+
     ROLES = (
-        ('co-chair', 'Co-Chair'),
-        ('volunteer', 'Volunteer'),
-        ('sponsor', 'Sponsor'),
-        ('vendor', 'Vendor'),
-        ('attendee', 'Attendee'),
+        (ROLE_COCHAIR, 'Co-Chair'),
+        (ROLE_VOLUNTEER, 'Volunteer'),
+        (ROLE_SPONSOR, 'Sponsor'),
+        (ROLE_VENDOR, 'Vendor'),
+        (ROLE_ATTENDEE, 'Attendee'),
+        (ROLE_ALLACCESS, 'All Access'),
+        (ROLE_COMPANION, 'Companion'),
     )
     event = models.ForeignKey(Event, on_delete=models.CASCADE)
     fan = models.ForeignKey(Fan, on_delete=models.CASCADE, default=uuid.uuid4)
@@ -110,7 +120,7 @@ class Shirt(BaseModel):
     )
     fan = models.ForeignKey(Fan, on_delete=models.CASCADE, default=uuid.uuid4)
     event = models.ForeignKey(Event, on_delete=models.CASCADE)
-    shirt_size = models.CharField(max_length=8, choices=SHIRT_SIZES)
+    shirt_size = models.CharField(max_length=8, choices=SHIRT_SIZES, default=SHIRT_SIZES[1])
 
     class Meta:
         unique_together = ("event", "fan")

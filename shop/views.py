@@ -18,12 +18,11 @@ import urllib.error
 import uuid
 from django.core.mail import EmailMessage
 from django.contrib.auth.models import User
-from afol.models import Fan, Attendee
 from django.core.mail import send_mail
 from django.template import loader
 from django.contrib import messages
 from django.utils.html import format_html
-
+from .utils import add_attendee_fan_badge_shirt
 # Create your views here.
 
 
@@ -111,31 +110,7 @@ class CartCheckoutView(View):
                 obj_order_item.save()
                 list_message.append(
                     "Order item " + obj_order_item.product.title + " associated with " + obj_item.email + ".")
-
-                obj_fan, is_created = Fan.objects.get_or_create(user=obj_user,
-                                                                first_name=obj_item.first_name,
-                                                                last_name=obj_item.last_name)
-                if is_created:
-                    obj_fan.save()
-
-                if obj_item.product.product_type == 'vendor':
-                    obj_attendee, is_created = Attendee.objects.get_or_create(event=obj_item.product.event,
-                                                                              fan=obj_fan,
-                                                                              role='vendor')
-                    if is_created:
-                        obj_attendee.save()
-                if obj_item.product.product_type == 'sponsor':
-                    obj_attendee, is_created = Attendee.objects.get_or_create(event=obj_item.product.event,
-                                                                              fan=obj_fan,
-                                                                              role='sponsor')
-                    if is_created:
-                        obj_attendee.save()
-                if obj_item.product.product_type == 'convention':
-                    obj_attendee, is_created = Attendee.objects.get_or_create(event=obj_item.product.event,
-                                                                              fan=obj_fan,
-                                                                              role='attendee')
-                    if is_created:
-                        obj_attendee.save()
+                add_attendee_fan_badge_shirt(request, obj_order_item)
 
             obj_cart.clear()
         else:
@@ -185,7 +160,7 @@ class CartView(View):
                 # print(obj_error.reason)
                 str_error_message = "Unable to reach payment server. Please try again later."
                 str_body = "URL: " + str_url + "\n\nJSON: " + \
-                    str_json + "\n\nRESPONSE:" + obj_response
+                    str_json + "\n\nRESPONSE:" + obj_response.decode('utf8')
                 email = EmailMessage(
                     'Brick Fiesta - Check Out URL Error', str_body, to=[settings.DEFAULT_FROM_EMAIL])
                 email.send()
@@ -193,7 +168,7 @@ class CartView(View):
             except urllib.error.HTTPError as obj_error:
                 str_error_message = "Unable to process payment correctly. Error sent to event organizers."
                 str_body = "URL: " + str_url + "\n\nJSON: " + \
-                    str_json + "\n\nRESPONSE:" + obj_response
+                    str_json + "\n\nRESPONSE:" + obj_response.decode('utf8')
                 email = EmailMessage(
                     'Brick Fiesta - Check Out HTTP Error', str_body, to=[settings.DEFAULT_FROM_EMAIL])
                 email.send()
