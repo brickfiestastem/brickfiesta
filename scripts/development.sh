@@ -72,7 +72,18 @@ clean_database() {
     find . -path "./vendor/migrations/*.py" -delete -print
     find . -path "*/migrations/*.pyc"  -delete -print
     rm *.sqlite3
-    python manage.py makemigrations afol event mocs news planning referral shop vendor sessions
+    python manage.py makemigrations afol
+    python manage.py makemigrations admin
+    python manage.py makemigrations auth
+    python manage.py makemigrations contenttypes
+    python manage.py makemigrations event
+    python manage.py makemigrations mocs
+    python manage.py makemigrations news
+    python manage.py makemigrations planning
+    python manage.py makemigrations referral
+    python manage.py makemigrations sessions
+    python manage.py makemigrations shop
+    python manage.py makemigrations vendor
     python manage.py migrate
 }
 
