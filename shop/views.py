@@ -153,6 +153,7 @@ class CartView(View):
                 'Content-Type', 'application/json; charset=utf-8')
             obj_request.add_header('Accept', 'application/json')
             # get response
+            obj_response = ""
             try:
                 obj_response = urllib.request.urlopen(
                     obj_request, data=str_json)
