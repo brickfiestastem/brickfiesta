@@ -79,8 +79,8 @@ class Attendee(BaseModel):
     fan = models.ForeignKey(Fan, on_delete=models.CASCADE, default=uuid.uuid4)
     role = models.CharField(max_length=16, choices=ROLES)
 
-    class Meta:
-        unique_together = ("event", "fan", "role")
+#    class Meta:
+#        unique_together = ("event", "fan", "role")
 
     def __str__(self):
         return "{} {} - {}, {}".format(self.fan.first_name, self.fan.last_name, self.get_role_display(), self.event.title)
@@ -96,8 +96,8 @@ class Badge(BaseModel):
     date_ordered = models.DateField(
         verbose_name='Date Ordered', null=True, blank=True)
 
-    class Meta:
-        unique_together = ("event", "fan")
+#    class Meta:
+#        unique_together = ("event", "fan")
 
     def __str__(self):
         return "{} - Badge {}".format(self.fan, self.event.title)
@@ -122,8 +122,8 @@ class Shirt(BaseModel):
     event = models.ForeignKey(Event, on_delete=models.CASCADE)
     shirt_size = models.CharField(max_length=8, choices=SHIRT_SIZES, default=SHIRT_SIZES[1])
 
-    class Meta:
-        unique_together = ("event", "fan")
+#    class Meta:
+#        unique_together = ("event", "fan")
 
     def __str__(self):
         return "{} {} - {}, {}".format(self.fan.first_name, self.fan.last_name, self.get_shirt_size_display(), self.event.title)
