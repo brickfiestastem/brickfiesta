@@ -84,6 +84,7 @@ clean_database() {
     python manage.py makemigrations sessions
     python manage.py makemigrations shop
     python manage.py makemigrations vendor
+
     python manage.py migrate
 }
 
@@ -93,6 +94,7 @@ load_fixtures() {
     cd ../
     python manage.py loaddata event/fixtures/locations.json
     python manage.py loaddata event/fixtures/events.json
+    python manage.py loaddata shop/fixtures/products.json
 }
 
 optimize_images() {
