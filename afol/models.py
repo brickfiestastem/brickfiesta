@@ -76,7 +76,7 @@ class Attendee(BaseModel):
         (ROLE_COMPANION, 'Companion'),
     )
     event = models.ForeignKey(Event, on_delete=models.CASCADE)
-    fan = models.ForeignKey(Fan, on_delete=models.CASCADE, default=uuid.uuid4)
+    fan = models.ForeignKey(Fan, on_delete=models.CASCADE)
     role = models.CharField(max_length=16, choices=ROLES)
 
 #    class Meta:
@@ -87,7 +87,7 @@ class Attendee(BaseModel):
 
 
 class Badge(BaseModel):
-    fan = models.ForeignKey(Fan, on_delete=models.CASCADE, default=uuid.uuid4)
+    fan = models.ForeignKey(Fan, on_delete=models.CASCADE)
     event = models.ForeignKey(Event, on_delete=models.CASCADE)
     badge_name = models.CharField(max_length=32, blank=False)
     rlug_name = models.CharField(max_length=32, blank=True)
@@ -118,7 +118,7 @@ class Shirt(BaseModel):
         ('YM', 'Youth M'),
         ('YL', 'Youth L'),
     )
-    fan = models.ForeignKey(Fan, on_delete=models.CASCADE, default=uuid.uuid4)
+    fan = models.ForeignKey(Fan, on_delete=models.CASCADE)
     event = models.ForeignKey(Event, on_delete=models.CASCADE)
     shirt_size = models.CharField(max_length=8, choices=SHIRT_SIZES, default=SHIRT_SIZES[1])
 
