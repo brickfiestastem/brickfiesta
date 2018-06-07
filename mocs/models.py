@@ -97,7 +97,7 @@ class Moc(BaseModel):
 
 
 class EventMoc(BaseModel):
-    fan = models.ForeignKey(Fan, on_delete=models.CASCADE, default=uuid.uuid4)
+    fan = models.ForeignKey(Fan, on_delete=models.CASCADE)
     category = models.ForeignKey(EventCategory, on_delete=models.CASCADE)
     moc = models.ForeignKey(Moc, on_delete=models.CASCADE)
 
@@ -123,7 +123,7 @@ class VoteManager(models.Manager):
 
 
 class Vote(BaseModel):
-    fan = models.ForeignKey(Fan, on_delete=models.CASCADE, default=uuid.uuid4)
+    fan = models.ForeignKey(Fan, on_delete=models.CASCADE)
     moc = models.ForeignKey(Moc, on_delete=models.CASCADE)
     category = models.ForeignKey(EventCategory, on_delete=models.CASCADE)
     value = models.IntegerField(default=1)
@@ -140,7 +140,7 @@ class Vote(BaseModel):
 
 
 class Layout(BaseModel):
-    fan = models.ForeignKey(Fan, on_delete=models.CASCADE, default=uuid.uuid4)
+    fan = models.ForeignKey(Fan, on_delete=models.CASCADE)
     category = models.ForeignKey(EventCategory, on_delete=models.CASCADE)
     title = models.CharField(verbose_name='Title', max_length=64)
     space = models.ForeignKey(Space, on_delete=models.CASCADE)
