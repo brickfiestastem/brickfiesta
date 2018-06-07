@@ -26,4 +26,4 @@ touch ./vendor/migrations/__init__.py
 
 python manage.py makemigrations --settings=brickfiesta.$DEPLOYMENT
 
-python manage.py migrate --fake --settings=brickfiesta.$DEPLOYMENT
+python manage.py migrate --settings=brickfiesta.$DEPLOYMENT
