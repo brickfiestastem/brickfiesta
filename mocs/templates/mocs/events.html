@@ -8,7 +8,7 @@
     <ul class="list-unstyled col-sm-12">
         {% for obj_event in object_list %}
         <li class="media">
-          <img class="align-self-right mr-3" style="height: 64px; width: auto; display: block; margin: 0 auto;" src="{{ obj_event.logo.url }}" alt="{{ obj_event.title }} Image">
+          <img class="align-self-right mr-3" style="height: auto; width: 64px; display: block;" src="{{ obj_event.logo.url }}" alt="{{ obj_event.title }} Image">
           <div class="media-body">
               <h5 class="mt-0"><a href="{% url 'mocs:eventcategories' obj_event.id %}">{{ obj_event.title }}</a></h5>
               <p>{{ obj_event.theme }}</p>
