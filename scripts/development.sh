@@ -12,7 +12,7 @@ setup_virtualenv() {
     sudo apt install virtualenv
     virtualenv -p python3 venv
     pip install --upgrade virtualenv
-    source venv/bin/activate
+    . venv/bin/activate
     pip install -r requirements.txt
 }
 
@@ -20,7 +20,7 @@ run_virtualenv() {
     echo "Run local virtualenv"
     cd $SCRIPT_DIR
     cd ../
-    source venv/bin/activate
+    . venv/bin/activate
 }
 
 setup_local_settings() {
@@ -106,6 +106,7 @@ optimize_images() {
 
 usage() {
     echo "c Clean database"
+    echo "cL Clean database load fixtures"
     echo "f Full Install"
     echo "l Just local_settings.py"
     echo "L Load fixtures"
