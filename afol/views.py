@@ -2,7 +2,7 @@ from django.views.generic import DetailView, ListView
 from django.contrib.auth import login
 from django.contrib.auth.models import User
 from django.shortcuts import redirect
-from .models import Profile, Fan
+from .models import Profile, Fan, Shirt
 from mocs.models import Moc
 from vendor.models import Business
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -84,3 +84,13 @@ class AFOLMOCsView(ListView):
             creator__in=Fan.objects.filter(user=request.user))
         return render(request,
                       'afol/moc_list.html', {'object_list': obj_mocs})
+
+@method_decorator(login_required, name='dispatch')
+class AFOLShirtView(ListView):
+    model = Shirt
+
+    def get(self, request):
+        obj_shirts = Shirt.objects.filter(
+            fan__in=Fan.objects.filter(user=request.user))
+        return render(request,
+                      'afol/shirt_list.html', {'object_list': obj_shirts})

@@ -1,0 +1,35 @@
+{% extends "brickfiesta/base.html" %}
+{% block content %}
+
+<div class="row">
+    <div class="col-lg-12"><h1>MOCs</h1></div>
+</div>
+<div class="row">
+    <div class="col-lg-4">
+        {% include 'afol/option_menu.html' %}
+    </div>
+    <div class="col-lg-8">
+        <p align="right">
+
+        </p>
+        <table class="table table-hover" width="100%">
+            <thead>
+            <tr>
+                <th scope="col">Fan</th>
+                <th scope="col">Event</th>
+                <th scope="col">Size</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for shirt in object_list %}
+            <tr>
+                <td>{{ shirt.fan }}</td>
+                <td>{{ shirt.event }}</td>
+                <td>{{ shirt.get_shirt_size_display }}</td>
+            </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock content %}

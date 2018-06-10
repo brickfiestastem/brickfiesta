@@ -51,7 +51,7 @@ class MocDetail(DetailView):
         obj_moc = self.get_object()
         context['not_retired'] = False
         context['moc_owner'] = False
-        if obj_moc.year_built > obj_moc.year_retired:
+        if obj_moc.year_retired and obj_moc.year_built > obj_moc.year_retired:
             context['not_retired'] = True
         if obj_fan.user == self.request.user:
             context['moc_owner'] = True

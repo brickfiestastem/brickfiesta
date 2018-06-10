@@ -104,10 +104,11 @@ class Badge(BaseModel):
 
 
 class Shirt(BaseModel):
-    SHIRT_SIZES_ADULTM = 'AM'
+    SHIRT_SIZE_UNDEFINED = 'NS'
     SHIRT_SIZES = (
+        (SHIRT_SIZE_UNDEFINED, 'Not Specified'),
         ('AS', 'Adult S'),
-        (SHIRT_SIZES_ADULTM, 'Adult M'),
+        ('AM', 'Adult M'),
         ('AL', 'Adult L'),
         ('AXL', 'Adult XL'),
         ('A2XL', 'Adult 2XL'),
@@ -121,7 +122,7 @@ class Shirt(BaseModel):
     )
     fan = models.ForeignKey(Fan, on_delete=models.CASCADE)
     event = models.ForeignKey(Event, on_delete=models.CASCADE)
-    shirt_size = models.CharField(max_length=8, choices=SHIRT_SIZES, default=SHIRT_SIZES_ADULTM)
+    shirt_size = models.CharField(max_length=8, choices=SHIRT_SIZES, default=SHIRT_SIZE_UNDEFINED)
 
     class Meta:
         unique_together = ("event", "fan")
