@@ -25,7 +25,11 @@
             <tr>
                 <td>{{ shirt.fan }}</td>
                 <td>{{ shirt.event }}</td>
-                <td><a href="{% url 'afol:shirtedit' shirt.id %}">{{ shirt.get_shirt_size_display }}</a></td>
+                {% if shirt.date_ordered %}
+                    <td>{{ shirt.get_shirt_size_display }}</td>
+                {% else %}
+                    <td><a href="{% url 'afol:shirtedit' shirt.id %}">{{ shirt.get_shirt_size_display }}</a></td>
+                {% endif %}
             </tr>
             {% endfor %}
             </tbody>

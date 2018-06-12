@@ -7,6 +7,7 @@ from django.template import loader
 from django.conf import settings
 import uuid
 from django.contrib import messages
+import datetime
 
 
 class AttendeeAdmin(admin.ModelAdmin):
@@ -14,14 +15,28 @@ class AttendeeAdmin(admin.ModelAdmin):
     list_filter = ("event", "role")
     list_display = ('event', 'fan', 'role')
     list_display_links = ('role', )
+    search_fields = ('fan__last_name', 'fan__first_name')
 
 
 admin.site.register(Attendee, AttendeeAdmin)
 
 
+def badge_ordered(modeladmin, request, queryset):
+    today = datetime.date.today()
+    for obj_badge in queryset:
+        obj_badge.date_ordered = today
+        obj_badge.save()
+
+
+badge_ordered.short_description = "Set the date ordered on badge"
+
+
 class BadgeAdmin(admin.ModelAdmin):
     list_filter = ("event", )
     list_display = ('event', 'fan', 'badge_name', 'date_ordered')
+    search_fields = ('fan__last_name', 'fan__first_name',
+                     'badge_name', 'date_ordered')
+    actions = [badge_ordered]
 
 
 admin.site.register(Badge, BadgeAdmin)
@@ -29,6 +44,7 @@ admin.site.register(Badge, BadgeAdmin)
 
 class FanAdmin(admin.ModelAdmin):
     list_display = ('user', 'first_name', 'last_name')
+    search_fields = ('first_name', 'last_name')
 
 
 admin.site.register(Fan, FanAdmin)
@@ -70,9 +86,35 @@ admin.site.unregister(User)
 admin.site.register(User, CustomUserAdmin)
 
 
+def shirt_ordered(modeladmin, request, queryset):
+    today = datetime.date.today()
+    for obj_shirt in queryset:
+        obj_shirt.date_ordered = today
+        obj_shirt.save()
+
+
+shirt_ordered.short_description = "Set the date ordered on shirts"
+
+
+def shirt_reminder(modeladmin, request, queryset):
+    for obj_shirt in queryset:
+        obj_user = obj_shirt.fan.user
+        send_mail(subject="Brick Fiesta - Shirt Size Reminder",
+                  message=loader.render_to_string(
+                      "afol/shirt_reminder_email.html"),
+                  from_email=settings.DEFAULT_FROM_EMAIL,
+                  recipient_list=[obj_user.email])
+        messages.info(request, "Email sent to %s." % obj_user.email)
+
+
+shirt_reminder.short_description = "Send shirt size reminder"
+
+
 class ShirtAdmin(admin.ModelAdmin):
     list_filter = ('event', 'shirt_size')
-    list_display = ('event', 'fan', 'shirt_size')
+    list_display = ('event', 'fan', 'shirt_size', 'date_ordered')
+    search_fields = ('fan__first_name', 'fan__last_name', 'date_ordered')
+    actions = [shirt_ordered, shirt_reminder]
 
 
 admin.site.register(Shirt, ShirtAdmin)

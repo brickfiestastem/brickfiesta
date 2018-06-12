@@ -124,6 +124,8 @@ class Shirt(BaseModel):
     event = models.ForeignKey(Event, on_delete=models.CASCADE)
     shirt_size = models.CharField(
         max_length=8, choices=SHIRT_SIZES, default=SHIRT_SIZE_UNDEFINED)
+    date_ordered = models.DateField(
+        verbose_name='Date Ordered', null=True, blank=True)
 
     class Meta:
         unique_together = ("event", "fan")
