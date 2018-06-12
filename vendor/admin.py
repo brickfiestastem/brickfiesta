@@ -2,6 +2,12 @@ from django.contrib import admin
 from .models import Business, BusinessNote, Vendor, Sponsor
 from django.core.management import call_command
 from django.conf import settings
+from django.contrib import messages
+from shop.models import CartItem
+from django.core.mail import send_mail
+from django.template import loader
+import uuid
+
 import os
 # Register your models here.
 
@@ -18,6 +24,8 @@ class BusinessNoteAdmin(admin.TabularInline):
 
 def adjust_logo(modeladmin, request, queryset):
     for obj_business in queryset:
+        messages.info(request, "Attempting to adjust {}.".format(
+            obj_business.logo.url))
         call_command('square_image', os.path.join(
             settings.MEDIA_ROOT, str(obj_business.logo)))
 
@@ -33,6 +41,38 @@ class BusinessAdmin(admin.ModelAdmin):
     list_display_links = ('name',)
     inlines = [BusinessNoteAdmin]
     actions = [adjust_logo]
+    search_fields = ['name', 'phone_number', 'street', 'url']
+
+
+admin.site.register(Business, BusinessAdmin)
+
+
+def send_payment_reminder(modeladmin, request, queryset):
+    for obj_vendor in queryset:
+        obj_vendor.status = 'pending'
+        obj_vendor.save()
+
+        str_uuid = uuid.uuid4()
+        obj_user = obj_vendor.user
+        int_quantity = obj_vendor.product_quantity
+        for int_item in range(int_quantity):
+            basket_item = CartItem.objects.create(cart=str_uuid,
+                                                  first_name=obj_user.first_name,
+                                                  last_name=obj_user.last_name,
+                                                  email=obj_user.email,
+                                                  product=obj_vendor.product)
+            messages.info(request, "Added {} to {} cart.".format(
+                obj_vendor.product, obj_user))
+        send_mail(subject="Brick Fiesta - Business Cart Assist",
+                  message=loader.render_to_string(
+                      "vendor/business_payment_email.html",
+                      {'user_first_name': obj_user.first_name, 'token': str_uuid}),
+                  from_email=settings.DEFAULT_FROM_EMAIL,
+                  recipient_list=[obj_user.email])
+        messages.info(request, "Email sent to %s." % obj_user.email)
+
+
+send_payment_reminder.short_description = "Updated to payment pending and send shopping cart link"
 
 
 class SponsorAdmin(admin.ModelAdmin):
@@ -41,6 +81,11 @@ class SponsorAdmin(admin.ModelAdmin):
     list_display = ('event', 'user', 'business', 'product',
                     'product_quantity', 'status', 'created')
     list_display_links = ('business',)
+    search_fields = ('user__first_name', 'user__last_name', 'business__name')
+    actions = [send_payment_reminder]
+
+
+admin.site.register(Sponsor, SponsorAdmin)
 
 
 class VendorAdmin(admin.ModelAdmin):
@@ -49,8 +94,8 @@ class VendorAdmin(admin.ModelAdmin):
     list_display = ('event', 'user', 'business', 'product',
                     'product_quantity', 'status', 'created')
     list_display_links = ('business',)
+    search_fields = ('user__first_name', 'user__last_name', 'business__name')
+    actions = [send_payment_reminder]
 
 
 admin.site.register(Vendor, VendorAdmin)
-admin.site.register(Sponsor, SponsorAdmin)
-admin.site.register(Business, BusinessAdmin)

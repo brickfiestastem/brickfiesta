@@ -186,7 +186,9 @@ class CartView(View):
                                                            'cart': obj_cart.get_basket(),
                                                            'cart_total': obj_cart.total()})
 
-    def get(self, request):
+    def get(self, request, token=None):
+        if token:
+            request.session['cart'] = str(token)
         obj_cart = ShoppingCart(request)
         return render(request, 'shop/cart_contents.html', {'cart': obj_cart.get_basket(),
                                                            'cart_total': obj_cart.total()})
