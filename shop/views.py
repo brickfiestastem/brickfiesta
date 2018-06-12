@@ -107,10 +107,10 @@ class CartCheckoutView(View):
                                            last_name=obj_item.last_name,
                                            product=obj_item.product,
                                            price=obj_item.product.price)
-                if obj_item.product.quantity_available > 0:
-                    obj_product = obj_item.product
-                    obj_product.quantity_available -= 1
-                    obj_product.save()
+                #if obj_item.product.quantity_available > 0:
+                #    obj_product = obj_item.product
+                #    obj_product.quantity_available -= 1
+                #    obj_product.save()
                 obj_order_item.save()
                 list_message.append(
                     "Order item " + obj_order_item.product.title + " associated with " + obj_item.email + ".")
