@@ -37,6 +37,7 @@ class OrderAdmin(admin.ModelAdmin):
     # List display for the admin
     inlines = (OrderItemInLine, )
     list_display = ('id', 'user', 'created')
+    search_fields = ('user__last_name', 'user__first_name', 'transaction_id')
     actions = [reprocess_order]
 
 
@@ -46,6 +47,7 @@ admin.site.register(Order, OrderAdmin)
 class CartItemAdmin(admin.ModelAdmin):
     list_filter = ('product__event', 'product__product_type')
     list_display = ('cart', 'first_name', 'last_name', 'email', 'product')
+    search_fields = ('first_name', 'last_name')
 
 
 admin.site.register(CartItem, CartItemAdmin)
