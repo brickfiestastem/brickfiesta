@@ -1,7 +1,8 @@
 from django.contrib.auth.forms import UserCreationForm
 from django import forms
 from django.contrib.auth.models import User
-from .models import Profile
+from .models import Profile, Shirt, Fan
+from event.models import Event
 import datetime
 
 
@@ -46,3 +47,14 @@ class AfolUserChangeForm(forms.ModelForm):
         model = Profile
         fields = {'birth_date', 'bricklink_username',
                   'flickr_handle', 'twitter_handle'}
+
+
+class ShirtChangeForm(forms.ModelForm):
+
+    class Meta:
+        model = Shirt
+        fields = ['fan', 'event', 'shirt_size']
+        widgets = {
+            'fan': forms.HiddenInput(),
+            'event': forms.HiddenInput(),
+        }

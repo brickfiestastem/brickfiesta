@@ -26,7 +26,8 @@ def reprocess_order(modeladmin, request, queryset):
     for obj_order in queryset:
         for obj_item in OrderItem.objects.filter(order=obj_order):
             add_attendee_fan_badge_shirt(request, obj_item)
-            messages.info(request, "Added fan and attendee for {}.".format(str(obj_item)))
+            messages.info(
+                request, "Added fan and attendee for {}.".format(str(obj_item)))
 
 
 reprocess_order.short_description = "Reprocess order items for fan and attendee linkage"

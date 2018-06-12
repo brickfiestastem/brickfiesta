@@ -6,6 +6,7 @@ import urllib.request
 from afol.models import Attendee, Badge, Fan, Shirt
 from django.contrib import messages
 
+
 def check_recaptcha(request):
     # Begin reCAPTCHA validation
     recaptcha_response = request.POST.get('g-recaptcha-response')
@@ -53,14 +54,16 @@ def add_attendee_fan_badge_shirt(request, obj_item):
                                                                   fan=obj_fan,
                                                                   role=Attendee.ROLE_VENDOR)
         if is_created:
-            messages.info(request, "Added attendee vendor for {}.".format(str(obj_fan)))
+            messages.info(
+                request, "Added attendee vendor for {}.".format(str(obj_fan)))
             obj_attendee.save()
     if obj_item.product.product_type == 'sponsor':
         obj_attendee, is_created = Attendee.objects.get_or_create(event=obj_item.product.event,
                                                                   fan=obj_fan,
                                                                   role=Attendee.ROLE_SPONSOR)
         if is_created:
-            messages.info(request, "Added attendee sponsor for {}.".format(str(obj_fan)))
+            messages.info(
+                request, "Added attendee sponsor for {}.".format(str(obj_fan)))
             obj_attendee.save()
     if obj_item.product.product_type == 'convention':
         str_role = Attendee.ROLE_ATTENDEE
@@ -73,5 +76,6 @@ def add_attendee_fan_badge_shirt(request, obj_item):
                                                                   fan=obj_fan,
                                                                   role=str_role)
         if is_created:
-            messages.info(request, "Added attendee {} for {}.".format(str_role, str(obj_fan)))
+            messages.info(request, "Added attendee {} for {}.".format(
+                str_role, str(obj_fan)))
             obj_attendee.save()

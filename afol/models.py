@@ -122,7 +122,8 @@ class Shirt(BaseModel):
     )
     fan = models.ForeignKey(Fan, on_delete=models.CASCADE)
     event = models.ForeignKey(Event, on_delete=models.CASCADE)
-    shirt_size = models.CharField(max_length=8, choices=SHIRT_SIZES, default=SHIRT_SIZE_UNDEFINED)
+    shirt_size = models.CharField(
+        max_length=8, choices=SHIRT_SIZES, default=SHIRT_SIZE_UNDEFINED)
 
     class Meta:
         unique_together = ("event", "fan")

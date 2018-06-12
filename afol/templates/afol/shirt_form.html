@@ -1,0 +1,18 @@
+{% extends "brickfiesta/base.html" %}
+{% block content %}
+<div class="row">
+    <div class="col-2"></div>
+    <div class="col-lg-8">
+        <fieldset>
+            <legend>Edit Shirt for {{ object.fan }} at {{ object.event }}</legend>
+            <form method="post" action="." enctype="multipart/form-data">
+                {% csrf_token %}
+                {% include 'brickfiesta/form_formatting.html' %}
+                <div align="right">
+                    <input class="btn btn-primary" type="submit" value="Submit"/>
+                </div>
+            </form>
+        </fieldset>
+    </div>
+</div>
+{% endblock content %}

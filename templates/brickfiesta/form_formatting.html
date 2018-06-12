@@ -1,17 +1,27 @@
-{% load template_extras %} {% if form.errors %}
+{% load template_extras %}
+{% if form.errors %}
 <div class="form-group has-danger">
     {% for error in form.errors %}
         <small class="invalid-feedback">{{ error }}</small>
     {% endfor %}
-</div> {% endif %} {% for field in form %}{% if field.errors %}
+</div>
+{% endif %}
+{% for hidden in form.hidden_fields %}
+{{ hidden }}
+{% endfor %}
+{% for field in form.visible_fields %}
+{% if field.errors %}
 <div class="form-group has-danger">
     <label for="{{ field.id_for_label }}">{{ field.label }}</label>
     {{ field|addcss:"form-control is-invalid" }}
     {% for error in  field.errors %} <small class="invalid-feedback">{{ error }}</small> {% endfor %}
-</div> {% else %}
+</div>
+{% else %}
 <div class="form-group">
     <label for="{{ field.id_for_label }}">{{ field.label }}</label>
     {{ field|addcss:"form-control" }} {% if field.help_text %}
         <small class="form-text text-muted" id="{{ field.name }}Help">{{ field.help_text|safe }}</small>
     {% endif %}
-</div> {% endif %} {% endfor %}
+</div>
+{% endif %}
+{% endfor %}

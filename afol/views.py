@@ -1,4 +1,4 @@
-from django.views.generic import DetailView, ListView
+from django.views.generic import DetailView, ListView, UpdateView
 from django.contrib.auth import login
 from django.contrib.auth.models import User
 from django.shortcuts import redirect
@@ -8,9 +8,10 @@ from vendor.models import Business
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views import generic
 from django.shortcuts import render
-from .forms import AfolUserCreateForm, AfolUserChangeForm
+from .forms import AfolUserCreateForm, AfolUserChangeForm, ShirtChangeForm
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
+from django.urls import reverse_lazy
 
 
 class ProfileView(LoginRequiredMixin, DetailView):
@@ -85,12 +86,30 @@ class AFOLMOCsView(ListView):
         return render(request,
                       'afol/moc_list.html', {'object_list': obj_mocs})
 
+
 @method_decorator(login_required, name='dispatch')
 class AFOLShirtView(ListView):
     model = Shirt
+    template_name = 'afol/shirt_list.html'
 
-    def get(self, request):
+    def get_context_data(self, **kwargs):
+        context = super(AFOLShirtView, self).get_context_data(**kwargs)
+        context['object_list'] = Shirt.objects.filter(
+            fan__in=Fan.objects.filter(user=self.request.user))
+        return context
+
+    def post(self, request):
+        obj_shirtform = ShirtChangeForm(request.POST, instance=Shirt.objects.get(
+            fan=request.POST.get('fan'), event=request.POST.get('event')))
+        if obj_shirtform.is_valid():
+            obj_shirtform.save()
         obj_shirts = Shirt.objects.filter(
-            fan__in=Fan.objects.filter(user=request.user))
-        return render(request,
-                      'afol/shirt_list.html', {'object_list': obj_shirts})
+            fan__in=Fan.objects.filter(user=self.request.user))
+        return render(request, 'afol/shirt_list.html', {'object_list': obj_shirts})
+
+
+@method_decorator(login_required, name='dispatch')
+class AFOLShirtEditView(UpdateView):
+    model = Shirt
+    form_class = ShirtChangeForm
+    success_url = reverse_lazy('afol:shirts')
