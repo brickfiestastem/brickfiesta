@@ -72,7 +72,7 @@ def send_payment_reminder(modeladmin, request, queryset):
         messages.info(request, "Email sent to %s." % obj_user.email)
 
 
-send_payment_reminder.short_description = "Updated to payment pending and send shopping cart link"
+send_payment_reminder.short_description = "Update to payment pending and send shopping cart link"
 
 
 class SponsorAdmin(admin.ModelAdmin):
