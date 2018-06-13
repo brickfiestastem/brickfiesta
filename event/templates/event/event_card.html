@@ -1,11 +1,13 @@
 <div class="card mb-3">
-    <a href="{% url 'event:details' event.id %}"><img style="height: auto; width: 200px; display: block; margin: 0 auto;"
-                                                      src="{{ event.logo.url }}" alt="Event Logo"></a>
-    <h3 class="card-header" align="center"><a href="{% url 'event:details' event.id %}">
-        {{ event.title }}</a></h3>
-    <div class="card-body">
-        <h5 class="card-title" align="center">{{ event.start_date }} to {{ event.end_date }}</h5>
-        <h6 class="card-subtitle mb-2 text-muted" align="center">{{ event.location.locality }},
-            {{ event.location.region }}</h6>
+    <div class="card-block">
+        <a href="{% url 'event:details' event.id %}"><img style="height: auto; width: 200px; display: block; margin: 0 auto;"
+                                                          src="{{ event.logo.url }}" alt="Event Logo"></a>
+        <h3 class="card-header" align="center"><a href="{% url 'event:details' event.id %}">
+            {{ event.title }}</a></h3>
+        <div class="card-body">
+            <h5 class="card-title" align="center">{{ event.start_date }} to {{ event.end_date }}</h5>
+            <h6 class="card-subtitle mb-2 text-muted" align="center">{{ event.location.locality }},
+                {{ event.location.region }}</h6>
+        </div>
     </div>
 </div>

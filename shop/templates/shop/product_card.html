@@ -1,24 +1,26 @@
 {% load template_extras %}
 <div class="card">
-    <h3 class="card-header">{{ product.title }}</h3>
-    <div class="card-body">
-        <h5 class="card-title">{{ product.event.title }}</h5>
-        <p>{{ product.get_product_type_display }}</p>
-        {% if product.event.is_upcoming and not template_details and product.quantity_available != 0 %}
-        <a href="{% url 'shop:details' product.id %}" class="btn btn-info card-link">Details -
-            {{ product.price|currency }}</a>
-        {% else %}
+    <div class="card-block">
+        <h3 class="card-header">{{ product.title }}</h3>
+        <div class="card-body">
+            <h5 class="card-title">{{ product.event.title }}</h5>
+            <p>{{ product.get_product_type_display }}</p>
+            {% if product.event.is_upcoming and not template_details and product.quantity_available != 0 %}
+            <a href="{% url 'shop:details' product.id %}" class="btn btn-info card-link">Details -
+                {{ product.price|currency }}</a>
+            {% else %}
             {{ product.price|currency }}{% if product.quantity_available == 0 %} - Sold out!{% endif %}
-        {% endif %}
+            {% endif %}
+        </div>
+        <img style="height: 200px; width: 100%; display: block;" src="{{ product.image.url }}"
+             alt="Card image">
+        <div class="card-body">
+            <p class="card-text" align="justified">{{ product.description|linebreaks }}</p>
+        </div>
+        <ul class="list-group list-group-flush">
+            {% for bullet in product.productbulletpoint_set.all %}
+            <li class="list-group-item">{{ bullet.text }}</li>
+            {% endfor %}
+        </ul>
     </div>
-    <img style="height: 200px; width: 100%; display: block;" src="{{ product.image.url }}"
-         alt="Card image">
-    <div class="card-body">
-        <p class="card-text" align="justified">{{ product.description|linebreaks }}</p>
-    </div>
-    <ul class="list-group list-group-flush">
-        {% for bullet in product.productbulletpoint_set.all %}
-        <li class="list-group-item">{{ bullet.text }}</li>
-        {% endfor %}
-    </ul>
 </div>

@@ -1,5 +1,9 @@
 <div class="card border-primary">
-    <h3 class="card-header text-primary" align="center"><a href="{% url 'vendor:details' obj_vendor.business.id %}">
-        {{ obj_vendor.business.name }}</a></h3>
-    <img style="height: 128px; width: 100%; display: block;" src="{{ obj_vendor.business.logo.url }}" alt="Card image">
+    <div class="card-block">
+        <h3 class="card-header text-primary" align="center">
+            <a href="{% url 'vendor:details' obj_vendor.business.id %}">{{ obj_vendor.business.name }}</a>
+        </h3>
+        <img style="height: 128px; width: 100%; display: block;" src="{{ obj_vendor.business.logo.url }}"
+             alt="Card image">
+    </div>
 </div>
