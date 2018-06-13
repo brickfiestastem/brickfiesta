@@ -3,7 +3,7 @@ from django.views.generic import DetailView
 from django.views.generic.edit import CreateView, UpdateView
 from django.views.generic.base import View, TemplateView
 from afol.models import Fan
-from mocs.models import Category, Moc, EventMoc, EventCategory
+from mocs.models import Category, Moc, MocCategories, EventCategory
 from event.models import Event
 from django.shortcuts import render, redirect
 from shop.utils import check_recaptcha
@@ -21,7 +21,7 @@ class CategoryListView(ListView):
         obj_eventcategory = EventCategory.objects.filter(
             event=event_id,
             category=category_id).get()
-        obj_mocs = EventMoc.objects.filter(
+        obj_mocs = MocCategories.objects.filter(
             category=obj_eventcategory, moc__is_public=True).distinct()
         return render(request,
                       'mocs/category.html',
@@ -49,7 +49,7 @@ class MocDetail(DetailView):
         context = super(MocDetail, self).get_context_data(**kwargs)
         obj_fan = Fan.objects.filter(id=self.object.creator.id).get()
         obj_moc = self.get_object()
-        context['moc_categories'] = EventMoc.objects.filter(moc=obj_moc).order_by('category__event__start_date')
+        context['moc_categories'] = MocCategories.objects.filter(moc=obj_moc).order_by('category__event__start_date')
         context['not_retired'] = False
         context['moc_owner'] = False
         if obj_moc.year_retired and obj_moc.year_built > obj_moc.year_retired:

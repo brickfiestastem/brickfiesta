@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Category, EventCategory, EventMoc, Moc, Vote
+from .models import Category, EventCategory, MocCategories, Moc, Vote
 
 
 class CategoryAdmin(admin.ModelAdmin):
@@ -21,7 +21,7 @@ admin.site.register(EventCategory, EventCategoryAdmin)
 
 
 class MOCCategoryInLine(admin.TabularInline):
-    model = EventMoc
+    model = MocCategories
     extra = 1
 
 class MOCAdmin(admin.ModelAdmin):
