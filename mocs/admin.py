@@ -24,6 +24,7 @@ class MOCCategoryInLine(admin.TabularInline):
     model = MocCategories
     extra = 1
 
+
 class MOCAdmin(admin.ModelAdmin):
     # List display for the admin
     inlines = (MOCCategoryInLine, )

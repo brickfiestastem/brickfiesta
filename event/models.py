@@ -153,6 +153,6 @@ class Schedule(BaseModel):
         return str(self.activity) + " in " + str(self.space) + " on " + str(self.date) + " @ " + str(self.start_time)
 
     class Meta:
-        ordering = ("date", "event__title", "space__name", "start_time")
+        ordering = ("date", "start_time", "space__name", "event__title",)
         unique_together = ("event", "space", "start_time", "date")
     # TODO: Event, Space, Date, and Time can't conflict.

@@ -1,7 +1,7 @@
 from django.views.generic import ListView
 from django.db.models import Avg, Count, Min, Sum
 from afol.models import Shirt
-from event.models import Event
+from event.models import Event, Schedule
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
 
@@ -19,6 +19,19 @@ class ShirtSummaryView(ListView):
     def get_queryset(self):
         self.obj_event = Event.objects.get(id=self.kwargs['event'])
         return Shirt.objects.filter(event=self.obj_event).values('shirt_size').annotate(shirt_count=Count('shirt_size'))
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['event'] = self.obj_event
+        return context
+
+
+class ScheduleListView(ListView):
+    template_name = 'planning/schedule.html'
+
+    def get_queryset(self):
+        self.obj_event = Event.objects.get(id=self.kwargs['event'])
+        return Schedule.objects.filter(event=self.obj_event)
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)
