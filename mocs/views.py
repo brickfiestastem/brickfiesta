@@ -49,6 +49,7 @@ class MocDetail(DetailView):
         context = super(MocDetail, self).get_context_data(**kwargs)
         obj_fan = Fan.objects.filter(id=self.object.creator.id).get()
         obj_moc = self.get_object()
+        context['moc_categories'] = EventMoc.objects.filter(moc=obj_moc).order_by('category__event__start_date')
         context['not_retired'] = False
         context['moc_owner'] = False
         if obj_moc.year_retired and obj_moc.year_built > obj_moc.year_retired:

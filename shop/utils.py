@@ -9,6 +9,9 @@ from django.contrib import messages
 
 def check_recaptcha(request):
     # Begin reCAPTCHA validation
+    host = request.get_host()
+    if 'localhost' in host:
+        return True
     recaptcha_response = request.POST.get('g-recaptcha-response')
     url = 'https://www.google.com/recaptcha/api/siteverify'
     values = {

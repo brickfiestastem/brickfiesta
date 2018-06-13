@@ -97,17 +97,16 @@ class Moc(BaseModel):
 
 
 class EventMoc(BaseModel):
-    fan = models.ForeignKey(Fan, on_delete=models.CASCADE)
     category = models.ForeignKey(EventCategory, on_delete=models.CASCADE)
     moc = models.ForeignKey(Moc, on_delete=models.CASCADE)
 
     # TODO: Find a way to make the event and moc unique while still using eventcategory
     class Meta:
-        verbose_name_plural = 'EventMOCs'
+        verbose_name_plural = 'MOCCategories'
         unique_together = ('category', 'moc')
 
     def __str__(self):
-        return "{}, {}, {}".format(self.category, self.fan, self.moc.title)
+        return "{}, {}".format(self.category, self.moc.title)
 
 
 class VoteManager(models.Manager):

@@ -20,18 +20,13 @@ class EventCategoryAdmin(admin.ModelAdmin):
 admin.site.register(EventCategory, EventCategoryAdmin)
 
 
-class EventMocAdmin(admin.ModelAdmin):
+class MOCCategoryInLine(admin.TabularInline):
+    model = EventMoc
+    extra = 1
+
+class MOCAdmin(admin.ModelAdmin):
     # List display for the admin
-    list_display_links = ('moc', )
-    list_filter = ('category',)
-    list_display = ('category', 'fan', 'moc')
-
-
-admin.site.register(EventMoc, EventMocAdmin)
-
-
-class MocAdmin(admin.ModelAdmin):
-    # List display for the admin
+    inlines = (MOCCategoryInLine, )
     list_display_links = ('title', )
     list_display = ('creator', 'title', 'year_built',
                     'year_retired', 'is_public')
@@ -39,7 +34,7 @@ class MocAdmin(admin.ModelAdmin):
                      'creator__last_name', 'creator__first_name')
 
 
-admin.site.register(Moc, MocAdmin)
+admin.site.register(Moc, MOCAdmin)
 
 
 class VoteAdmin(admin.ModelAdmin):

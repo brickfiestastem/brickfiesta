@@ -17,6 +17,15 @@
         <li><a href="{{ object.url_flickr }}" target="_blank">{{ object.url_flickr }}</a></li>
         {% endif %}
     </ul>
+    <h3>MOC Categories</h3>
+    {% if moc_owner %}
+            <!-- a class="btn btn-info" href="{% url 'mocs:edit' object.id %}">Add MOC Categories</a -->
+    {% endif %}
+    <ul>
+        {% for item in moc_categories %}
+        <li>{{ item.category }}</li>
+        {% endfor %}
+    </ul>
     <h3>MOC Stats</h3>
     <table class="table">
         <thead class="thead-dark">
