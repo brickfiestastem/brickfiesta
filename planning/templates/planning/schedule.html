@@ -11,10 +11,10 @@
     </div>
     {% for scheduled_activity in object.list %}
     <div class="col-12">
-        <h2>{{ scheduled_activity.activity.title }}{% if scheduled_activity.is_public %} - Public on Web Site{% endif
-            %}</h2>
-        <h4>{{ scheduled_activity.start_time }} - {{ scheduled_activity.end_time }} in {{ scheduled_activity.space.name
-            }}</h4>
+        <h2>{{ scheduled_activity.activity.title }}
+            {% if scheduled_activity.is_public %} - Public on Web Site{% endif %}</h2>
+        <h4>{{ scheduled_activity.start_time }} - {{ scheduled_activity.end_time }} in
+            {{ scheduled_activity.space.name }}</h4>
         <p align="justified">{{ scheduled_activity.activity.description }}</p>
     </div>
     {% endfor %}
