@@ -99,9 +99,11 @@ shirt_ordered.short_description = "Set the date ordered on shirts"
 def shirt_reminder(modeladmin, request, queryset):
     for obj_shirt in queryset:
         obj_user = obj_shirt.fan.user
+        str_shirt = str(obj_shirt)
         send_mail(subject="Brick Fiesta - Shirt Size Reminder",
                   message=loader.render_to_string(
-                      "afol/shirt_reminder_email.html"),
+                      "afol/shirt_reminder_email.html",
+                      {'user_first_name': obj_user.first_name, 'shirt_size': str_shirt}),
                   from_email=settings.DEFAULT_FROM_EMAIL,
                   recipient_list=[obj_user.email])
         messages.info(request, "Email sent to %s." % obj_user.email)
