@@ -100,9 +100,6 @@ class MocCategories(BaseModel):
     category = models.ForeignKey(EventCategory, on_delete=models.CASCADE)
     moc = models.ForeignKey(Moc, on_delete=models.CASCADE)
 
-    class Meta:
-        unique_together = ('category', 'moc')
-
     def __str__(self):
         return "{}, {}".format(self.category, self.moc.title)
 

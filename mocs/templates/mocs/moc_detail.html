@@ -19,11 +19,11 @@
     </ul>
     <h3>MOC Categories</h3>
     {% if moc_owner %}
-            <!-- a class="btn btn-info" href="{% url 'mocs:edit' object.id %}">Add MOC Categories</a -->
+    <a class="btn btn-info" href="{% url 'mocs:add-category' object.id %}">Add MOC Categories</a>
     {% endif %}
     <ul>
         {% for item in moc_categories %}
-        <li>{{ item.category }}</li>
+        <li><a href="{% url 'mocs:edit-category' item.id %}">{{ item.category }}</a></li>
         {% endfor %}
     </ul>
     <h3>MOC Stats</h3>

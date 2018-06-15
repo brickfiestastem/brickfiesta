@@ -96,3 +96,36 @@ class MocUpdateView(UpdateView):
                 None, 'You failed the human test. Try the reCAPTCHA again.')
             return super().form_invalid(form)
         return super().form_valid(form)
+
+
+@method_decorator(login_required, name='dispatch')
+class MocUpdateCategoryView(UpdateView):
+    model = MocCategories
+    fields = ['category', ]
+    success_url = '/afol/mocs'
+
+    def form_valid(self, form):
+        if not check_recaptcha(self.request):
+            form.add_error(
+                None, 'You failed the human test. Try the reCAPTCHA again.')
+            return super(MocUpdateCategoryView, self).form_invalid(form)
+        return super(MocUpdateCategoryView, self).form_valid(form)
+
+
+@method_decorator(login_required, name='dispatch')
+class MocCreateCategoryView(CreateView):
+    model = MocCategories
+    fields = ['category', ]
+    success_url = '/afol/mocs'
+
+    def dispatch(self, request, *args, **kwargs):
+        self.moc = Moc.objects.get(pk=kwargs['pk'])
+        return super(MocCreateCategoryView, self).dispatch(request, *args, **kwargs)
+
+    def form_valid(self, form):
+        form.instance.moc = self.moc
+        if not check_recaptcha(self.request):
+            form.add_error(
+                None, 'You failed the human test. Try the reCAPTCHA again.')
+            return super(MocCreateCategoryView, self).form_invalid(form)
+        return super(MocCreateCategoryView, self).form_valid(form)
