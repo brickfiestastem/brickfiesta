@@ -13,8 +13,8 @@
     {% for scheduled_activity in object.list %}
     <tr>
         <td align="right">{{ scheduled_activity.start_time }} - {{ scheduled_activity.end_time }}</td>
-        <td><a href="{% url 'event:activity' scheduled_activity.activity.id %}">{{ scheduled_activity.activity.title
-            }}</a></td>
+        <td><a href="{% url 'event:activity' scheduled_activity.activity.id %}">
+            {{ scheduled_activity.activity.title }}</a></td>
         <td align="center">{{ scheduled_activity.space.name }}</td>
     </tr>
     {% endfor %}

@@ -54,6 +54,7 @@ class ActivityDetail(DetailView):
             activity=self.object, is_public=True)
         return context
 
+
 class EventDetail(DetailView):
     model = Event
 
