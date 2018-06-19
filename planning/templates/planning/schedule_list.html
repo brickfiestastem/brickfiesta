@@ -3,16 +3,16 @@
 
 <h1>Schedule List for {{ event.title }}</h1>
 
-{% regroup object_list by date as schedule_list %}
+{% regroup object_list by date as schedule_item %}
 <div class="row">
-    {% for object in schedule_list %}
+    {% for object in schedule_item %}
     <div class="col-12">
         <h3>{{ object.grouper }}</h3>
     </div>
     {% for scheduled_activity in object.list %}
     <div class="col-12">
         <h2>{{ scheduled_activity.activity.title }}
-            {% if scheduled_activity.is_public %} - Public on Web Site{% endif %}</h2>
+            {% if scheduled_activity.is_public %}<span class="badge badge-info">Public</span>{% endif %}</h2>
         <h4>{{ scheduled_activity.start_time }} - {{ scheduled_activity.end_time }} in
             {{ scheduled_activity.space.name }}</h4>
         <p align="justified">{{ scheduled_activity.activity.description }}</p>

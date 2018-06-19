@@ -2,7 +2,7 @@ from django.urls import path
 from django.views.generic.dates import ArchiveIndexView
 from .models import Event, Location
 from . import views
-from .views import EventDetail, LocationDetail
+from .views import EventDetail, LocationDetail, ActivityDetail
 
 app_name = 'event'
 
@@ -13,6 +13,7 @@ urlpatterns = [
                                               date_field='end_date',
                                               allow_future=True), name='index'),
     path('details/<uuid:pk>/', EventDetail.as_view(), name='details'),
+    path('activity/<uuid:pk>/', ActivityDetail.as_view(), name='activity'),
     path('locations/', ArchiveIndexView.as_view(model=Location,
                                                 date_field='created',
                                                 allow_future=True), name="locations"),

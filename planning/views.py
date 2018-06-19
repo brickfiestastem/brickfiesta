@@ -26,8 +26,23 @@ class ShirtSummaryView(ListView):
         return context
 
 
+@method_decorator(login_required, name='dispatch')
 class ScheduleListView(ListView):
-    template_name = 'planning/schedule.html'
+    template_name = 'planning/schedule_list.html'
+
+    def get_queryset(self):
+        self.obj_event = Event.objects.get(id=self.kwargs['event'])
+        return Schedule.objects.filter(event=self.obj_event)
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['event'] = self.obj_event
+        return context
+
+
+@method_decorator(login_required, name='dispatch')
+class SchedulePrintListView(ListView):
+    template_name = 'planning/schedule_print.html'
 
     def get_queryset(self):
         self.obj_event = Event.objects.get(id=self.kwargs['event'])

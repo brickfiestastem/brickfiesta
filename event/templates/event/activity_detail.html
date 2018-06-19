@@ -1,0 +1,35 @@
+{% extends "brickfiesta/base.html" %}
+
+{% block content %}
+<h1>{{ object.title }}</h1>
+<h2>Description</h2>
+<p>{{ object.description|linebreaks }}</p>
+<h2>Rules</h2>
+<p>{{ object.rules|linebreaks }}</p>
+<table class="table">
+    <thead class="thead-dark">
+    <tr>
+        <td>Details</td>
+        <td>Values</td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td>Sign Up Required</td>
+        <td>{{ object.signup_required }}</td>
+    </tr>
+    <tr>
+        <td>Minimum People</td>
+        <td>{{ object.min_people }}</td>
+    </tr>
+    <tr>
+        <td>Maximum People</td>
+        <td>{{ object.max_people }}</td>
+    </tr>
+    </tbody>
+</table>
+<h2>Scheduled</h2>
+{% if schedule_list %}
+{% include 'event/schedule_table.html' %}
+{% endif %}
+{% endblock content %}

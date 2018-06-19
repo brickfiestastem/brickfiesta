@@ -48,7 +48,7 @@ admin.site.register(Space, SpaceAdmin)
 class ScheduleAdmin(admin.ModelAdmin):
     # List display for the admin
     list_filter = ('event', 'space', 'date')
-    list_display = ('event', 'activity', 'space',
+    list_display = ('event', 'is_public', 'activity', 'space',
                     'date', 'start_time', 'end_time')
     list_display_links = ('activity',)
     search_fields = ('activity__title',)

@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from event.models import Announcement, Event, Location
+from event.models import Announcement, Event, Location, Schedule, Activity
 from shop.utils import check_recaptcha
 from vendor.models import Sponsor, Vendor
 from django.views.generic import DetailView, TemplateView
@@ -45,6 +45,15 @@ class ContactView(FormView):
         return super().form_valid(form)
 
 
+class ActivityDetail(DetailView):
+    model = Activity
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['schedule_list'] = Schedule.objects.filter(
+            activity=self.object, is_public=True)
+        return context
+
 class EventDetail(DetailView):
     model = Event
 
@@ -59,6 +68,8 @@ class EventDetail(DetailView):
             event=self.object, status='approved')
         context['vendor_list'] = Vendor.objects.filter(
             event=self.object, status='approved')
+        context['schedule_list'] = Schedule.objects.filter(
+            event=self.object, is_public=True)
         return context
 
 
