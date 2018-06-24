@@ -8,7 +8,9 @@
                 {{ event.location.region }}</h6>
         </div>
         <a href="{% url 'event:details' event.id %}">
-            <img style="height: auto; width: 200px; display: block; margin: 0 auto;" src="{{ event.logo.url }}"
+            <img class="card-img-bottom"
+                 style="height: auto; width: 200px; display: block; margin: 0 auto;"
+                 src="{{ event.logo.url }}"
                  alt="Event Logo">
         </a>
     </div>
