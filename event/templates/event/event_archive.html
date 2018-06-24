@@ -3,7 +3,7 @@
 <h1>Events</h1>
 <div class="row">
     {% for event in latest %}
-    <div class="col-sm-4 d-flex align-items-stretch">
+    <div class="col-sm-4 d-flex flex-column align-items-stretch">
         {% include 'event/event_card.html' %}
     </div>
     {% empty %} {% endfor %}
