@@ -22,6 +22,28 @@
     {% endfor %}
     <p class="alert alert-info" align="right">Tag us on social media: #{{ event.hashtag }}</p>
 </div>
+
+<h2>Purchase Options</h2>
+{% if event.is_upcoming %}
+<a class="btn btn-info btn-lg" href="{% url 'shop:event' event.id %}" role="button">Online Shop</a>
+{% elif event.is_current %}
+<div class="alert alert-warning">
+    <strong>Purchasing online for this event is now closed.</strong> Please visit the registration booth at the event to
+    pickup or purchases.
+</div>
+{% else %}
+<div class="alert alert-warning">
+    <strong>This is a past event and purchasing is no longer available find out about our <a
+            href="{% url 'event:index' %}">next event</a>.</strong>
+</div>
+{% endif %}
+
+<h2>Location</h2>
+<p class="h4"><strong><a href="{% url 'event:location' event.location.id %}">{{ event.location.name }}</a></strong>
+    {% if event.hotel_code_url %}( <a href="{{ event.hotel_code_url }}" target="_blank">Hotel Reservation Link</a> ){% endif %}
+</p>
+<p>{{ event.hotel_information|linebreaks }}</p>
+
 <h2>Sponsors</h2>
 <div class="row">
     {% for obj_sponsor in sponsor_list %}
@@ -42,24 +64,5 @@
     </div>
     {% endfor %}
 </div>
-<h2>Purchase Options</h2>
-{% if event.is_upcoming %}
-<a class="btn btn-info btn-lg" href="{% url 'shop:event' event.id %}" role="button">Online Shop</a>
-{% elif event.is_current %}
-<div class="alert alert-warning">
-    <strong>Purchasing online for this event is now closed.</strong> Please visit the registration booth at the event to
-    pickup or purchases.
-</div>
-{% else %}
-<div class="alert alert-warning">
-    <strong>This is a past event and purchasing is no longer available find out about our <a
-            href="{% url 'event:index' %}">next event</a>.</strong>
-</div>
-{% endif %}
-<h2>Location</h2>
-<p class="h4"><strong><a href="{% url 'event:location' event.location.id %}">{{ event.location.name }}</a></strong>
-    {% if event.hotel_code_url %}( <a href="{{ event.hotel_code_url }}" target="_blank">Hotel Reservation Link</a> ){% endif %}
-</p>
-<p>{{ event.hotel_information|linebreaks }}</p>
 
 {% endblock content %}
