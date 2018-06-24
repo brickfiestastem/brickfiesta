@@ -3,6 +3,7 @@ from django.views.generic import DetailView
 from django.views.generic.edit import CreateView, UpdateView
 from django.views.generic.base import View, TemplateView
 from .models import Business, Vendor, Sponsor
+from django.core.mail import send_mail
 from event.models import Event
 from shop.models import Product
 from django.shortcuts import render
@@ -11,6 +12,7 @@ from django.utils.decorators import method_decorator
 from .forms import SponsorForm, VendorForm
 from shop.utils import check_recaptcha
 from django.db.models import Count
+from django.conf import settings
 import datetime
 
 
@@ -105,6 +107,10 @@ class VendorRequestDetail(View):
                     form.instance.event = obj_event
                     form.instance.business = business_id
                     form.save()
+                    send_mail(subject="Brick Fiesta - New Vendor Request",
+                              message="A new vendor has requested to be added to {}.".format(obj_event.title),
+                              from_email=settings.DEFAULT_FROM_EMAIL,
+                              recipient_list=['vendor.support@brickfiesta.com'])
                 else:
                     form.add_error(
                         'product', 'Already submitted request for this event.')
@@ -181,6 +187,10 @@ class SponsorRequestDetail(View):
                     form.instance.business = business_id
                     form.instance.product_quantity = 1
                     form.save()
+                    send_mail(subject="Brick Fiesta - New Sponsor Request",
+                              message="A new sponsor has requested to be added to {}.".format(obj_event.title),
+                              from_email=settings.DEFAULT_FROM_EMAIL,
+                              recipient_list=['vendor.support@brickfiesta.com'])
                 else:
                     form.add_error(
                         'product', 'Already submitted request for this event.')
