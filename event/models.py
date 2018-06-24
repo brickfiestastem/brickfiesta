@@ -1,9 +1,11 @@
-from django.db import models
-from event.utils import upload_path_event, upload_path_activity, upload_path_space
-from django.contrib.auth.models import User
-from django.utils.text import Truncator
 import datetime
 import uuid
+
+from django.contrib.auth.models import User
+from django.db import models
+from django.utils.text import Truncator
+
+from event.utils import upload_path_event, upload_path_activity
 
 
 class BaseModel(models.Model):

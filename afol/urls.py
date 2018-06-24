@@ -1,4 +1,5 @@
 from django.urls import path, include
+
 from .views import ProfileView, ProfileEditView, SignUpView, AFOLMOCsView, AFOLShirtView, AFOLShirtEditView
 
 app_name = 'afol'

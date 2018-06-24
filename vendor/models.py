@@ -1,10 +1,12 @@
-from django.db import models
+import uuid
+
 from django.conf import settings
-from .utils import upload_path_vendor
+from django.contrib.auth.models import User
+from django.db import models
+
 from event.models import Event
 from shop.models import Product
-from django.contrib.auth.models import User
-import uuid
+from .utils import upload_path_vendor
 
 
 class BaseModel(models.Model):

@@ -1,8 +1,11 @@
-from django.db import models
-from event.models import Event
-# from django.conf import settings
-
 import uuid
+
+from django.db import models
+
+from event.models import Event
+
+
+# from django.conf import settings
 
 
 class BaseModel(models.Model):

@@ -1,13 +1,15 @@
+import datetime
+import uuid
+
+from django.conf import settings
 from django.contrib import admin
-from django.contrib.auth.models import User
+from django.contrib import messages
 from django.contrib.auth.admin import UserAdmin
-from .models import Attendee, Badge, Fan, Profile, Shirt
+from django.contrib.auth.models import User
 from django.core.mail import send_mail
 from django.template import loader
-from django.conf import settings
-import uuid
-from django.contrib import messages
-import datetime
+
+from .models import Attendee, Badge, Fan, Profile, Shirt
 
 
 class AttendeeAdmin(admin.ModelAdmin):

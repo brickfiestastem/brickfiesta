@@ -1,10 +1,11 @@
-from django.db import models
-from django.conf import settings
-from event.models import Event
-from shop.utils import upload_path_product
-from referral.models import Referral
-from django.contrib.auth.models import User
 import uuid
+
+from django.contrib.auth.models import User
+from django.db import models
+
+from event.models import Event
+from referral.models import Referral
+from shop.utils import upload_path_product
 
 
 class BaseModel(models.Model):

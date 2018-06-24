@@ -1,6 +1,7 @@
 from django.contrib import admin
-from .models import Product, Order, OrderItem, CartItem, ProductBulletPoint
 from django.contrib import messages
+
+from .models import Product, Order, OrderItem, CartItem, ProductBulletPoint
 from .utils import add_attendee_fan_badge_shirt
 
 

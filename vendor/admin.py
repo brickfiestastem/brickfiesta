@@ -1,14 +1,17 @@
-from django.contrib import admin
-from .models import Business, BusinessNote, Vendor, Sponsor
-from django.core.management import call_command
-from django.conf import settings
-from django.contrib import messages
-from shop.models import CartItem
-from django.core.mail import send_mail
-from django.template import loader
+import os
 import uuid
 
-import os
+from django.conf import settings
+from django.contrib import admin
+from django.contrib import messages
+from django.core.mail import send_mail
+from django.core.management import call_command
+from django.template import loader
+
+from shop.models import CartItem
+from .models import Business, BusinessNote, Vendor, Sponsor
+
+
 # Register your models here.
 
 

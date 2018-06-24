@@ -1,7 +1,9 @@
 from django.urls import path
-from .views import QuestionAnswerView
-from .models import Article
 from django.views.generic.dates import ArchiveIndexView
+
+from .models import Article
+from .views import QuestionAnswerView
+
 # TODO: Implement feed and Year Archive View
 # from django.views.generic.dates import YearArchiveView
 

@@ -1,7 +1,8 @@
 from django.urls import path
 from django.views.generic.dates import ArchiveIndexView
-from .models import Event, Location
+
 from . import views
+from .models import Event, Location
 from .views import EventDetail, LocationDetail, ActivityDetail
 
 app_name = 'event'

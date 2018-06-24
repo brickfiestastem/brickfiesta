@@ -1,9 +1,10 @@
+from django.contrib.auth.decorators import login_required
+from django.db.models import Count
+from django.utils.decorators import method_decorator
 from django.views.generic import ListView
-from django.db.models import Avg, Count, Min, Sum
+
 from afol.models import Shirt
 from event.models import Event, Schedule
-from django.contrib.auth.decorators import login_required
-from django.utils.decorators import method_decorator
 
 
 @method_decorator(login_required, name='dispatch')

@@ -1,8 +1,10 @@
-from django.db.models import Sum
-from .models import CartItem
-from django.conf import settings
 import json
 import uuid
+
+from django.conf import settings
+from django.db.models import Sum
+
+from .models import CartItem
 
 
 class ShoppingCart(object):

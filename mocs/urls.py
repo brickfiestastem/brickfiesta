@@ -1,4 +1,5 @@
 from django.urls import path
+
 from mocs.views import CategoryListView, EventCategoriesListView, EventListView, MocAddView, \
     MocDetail, MocUpdateView, MocUpdateCategoryView, MocCreateCategoryView
 

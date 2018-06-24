@@ -1,15 +1,15 @@
-from django.views.generic.list import ListView
+from django.contrib.auth.decorators import login_required
+from django.shortcuts import render
+from django.utils.decorators import method_decorator
 from django.views.generic import DetailView
 from django.views.generic.edit import CreateView, UpdateView
-from django.views.generic.base import View, TemplateView
+from django.views.generic.list import ListView
+
 from afol.models import Fan
-from mocs.models import Category, Moc, MocCategories, EventCategory
 from event.models import Event
-from django.shortcuts import render, redirect
-from shop.utils import check_recaptcha
-from django.contrib.auth.decorators import login_required
-from django.utils.decorators import method_decorator
 from mocs.forms import MOCsForm
+from mocs.models import Moc, MocCategories, EventCategory
+from shop.utils import check_recaptcha
 
 
 class CategoryListView(ListView):

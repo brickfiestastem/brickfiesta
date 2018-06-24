@@ -10,8 +10,9 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/1.11/ref/settings/
 """
 
-import os
 import json
+import os
+
 from django.core.exceptions import ImproperlyConfigured
 
 with open("settings.json") as f:

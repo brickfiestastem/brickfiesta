@@ -1,12 +1,11 @@
+import uuid
+
 from django.db import models
 from django.db.models import Count
-from event.models import Event, Space
+
 from afol.models import Fan
-from django.contrib.auth.models import User
+from event.models import Event, Space
 from .utils import upload_path_mocs
-from django import forms
-import uuid
-import datetime
 
 
 class BaseModel(models.Model):

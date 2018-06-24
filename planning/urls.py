@@ -1,4 +1,5 @@
 from django.urls import path
+
 from planning.views import EventListingView, ShirtSummaryView, ScheduleListView, SchedulePrintListView
 
 app_name = "planning"

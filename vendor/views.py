@@ -1,19 +1,19 @@
-from django.views.generic.list import ListView
-from django.views.generic import DetailView
-from django.views.generic.edit import CreateView, UpdateView
-from django.views.generic.base import View, TemplateView
-from .models import Business, Vendor, Sponsor
-from django.core.mail import send_mail
-from event.models import Event
-from shop.models import Product
-from django.shortcuts import render
-from django.contrib.auth.decorators import login_required
-from django.utils.decorators import method_decorator
-from .forms import SponsorForm, VendorForm
-from shop.utils import check_recaptcha
-from django.db.models import Count
-from django.conf import settings
 import datetime
+
+from django.conf import settings
+from django.contrib.auth.decorators import login_required
+from django.core.mail import send_mail
+from django.shortcuts import render
+from django.utils.decorators import method_decorator
+from django.views.generic import DetailView
+from django.views.generic.base import View, TemplateView
+from django.views.generic.edit import CreateView, UpdateView
+from django.views.generic.list import ListView
+
+from shop.models import Product
+from shop.utils import check_recaptcha
+from .forms import SponsorForm, VendorForm
+from .models import Business, Vendor, Sponsor
 
 
 class UpcomingView(TemplateView):
@@ -108,7 +108,8 @@ class VendorRequestDetail(View):
                     form.instance.business = business_id
                     form.save()
                     send_mail(subject="Brick Fiesta - New Vendor Request",
-                              message="A new vendor has requested to be added to {}.".format(obj_event.title),
+                              message="A new vendor has requested to be added to {}.".format(
+                                  obj_event.title),
                               from_email=settings.DEFAULT_FROM_EMAIL,
                               recipient_list=['vendor.support@brickfiesta.com'])
                 else:
@@ -188,7 +189,8 @@ class SponsorRequestDetail(View):
                     form.instance.product_quantity = 1
                     form.save()
                     send_mail(subject="Brick Fiesta - New Sponsor Request",
-                              message="A new sponsor has requested to be added to {}.".format(obj_event.title),
+                              message="A new sponsor has requested to be added to {}.".format(
+                                  obj_event.title),
                               from_email=settings.DEFAULT_FROM_EMAIL,
                               recipient_list=['vendor.support@brickfiesta.com'])
                 else:

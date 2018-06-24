@@ -1,28 +1,32 @@
-from django.shortcuts import render, redirect
-from django.urls import reverse
-from django.views import View
-from django.views.generic.list import ListView
-from django.views.generic.detail import SingleObjectMixin
-from django.views.generic import DetailView, FormView
-from event.models import Event
-from shop.utils import check_recaptcha
-from .models import Product, Order, OrderItem
-from .forms import CartItemForm
-from .cart import ShoppingCart
-from django.conf import settings
-import json
 import datetime
+import json
+import urllib.error
 import urllib.parse
 import urllib.request
-import urllib.error
 import uuid
-from django.core.mail import EmailMessage
-from django.contrib.auth.models import User
-from django.core.mail import send_mail
-from django.template import loader
+
+from django.conf import settings
 from django.contrib import messages
+from django.contrib.auth.models import User
+from django.core.mail import EmailMessage
+from django.core.mail import send_mail
+from django.shortcuts import render, redirect
+from django.template import loader
+from django.urls import reverse
 from django.utils.html import format_html
+from django.views import View
+from django.views.generic import DetailView, FormView
+from django.views.generic.detail import SingleObjectMixin
+from django.views.generic.list import ListView
+
+from event.models import Event
+from shop.utils import check_recaptcha
+from .cart import ShoppingCart
+from .forms import CartItemForm
+from .models import Product, Order, OrderItem
 from .utils import add_attendee_fan_badge_shirt
+
+
 # Create your views here.
 
 

@@ -1,10 +1,12 @@
-from event.utils import upload_path
-from django.conf import settings
 import json
 import urllib
 import urllib.request
-from afol.models import Attendee, Badge, Fan, Shirt
+
+from django.conf import settings
 from django.contrib import messages
+
+from afol.models import Attendee, Badge, Fan, Shirt
+from event.utils import upload_path
 
 
 def check_recaptcha(request):

@@ -1,7 +1,9 @@
-from django import forms
-from mocs.models import Moc
-from afol.models import Fan
 import datetime
+
+from django import forms
+
+from afol.models import Fan
+from mocs.models import Moc
 
 
 class MOCsForm(forms.ModelForm):

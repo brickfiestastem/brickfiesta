@@ -1,17 +1,18 @@
-from django.views.generic import DetailView, ListView, UpdateView
 from django.contrib.auth import login
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.models import User
 from django.shortcuts import redirect
-from .models import Profile, Fan, Shirt
+from django.shortcuts import render
+from django.urls import reverse_lazy
+from django.utils.decorators import method_decorator
+from django.views import generic
+from django.views.generic import DetailView, ListView, UpdateView
+
 from mocs.models import Moc
 from vendor.models import Business
-from django.contrib.auth.mixins import LoginRequiredMixin
-from django.views import generic
-from django.shortcuts import render
 from .forms import AfolUserCreateForm, AfolUserChangeForm, ShirtChangeForm
-from django.contrib.auth.decorators import login_required
-from django.utils.decorators import method_decorator
-from django.urls import reverse_lazy
+from .models import Profile, Fan, Shirt
 
 
 class ProfileView(LoginRequiredMixin, DetailView):

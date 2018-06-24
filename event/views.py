@@ -1,12 +1,14 @@
+import datetime
+
+from django.conf import settings
 from django.shortcuts import render
+from django.views.generic import DetailView, TemplateView
+from django.views.generic.edit import FormView
+
 from event.models import Announcement, Event, Location, Schedule, Activity
 from shop.utils import check_recaptcha
 from vendor.models import Sponsor, Vendor
-from django.views.generic import DetailView, TemplateView
-from django.views.generic.edit import FormView
 from .forms import ContactForm
-from django.conf import settings
-import datetime
 
 
 class FrontPage(TemplateView):
