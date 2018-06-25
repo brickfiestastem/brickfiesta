@@ -4,7 +4,11 @@
     <div class="col-2"></div>
     <div class="col-lg-8">
         <fieldset>
-            <legend>My Own Creation - Category</legend>
+            {% if object.moc %}
+            <legend><a href="{% url 'mocs:details' object.moc.id %}">My Own Creation</a> - Category</legend>
+            {% else %}
+            <legend><a href="{% url 'afol:mocs' %}">My Own Creation</a> - Category</legend>
+            {% endif %}
             <form method="post" action="." enctype="multipart/form-data">
                 {% csrf_token %}
                 {% include 'brickfiesta/form_formatting.html' %}

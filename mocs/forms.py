@@ -30,6 +30,6 @@ class MOCsForm(forms.ModelForm):
 
     class Meta:
         model = Moc
-        fields = ('creator', 'title', 'description', 'height', 'length',
+        fields = ('creator', 'title', 'description', 'display_requirements', 'height', 'length',
                   'width', 'viewable_sides', 'url_photo', 'url_flickr',
                   'year_built', 'year_retired', 'is_public')

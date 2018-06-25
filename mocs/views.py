@@ -105,6 +105,12 @@ class MocUpdateCategoryView(UpdateView):
     success_url = '/afol/mocs'
 
     def form_valid(self, form):
+        obj_eventcategory = EventCategory.objects.filter(
+            event=form.instance.category.event)
+        if MocCategories.objects.filter(moc=form.instance.moc, category__in=obj_eventcategory).count() > 1:
+            form.add_error(
+                "category", 'You cannot pick more than one category per event.')
+            return super(MocUpdateCategoryView, self).form_invalid(form)
         if not check_recaptcha(self.request):
             form.add_error(
                 None, 'You failed the human test. Try the reCAPTCHA again.')
@@ -124,6 +130,12 @@ class MocCreateCategoryView(CreateView):
 
     def form_valid(self, form):
         form.instance.moc = self.moc
+        obj_eventcategory = EventCategory.objects.filter(
+            event=form.instance.category.event)
+        if MocCategories.objects.filter(moc=self.moc, category__in=obj_eventcategory).exists():
+            form.add_error(
+                "category", 'You cannot pick more than one category per event.')
+            return super(MocCreateCategoryView, self).form_invalid(form)
         if not check_recaptcha(self.request):
             form.add_error(
                 None, 'You failed the human test. Try the reCAPTCHA again.')

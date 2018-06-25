@@ -38,7 +38,8 @@ class EventListView(ListView):
 
 class EventProductView(View):
     def get(self, request, event_id):
-        obj_products = Product.objects.filter(event__id__exact=event_id, is_public=True)
+        obj_products = Product.objects.filter(
+            event__id__exact=event_id, is_public=True)
         return render(request,
                       'shop/product_list.html',
                       {'object_list': obj_products, 'first': obj_products.first()})

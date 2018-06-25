@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from .models import Category, EventCategory, MocCategories, Moc, Vote
+from .models import Category, EventCategory, MocCategories, MocNote, Moc, Vote
 
 
 class CategoryAdmin(admin.ModelAdmin):
@@ -21,6 +21,16 @@ class EventCategoryAdmin(admin.ModelAdmin):
 admin.site.register(EventCategory, EventCategoryAdmin)
 
 
+class MocNoteInLine(admin.TabularInline):
+    model = MocNote
+    extra = 1
+
+    def formfield_for_foreignkey(self, db_field, request, **kwargs):
+        if db_field.name == "user":
+            kwargs["initial"] = request.user
+        return super().formfield_for_foreignkey(db_field, request, **kwargs)
+
+
 class MOCCategoryInLine(admin.TabularInline):
     model = MocCategories
     extra = 1
@@ -28,7 +38,7 @@ class MOCCategoryInLine(admin.TabularInline):
 
 class MOCAdmin(admin.ModelAdmin):
     # List display for the admin
-    inlines = (MOCCategoryInLine, )
+    inlines = (MOCCategoryInLine, MocNoteInLine)
     list_display_links = ('title', )
     list_display = ('creator', 'title', 'year_built',
                     'year_retired', 'is_public')

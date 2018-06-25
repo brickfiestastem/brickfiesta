@@ -1,5 +1,6 @@
 import uuid
 
+from django.contrib.auth.models import User
 from django.db import models
 from django.db.models import Count
 
@@ -70,6 +71,9 @@ class Moc(BaseModel):
         Fan, on_delete=models.CASCADE, default=uuid.uuid4)
     title = models.CharField(verbose_name='Title', unique=True, max_length=64)
     description = models.TextField(verbose_name='Description')
+    display_requirements = models.TextField(verbose_name='Display requirements',
+                                            help_text='<ul><li>Does this MOC have special display requirements like power or something more than just table space? Enter it here.</li></ul>',
+                                            blank=True, null=True)
     height = models.IntegerField(verbose_name='Height', default=10,
                                  help_text="<ul><li>Enter in inches rounded up to the nearest inch.</li></ul>")
     length = models.IntegerField(verbose_name='Length', default=10,
@@ -93,6 +97,15 @@ class Moc(BaseModel):
 
     def __str__(self):
         return self.title
+
+
+class MocNote(BaseModel):
+    moc = models.ForeignKey(Moc, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    note = models.TextField(verbose_name='Note')
+
+    def __str__(self):
+        return "{} note on {}".format(self.user, self.moc)
 
 
 class MocCategories(BaseModel):
