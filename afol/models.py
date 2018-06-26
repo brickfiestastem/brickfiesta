@@ -5,7 +5,7 @@ from django.db import models
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 
-from event.models import Event
+from event.models import Event, Schedule
 
 
 def get_user_string(self):
@@ -134,3 +134,19 @@ class Shirt(BaseModel):
 
     def __str__(self):
         return "{} {} - {}, {}".format(self.fan.first_name, self.fan.last_name, self.get_shirt_size_display(), self.event.title)
+
+
+class ScheduleVolunteer(BaseModel):
+    schedule = models.ForeignKey(Schedule, on_delete=models.CASCADE)
+    fan = models.ForeignKey(Fan, on_delete=models.CASCADE)
+    order = models.PositiveSmallIntegerField(
+        verbose_name='Volunteer Order', default=0)
+
+
+class ScheduleAttendee(BaseModel):
+    schedule = models.ForeignKey(Schedule, on_delete=models.CASCADE)
+    fan = models.ForeignKey(Fan, on_delete=models.CASCADE)
+    order = models.PositiveSmallIntegerField(
+        verbose_name='Sign Up Order', default=0)
+    has_attended = models.BooleanField(
+        verbose_name='Attended Event', default=False)

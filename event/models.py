@@ -63,18 +63,14 @@ class Activity(BaseModel):
     signup_required = models.BooleanField(verbose_name='Sign Up Required')
     min_people = models.IntegerField(verbose_name='Minimum People')
     max_people = models.IntegerField(verbose_name='Maximum People')
+    number_volunteers = models.IntegerField(
+        verbose_name="Number Volunteers", default=2)
 
     class Meta:
         verbose_name_plural = "Activities"
 
     def __str__(self):
         return self.title
-
-
-class ActivityVolunteers(BaseModel):
-    activity = models.ForeignKey(Activity, on_delete=models.CASCADE)
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
-    order = models.SmallIntegerField(verbose_name='Order')
 
 
 class Event(BaseModel):
@@ -149,7 +145,10 @@ class Schedule(BaseModel):
     start_time = models.TimeField()
     end_time = models.TimeField()
     date = models.DateField()
-    is_public = models.BooleanField(default=False)
+    is_public = models.BooleanField(
+        default=False, help_text="Is public on web site?")
+    is_printable = models.BooleanField(
+        default=True, help_text="Is printable on printed schedule?")
 
     def __str__(self):
         return str(self.activity) + " in " + str(self.space) + " on " + str(self.date) + " @ " + str(self.start_time)
