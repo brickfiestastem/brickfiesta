@@ -2,6 +2,7 @@ import uuid
 
 from django.contrib.auth.models import User
 from django.db import models
+from django.db.models import Max
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 
@@ -137,16 +138,44 @@ class Shirt(BaseModel):
 
 
 class ScheduleVolunteer(BaseModel):
+
+    def volunteernumber():
+        int_number = ScheduleVolunteer.objects.all().aggregate(Max('order'))
+        if None == int_number['order__max']:
+            return 1
+        else:
+            return int_number['order__max'] + 1
+
     schedule = models.ForeignKey(Schedule, on_delete=models.CASCADE)
     fan = models.ForeignKey(Fan, on_delete=models.CASCADE)
     order = models.PositiveSmallIntegerField(
-        verbose_name='Volunteer Order', default=0)
+        verbose_name='Volunteer Order', default=volunteernumber)
+
+    class Meta:
+        unique_together = ("schedule", "fan")
+
+    def __str__(self):
+        return "{} is the {} volunteer for {}".format(self.fan, self.order, self.schedule)
 
 
 class ScheduleAttendee(BaseModel):
+
+    def attendeenumber():
+        int_number = ScheduleAttendee.objects.all().aggregate(Max('order'))
+        if None == int_number['order__max']:
+            return 1
+        else:
+            return int_number['order__max'] + 1
+
     schedule = models.ForeignKey(Schedule, on_delete=models.CASCADE)
     fan = models.ForeignKey(Fan, on_delete=models.CASCADE)
     order = models.PositiveSmallIntegerField(
-        verbose_name='Sign Up Order', default=0)
+        verbose_name='Sign Up Order', default=attendeenumber)
     has_attended = models.BooleanField(
         verbose_name='Attended Event', default=False)
+
+    class Meta:
+        unique_together = ("schedule", "fan")
+
+    def __str__(self):
+        return "{} is the {} attendee for {}".format(self.fan, self.order, self.schedule)

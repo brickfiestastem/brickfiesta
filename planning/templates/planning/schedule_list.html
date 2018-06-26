@@ -12,7 +12,19 @@
     {% for scheduled_activity in object.list %}
     <div class="col-12">
         <h2>{{ scheduled_activity.activity.title }}
-            {% if scheduled_activity.is_public %}<span class="badge badge-info">Public</span>{% endif %}</h2>
+            {% if scheduled_activity.is_public %}<span class="badge badge-info">Public</span>{% endif %}
+            {% if scheduled_activity.attendee_count %}
+            {% if scheduled_activity.attendee_count > scheduled_activity.activity.max_people %}
+            <span class="badge badge-warning">Wait List</span>
+            {% else %}
+            <span class="badge badge-info">Space Available</span>
+            {% endif %}
+            {% endif %}
+            {% if scheduled_activity.volunteer_count %}
+            {% if scheduled_activity.volunteer_count < scheduled_activity.activity.number_volunteers %}
+            <span class="badge badge-warning">Volunteers Needed</span>
+            {% endif %}
+            {% endif %}</h2>
         <h4>{{ scheduled_activity.start_time }} - {{ scheduled_activity.end_time }} in
             {{ scheduled_activity.space.name }}</h4>
         <p align="justified">{{ scheduled_activity.activity.description }}</p>

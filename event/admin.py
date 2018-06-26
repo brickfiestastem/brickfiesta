@@ -1,6 +1,7 @@
 from django.contrib import admin
 
 from .models import Activity, Announcement, Event, Location, Space, Schedule
+from afol.models import ScheduleAttendee, ScheduleVolunteer
 
 
 class ActivityAdmin(admin.ModelAdmin):
@@ -46,10 +47,32 @@ class SpaceAdmin(admin.ModelAdmin):
 admin.site.register(Space, SpaceAdmin)
 
 
+class ScheduleAttendeeInLine(admin.TabularInline):
+    model = ScheduleAttendee
+    extra = 0
+
+
+class ScheduleVolunteerInLine(admin.TabularInline):
+    model = ScheduleVolunteer
+    extra = 0
+
+
 class ScheduleAdmin(admin.ModelAdmin):
     # List display for the admin
+
+    def attendee_count(self, obj):
+        return obj.scheduleattendee_set.count()
+
+    attendee_count.short_description = "Attendees"
+
+    def volunteer_count(self, obj):
+        return obj.schedulevolunteer_set.count()
+
+    volunteer_count.short_description = "Volunteers"
+
+    inlines = (ScheduleVolunteerInLine, ScheduleAttendeeInLine)
     list_filter = ('event', 'space', 'date')
-    list_display = ('event', 'is_public', 'activity', 'space',
+    list_display = ('event', 'is_public', 'activity', 'volunteer_count', 'attendee_count', 'space',
                     'date', 'start_time', 'end_time')
     list_display_links = ('activity',)
     search_fields = ('activity__title',)

@@ -1,6 +1,7 @@
 import datetime
 
 from django.conf import settings
+from django.db.models import Count
 from django.shortcuts import render
 from django.views.generic import DetailView, TemplateView
 from django.views.generic.edit import FormView
@@ -52,8 +53,15 @@ class ActivityDetail(DetailView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['schedule_list'] = Schedule.objects.filter(
-            activity=self.object, is_public=True)
+        context['schedule_list'] = None
+        if self.request.user.is_authenticated:
+            context['schedule_list'] = Schedule.objects.filter(
+                activity=self.object, is_public=True).annotate(
+                volunteer_count=Count('schedulevolunteer'),
+                attendee_count=Count('scheduleattendee'))
+        else:
+            context['schedule_list'] = Schedule.objects.filter(
+                activity=self.object, is_public=True)
         return context
 
 

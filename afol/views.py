@@ -1,7 +1,10 @@
+import datetime
+
 from django.contrib.auth import login
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.models import User
+from django.db.models import Count
 from django.shortcuts import redirect
 from django.shortcuts import render
 from django.urls import reverse_lazy
@@ -9,10 +12,11 @@ from django.utils.decorators import method_decorator
 from django.views import generic
 from django.views.generic import DetailView, ListView, UpdateView
 
+from event.models import Schedule
 from mocs.models import Moc
 from vendor.models import Business
 from .forms import AfolUserCreateForm, AfolUserChangeForm, ShirtChangeForm
-from .models import Profile, Fan, Shirt
+from .models import Attendee, Profile, Fan, Shirt
 
 
 class ProfileView(LoginRequiredMixin, DetailView):
@@ -114,3 +118,15 @@ class AFOLShirtEditView(UpdateView):
     model = Shirt
     form_class = ShirtChangeForm
     success_url = reverse_lazy('afol:shirts')
+
+
+@method_decorator(login_required, name='dispatch')
+class AFOLVolunteerView(ListView):
+    model = Schedule
+    template_name = 'afol/volunteer_list.html'
+
+    def get_queryset(self):
+        obj_events = Attendee.objects.filter(fan__user=self.request.user).values('event')
+        today = datetime.date.today()
+        return Schedule.objects.filter(event__end_date__gte=today, event__in=obj_events).annotate(
+            volunteer_count=Count('schedulevolunteer'))

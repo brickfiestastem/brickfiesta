@@ -33,7 +33,9 @@ class ScheduleListView(ListView):
 
     def get_queryset(self):
         self.obj_event = Event.objects.get(id=self.kwargs['event'])
-        return Schedule.objects.filter(event=self.obj_event)
+        return Schedule.objects.filter(event=self.obj_event).annotate(
+            volunteer_count=Count('schedulevolunteer'),
+            attendee_count=Count('scheduleattendee'))
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -47,7 +49,7 @@ class SchedulePrintListView(ListView):
 
     def get_queryset(self):
         self.obj_event = Event.objects.get(id=self.kwargs['event'])
-        return Schedule.objects.filter(event=self.obj_event)
+        return Schedule.objects.filter(event=self.obj_event, is_public=True, is_printable=True)
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)
