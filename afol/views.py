@@ -11,12 +11,13 @@ from django.urls import reverse_lazy
 from django.utils.decorators import method_decorator
 from django.views import generic
 from django.views.generic import DetailView, ListView, UpdateView
+from django.views.generic.edit import CreateView
 
 from event.models import Schedule
 from mocs.models import Moc
 from vendor.models import Business
-from .forms import AfolUserCreateForm, AfolUserChangeForm, ShirtChangeForm
-from .models import Attendee, Profile, Fan, Shirt
+from .forms import AfolUserCreateForm, AfolUserChangeForm, ShirtChangeForm, ScheduleVolunteerForm
+from .models import Attendee, Profile, Fan, Shirt, ScheduleVolunteer, ScheduleAttendee
 
 
 class ProfileView(LoginRequiredMixin, DetailView):
@@ -125,8 +126,45 @@ class AFOLVolunteerView(ListView):
     model = Schedule
     template_name = 'afol/volunteer_list.html'
 
+    def get_form_kwargs(self):
+        kwargs = super(AFOLVolunteerView, self).get_form_kwargs()
+        kwargs['user'] = self.request.user
+        return kwargs
+
     def get_queryset(self):
         obj_events = Attendee.objects.filter(fan__user=self.request.user).values('event')
         today = datetime.date.today()
         return Schedule.objects.filter(event__end_date__gte=today, event__in=obj_events).annotate(
             volunteer_count=Count('schedulevolunteer'))
+
+    def get_context_data(self, **kwargs):
+        context = super(AFOLVolunteerView, self).get_context_data(**kwargs)
+        context['can_volunteer'] = True
+        return context
+
+    def post(self, request):
+        obj_form = ScheduleVolunteerForm(request.POST, instance=Fan.objects.get(
+            fan=request.POST.get('fan'), schedule=request.POST.get('schedule')))
+        if obj_form.is_valid():
+            obj_form.save()
+        return
+
+
+@method_decorator(login_required, name='dispatch')
+class AFOLVolunteerCreateView(CreateView):
+    model = ScheduleVolunteer
+    form_class = ScheduleVolunteerForm
+    success_url = reverse_lazy('afol:volunteer')
+
+    def dispatch(self, request, *args, **kwargs):
+        self.schedule = Schedule.objects.get(pk=kwargs['pk'])
+        return super(AFOLVolunteerCreateView, self).dispatch(request, *args, **kwargs)
+
+    def get_form_kwargs(self):
+        kwargs = super(AFOLVolunteerCreateView, self).get_form_kwargs()
+        kwargs['user'] = self.request.user
+        return kwargs
+
+    def form_valid(self, form):
+        form.instance.schedule = self.schedule
+        return super(AFOLVolunteerCreateView, self).form_valid(form)

@@ -29,8 +29,9 @@
             {% endif %}
             {% if scheduled_activity.volunteer_count %}
             {% if scheduled_activity.volunteer_count < scheduled_activity.activity.number_volunteers %}
-            {% if scheduled_activity.volunteer %}
-            <span class="badge badge-warning">Volunteers Needed</span>
+            {% if can_volunteer %}
+            <a href="{% url 'afol:volunteercreate' scheduled_activity.id %}" class="badge badge-warning">Volunteers
+                Needed</a>
             {% else %}
             <span class="badge badge-warning">Volunteers Needed</span>
             {% endif %}

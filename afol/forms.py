@@ -4,7 +4,7 @@ from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 
-from .models import Profile, Shirt
+from .models import Profile, Shirt, ScheduleVolunteer, Fan, ScheduleAttendee
 
 
 class AfolUserCreateForm(UserCreationForm):
@@ -59,3 +59,17 @@ class ShirtChangeForm(forms.ModelForm):
             'fan': forms.HiddenInput(),
             'event': forms.HiddenInput(),
         }
+
+
+class ScheduleVolunteerForm(forms.ModelForm):
+    class Meta:
+        model = ScheduleVolunteer
+        fields = ('fan', 'schedule',)
+        widgets = {
+            'schedule': forms.HiddenInput(),
+        }
+
+    def __init__(self, *args, **kwargs):
+        obj_queryset = Fan.objects.filter(user=kwargs.pop('user'))
+        super(ScheduleVolunteerForm, self).__init__(*args, **kwargs)
+        self.fields['fan'].queryset = obj_queryset
