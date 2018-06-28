@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns="http://www.w3.org/1999/html">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -61,7 +61,7 @@
 <div class="page-break"></div>
 {% for sponsor in sponsor_list %}
     <h3>Sponsor: {{ sponsor.business.name }}</h3>
-    <img style="height: auto; width: 6in;" src="{{ sponsor.business.logo.url }}" />
+    <center><img style="height: auto; width: 6in;" src="{{ sponsor.business.logo.url }}" /></center>
     <p align="justified">{{ sponsor.business.description }}</p>
     <p align="center">{{ sponsor.business.street }}, {{ sponsor.business.locality }},
         {{ sponsor.business.region }}, {{ sponsor.business.postal_code }}</p>
@@ -82,10 +82,12 @@
 <h3>Vendors</h3>
 {% for vendor in vendor_list %}
 <h4>{{ vendor.business.name }}</h4>
-<p align="justified">{{ vendor.business.description }}</p>
-<p align="center">{{ vendor.business.street }}, {{ vendor.business.locality }},
-        {{ vendor.business.region }}, {{ vendor.business.postal_code }}</p>
-<p align="center">{{ vendor.business.url }}</p>
+<ul>
+    <li>{{ vendor.business.description }}</li>
+    <li>{{ vendor.business.street }}, {{ vendor.business.locality }},
+        {{ vendor.business.region }}, {{ vendor.business.postal_code }}</li>
+    <li>{{ vendor.business.url }}</li>
+</ul>
 {% endfor %}
 <div class="page-break"></div>
 <h3>Vendors (continued)</h3>
