@@ -72,8 +72,9 @@ class ScheduleAdmin(admin.ModelAdmin):
 
     inlines = (ScheduleVolunteerInLine, ScheduleAttendeeInLine)
     list_filter = ('event', 'space', 'date')
-    list_display = ('event', 'is_public', 'activity', 'volunteer_count', 'attendee_count', 'space',
-                    'date', 'start_time', 'end_time')
+    list_display = ('activity', 'date', 'start_time', 'end_time',
+                    'space', 'volunteer_count', 'attendee_count',
+                    'is_public', 'is_printable', 'event', )
     list_display_links = ('activity',)
     search_fields = ('activity__title',)
 

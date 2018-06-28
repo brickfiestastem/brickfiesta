@@ -51,6 +51,9 @@ class Space(BaseModel):
     longitude = models.FloatField(
         verbose_name='Longitude', blank=True, null=True)
 
+    class Meta:
+        ordering = ['location', 'name']
+
     def __str__(self):
         return self.location.name + " - " + self.name
 
@@ -70,6 +73,7 @@ class Activity(BaseModel):
 
     class Meta:
         verbose_name_plural = "Activities"
+        ordering = ['title']
 
     def __str__(self):
         return self.title
