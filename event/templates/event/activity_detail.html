@@ -7,7 +7,8 @@
 <h2>Rules</h2>
 <p>{{ object.rules|linebreaks }}</p>
 <h2>Additional Information</h2>
-<p>The minimum people to participate in this event is {{ object.min_people }} the maximum is {{ object.max_people }}.
+<p>The minimum people to participate in this event is {{ object.min_people }} the maximum is
+    {% if object.max_people == -1 %}unlimited{% else %}{{ object.max_people }}{% endif %}.
 </p>
 {% if object.signup_required %}
 <p>Sign up for this event is required. If sign up is full you will be added to a waiting list.</p>
