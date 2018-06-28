@@ -71,13 +71,16 @@
 {% include 'event/schedule_table.html' %}
 <div class="page-break"></div>
 <h3>Activities</h3>
-<dl>
+<ul>
 {% for activity in activity_list %}
-    <dt>{{ activity.title }}</dt>
-    <dd><strong>Description:</strong> {{ activity.description|linebreaks }}</dd>
-    <dd><strong>Rules:</strong> {{ activity.rules|linebreaks }}</dd>
+    <li>{{ activity.title }}
+        <ul>
+            <li><i>Description:</i> {{ activity.description }}</li>
+            <li><i>Rules:</i> {{ activity.rules }}</li>
+        </ul>
+    </li>
 {% endfor %}
-</dl>
+</ul>
 <div class="page-break"></div>
 <h3>Vendors</h3>
 {% for vendor in vendor_list %}
