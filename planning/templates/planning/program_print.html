@@ -26,7 +26,7 @@
 </center>
 <div class="page-break"></div>
 <h3>Welcome Message</h3>
-<p align="justified">{{ program.welcome_message }}</p>
+<p align="justified">{{ program.welcome_message|linebreaks }}</p>
 <h3>Contributors</h3>
 <table width="100%">
     <thead>
@@ -47,22 +47,22 @@
     </tbody>
 </table>
 <h3>Thank You</h3>
-<p align="justified">{{ program.volunteer_thanks }}</p>
+<p align="justified">{{ program.volunteer_thanks|linebreaks }}</p>
 <h3>Disclaimer</h3>
-<p align="justified">{{ program.disclaimer }}</p>
+<p align="justified">{{ program.disclaimer|linebreaks }}</p>
 <div class="page-break"></div>
 {% for highlight in program_highlights %}
 <center>
     <img style="height: auto; width: 512px;" src="{{ highlight.activity.picture.url }}" />
     <h3>{{ highlight.activity.title }}</h3>
 </center>
-<p align="justified">{{ highlight.activity.description }}</p>
+<p align="justified">{{ highlight.activity.description|linebreaks }}</p>
 {% endfor %}
 <div class="page-break"></div>
 {% for sponsor in sponsor_list %}
     <h3>Sponsor: {{ sponsor.business.name }}</h3>
     <center><img style="height: auto; width: 6in;" src="{{ sponsor.business.logo.url }}" /></center>
-    <p align="justified">{{ sponsor.business.description }}</p>
+    <p align="justified">{{ sponsor.business.description|linebreaks }}</p>
     <p align="center">{{ sponsor.business.street }}, {{ sponsor.business.locality }},
         {{ sponsor.business.region }}, {{ sponsor.business.postal_code }}</p>
     <h4 align="center">{{ sponsor.business.url }}</h4>
@@ -74,8 +74,8 @@
 <dl>
 {% for activity in activity_list %}
     <dt>{{ activity.title }}</dt>
-    <dd><strong>Description:</strong> {{ activity.description }}</dd>
-    <dd><strong>Rules:</strong> {{ activity.rules }}</dd>
+    <dd><strong>Description:</strong> {{ activity.description|linebreaks }}</dd>
+    <dd><strong>Rules:</strong> {{ activity.rules|linebreaks }}</dd>
 {% endfor %}
 </dl>
 <div class="page-break"></div>
@@ -97,7 +97,7 @@
 {% endfor %}
 <div class="page-break"></div>
 <h3>Closing Remarks</h3>
-<p align="justified">{{ program.closing_remarks }}</p>
+<p align="justified">{{ program.closing_remarks|linebreaks }}</p>
 <div class="page-break"></div>
 <h3>Convention Map</h3>
 <img style="height: auto; width: 4.5in;" src="{{ event.location.map.url }}" />
