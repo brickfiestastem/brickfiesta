@@ -12,7 +12,7 @@
     {% for scheduled_activity in object.list %}
     <div class="col-12">
         <h2>{{ scheduled_activity.activity.title }}
-            {% if scheduled_activity.is_public %}<span class="badge badge-info">Public</span>{% endif %}
+            {% if scheduled_activity.is_public %}<span class="badge badge-info">Visible On Website</span>{% endif %}
             {% if scheduled_activity.attendee_count %}
             {% if scheduled_activity.attendee_count > scheduled_activity.activity.max_people %}
             <span class="badge badge-warning">Wait List</span>

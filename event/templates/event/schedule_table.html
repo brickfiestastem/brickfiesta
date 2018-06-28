@@ -16,8 +16,12 @@
         <td align="right">
             {{ scheduled_activity.start_time }} - {{ scheduled_activity.end_time }}
         </td>
-        <td><a href="{% url 'event:activity' scheduled_activity.activity.id %}">
+        <td>{% if printing %}
+            {{ scheduled_activity.activity.title }}
+            {% else %}
+            <a href="{% url 'event:activity' scheduled_activity.activity.id %}">
             {{ scheduled_activity.activity.title }}</a>
+            {% endif %}
         </td>
         <td>
             {% if scheduled_activity.attendee_count %}
@@ -43,4 +47,5 @@
     {% endfor %}
     </tbody>
 </table>
+<div class="page-break"></div>
 {% endfor %}

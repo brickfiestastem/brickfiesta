@@ -90,7 +90,9 @@ class Moc(BaseModel):
     year_retired = models.DateField(
         verbose_name='Year Retired', blank=True, null=True)
     is_public = models.BooleanField(
-        verbose_name='Display Publicly On Brick Fiesta', default=False)
+        verbose_name='Is Public',
+        help_text='Visible on Brick Fiesta Website',
+        default=False)
 
     class Meta:
         verbose_name_plural = 'MOCs'

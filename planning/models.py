@@ -2,7 +2,7 @@ import uuid
 
 from django.db import models
 
-from event.models import Event
+from event.models import Event, Activity
 
 
 # from django.conf import settings
@@ -17,6 +17,31 @@ class BaseModel(models.Model):
 
     class Meta:
         abstract = True
+
+
+class Program(BaseModel):
+    event = models.ForeignKey(Event, on_delete=models.CASCADE)
+    welcome_message = models.TextField(verbose_name='Welcome Message', default='')
+    closing_remarks = models.TextField(verbose_name='Closing Remarks', default='')
+    disclaimer = models.TextField(verbose_name='Disclaimer',
+                default='Brick Fiesta is generously sponsored by Alamo, Inc, a 501(c)3 non-profit corporation.'
+                        'LEGO &reg; is a registered trademark of The LEGO Group, which does not sponsor,'
+                        ' authorize, or endorse this event or website.')
+    volunteer_thanks = models.TextField(verbose_name='Volunteer Thanks',
+                default='Thank you to all our sponsor, vendors, members, and volunteers. Without you'
+                        'we would not have been able to have such an awesome event!')
+
+
+class ProgramContributors(BaseModel):
+    program = models.ForeignKey(Program, on_delete=models.CASCADE)
+    title = models.CharField(verbose_name='Title of Person', max_length=128)
+    name = models.CharField(verbose_name='Name of Person', max_length=128)
+    order = models.IntegerField(verbose_name='Order of Display', default=0)
+
+
+class ProgramHighlightActivity(BaseModel):
+    program = models.ForeignKey(Program, on_delete=models.CASCADE)
+    activity = models.ForeignKey(Activity, on_delete=models.CASCADE)
 
 
 class InventoryItem(BaseModel):

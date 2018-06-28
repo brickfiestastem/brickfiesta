@@ -6,6 +6,7 @@
 {% for object in object_list %}
     <li>{{ object.title }}
         <ul>
+            <li><a href="{% url 'planning:program' object.id %}">Program</a></li>
             <li><a href="{% url 'planning:shirt' object.id %}">Shirt Summary</a></li>
             <li><a href="{% url 'planning:schedule_list' object.id %}">List Schedule</a>
                 (<a href="{% url 'planning:schedule_print' object.id %}">Printable Schedule</a>)

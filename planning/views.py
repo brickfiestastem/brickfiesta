@@ -1,10 +1,35 @@
 from django.contrib.auth.decorators import login_required
 from django.db.models import Count
 from django.utils.decorators import method_decorator
-from django.views.generic import ListView
+from django.views.generic import ListView, TemplateView
 
 from afol.models import Shirt
-from event.models import Event, Schedule
+from event.models import Event, Schedule, Activity
+from vendor.models import Sponsor, Vendor
+from .models import Program, ProgramContributors, ProgramHighlightActivity
+
+class ProgramView(TemplateView):
+    template_name = 'planning/program_print.html'
+
+    def get_queryset(self):
+        return Event.objects.get(id=self.kwargs['event'])
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        self.obj_event = Event.objects.get(id=self.kwargs['event'])
+        context['printing'] = True
+        context['event'] = self.obj_event
+        context['program'] = Program.objects.get(event=self.obj_event)
+        context['program_contributors'] = ProgramContributors.objects.filter(program=context['program']).order_by('order')
+        context['program_highlights'] = ProgramHighlightActivity.objects.filter(program=context['program'])
+        context['sponsor_list'] = Sponsor.objects.all().order_by('business')\
+            .filter(event=self.obj_event, status='approved')
+        context['schedule_list'] = Schedule.objects.filter(event=self.obj_event, is_public=True, is_printable=True)
+        # obj_activities = set(Schedule.objects.filter(event=self.obj_event, is_public=True).values_list('activity'))
+        context['activity_list'] = Activity.objects.all().order_by('title')
+        context['vendor_list'] = Vendor.objects.all().order_by('business')\
+            .filter(event=self.obj_event, status='approved')
+        return context
 
 
 @method_decorator(login_required, name='dispatch')
@@ -54,4 +79,5 @@ class SchedulePrintListView(ListView):
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)
         context['event'] = self.obj_event
+        context['printing'] = True
         return context

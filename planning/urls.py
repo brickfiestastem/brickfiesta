@@ -1,13 +1,15 @@
 from django.urls import path
 
-from planning.views import EventListingView, ShirtSummaryView, ScheduleListView, SchedulePrintListView
+from planning.views import EventListingView, ShirtSummaryView, ScheduleListView, SchedulePrintListView, ProgramView
 
 app_name = "planning"
 
 urlpatterns = [
     path('', EventListingView.as_view(), name='index'),
-    path('shirts/<event>', ShirtSummaryView.as_view(), name='shirt'),
+    path('program/<event>', ProgramView.as_view(), name='program'),
     path('schedule/list/<event>', ScheduleListView.as_view(), name='schedule_list'),
     path('schedule/print/<event>',
          SchedulePrintListView.as_view(), name='schedule_print'),
+    path('shirts/<event>', ShirtSummaryView.as_view(), name='shirt'),
+
 ]

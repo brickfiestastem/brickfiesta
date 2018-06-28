@@ -5,7 +5,7 @@ from django.contrib.auth.models import User
 from django.db import models
 from django.utils.text import Truncator
 
-from event.utils import upload_path_event, upload_path_activity
+from event.utils import upload_path_event, upload_path_activity, upload_path_location, upload_path_space
 
 
 class BaseModel(models.Model):
@@ -32,6 +32,8 @@ class Location(BaseModel):
     url = models.URLField(verbose_name='URL', blank=True)
     latitude = models.FloatField(verbose_name='Latitude')
     longitude = models.FloatField(verbose_name='Longitude')
+    map = models.ImageField(verbose_name='Convention Space Map',
+        upload_to=upload_path_location, null=True, blank=True)
 
     def __str__(self):
         return self.name
@@ -42,7 +44,7 @@ class Space(BaseModel):
     name = models.CharField(verbose_name='Venue Space Name', max_length=64)
     description = models.TextField(verbose_name='Description')
     map = models.ImageField(verbose_name='Map', null=True, blank=True,
-                            upload_to=upload_path_event)
+                            upload_to=upload_path_space)
     max_seating = models.IntegerField(verbose_name='Max Seating')
     latitude = models.FloatField(
         verbose_name='Latitude', blank=True, null=True)
@@ -146,7 +148,7 @@ class Schedule(BaseModel):
     end_time = models.TimeField()
     date = models.DateField()
     is_public = models.BooleanField(
-        default=False, help_text="Is public on web site?")
+        default=False, help_text="Is visible on web site?")
     is_printable = models.BooleanField(
         default=True, help_text="Is printable on printed schedule?")
 

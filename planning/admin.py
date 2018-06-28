@@ -1,3 +1,23 @@
-# from django.contrib import admin
+from django.contrib import admin
 
-# Register your models here.
+from .models import Program, ProgramContributors, ProgramHighlightActivity
+
+
+class ProgramContributorsInLine(admin.TabularInline):
+    model = ProgramContributors
+    extra = 0
+
+
+class ProgramHighlightActivityInLine(admin.TabularInline):
+    model = ProgramHighlightActivity
+    extra = 0
+
+
+class ProgramAdmin(admin.ModelAdmin):
+    # List display for the admin
+
+    inlines = (ProgramContributorsInLine, ProgramHighlightActivityInLine)
+    list_filter = ('event', )
+    list_display = ('event', )
+
+admin.site.register(Program, ProgramAdmin)

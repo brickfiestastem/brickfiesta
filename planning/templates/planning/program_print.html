@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="description"
+          content="Brick Fiesta - A non-profit hobby fan run family focused LEGO convention in Texas.">
+    <meta name="author" content="Brick Fiesta STEM">
+    <title>Brick Fiesta - Schedule</title>
+    <link rel="stylesheet" type="text/css"
+          href="https://maxcdn.bootstrapcdn.com/bootswatch/4.0.0/simplex/bootstrap.min.css"/>
+<style>
+    @media print {
+	.page-break	{ display: block; page-break-before: always; }
+}
+</style>
+<body>
+<center>
+    <h1>{{ event.title }}</h1>
+    <h2>{{ event.theme }}</h2>
+    <img style="height: auto; width: 4.5in;" src="{{ event.logo.url }}" />
+    <h3>{{ event.location.name }}</h3>
+    <h3>{{ event.location.locality }}, {{ event.location.region }}</h3>
+    <h3>{{ event.start_date }} to {{ event.end_date }}</h3>
+</center>
+<div class="page-break"></div>
+<h3>Welcome Message</h3>
+<p align="justified">{{ program.welcome_message }}</p>
+<h3>Contributors</h3>
+<table width="100%">
+    <thead>
+    <tr>
+        <td width="45%" align="right"></td>
+        <td width="10%"></td>
+        <td width="45%" align="left"></td>
+    </tr>
+    </thead>
+    <tbody>
+    {% for person in program_contributors %}
+    <tr>
+        <td align="right">{{ person.title }}</td>
+        <td></td>
+        <td>{{ person.name }}</td>
+    </tr>
+    {% endfor %}
+    </tbody>
+</table>
+<h3>Thank You</h3>
+<p align="justified">{{ program.volunteer_thanks }}</p>
+<h3>Disclaimer</h3>
+<p align="justified">{{ program.disclaimer }}</p>
+<div class="page-break"></div>
+{% for highlight in program_highlights %}
+<center>
+    <img style="height: auto; width: 512px;" src="{{ highlight.activity.picture.url }}" />
+    <h3>{{ highlight.activity.title }}</h3>
+</center>
+<p align="justified">{{ highlight.activity.description }}</p>
+{% endfor %}
+<div class="page-break"></div>
+{% for sponsor in sponsor_list %}
+    <h3>Sponsor: {{ sponsor.business.name }}</h3>
+    <img style="height: auto; width: 6in;" src="{{ sponsor.business.logo.url }}" />
+    <p align="justified">{{ sponsor.business.description }}</p>
+    <p align="center">{{ sponsor.business.street }}, {{ sponsor.business.locality }},
+        {{ sponsor.business.region }}, {{ sponsor.business.postal_code }}</p>
+    <h4 align="center">{{ sponsor.business.url }}</h4>
+    <div class="page-break"></div>
+{% endfor %}
+{% include 'event/schedule_table.html' %}
+<div class="page-break"></div>
+<h3>Activities</h3>
+<dl>
+{% for activity in activity_list %}
+    <dt>{{ activity.title }}</dt>
+    <dd><strong>Description:</strong> {{ activity.description }}</dd>
+    <dd><strong>Rules:</strong> {{ activity.rules }}</dd>
+{% endfor %}
+</dl>
+<div class="page-break"></div>
+<h3>Vendors</h3>
+{% for vendor in vendor_list %}
+<h4>{{ vendor.business.name }}</h4>
+<p align="justified">{{ vendor.business.description }}</p>
+<p align="center">{{ vendor.business.street }}, {{ vendor.business.locality }},
+        {{ vendor.business.region }}, {{ vendor.business.postal_code }}</p>
+<p align="center">{{ vendor.business.url }}</p>
+{% endfor %}
+<div class="page-break"></div>
+<h3>Vendors (continued)</h3>
+{% for vendor in vendor_list %}
+<img style="height: auto; width: 2.5in;" src="{{ vendor.business.logo.url }}" />
+{% if forloop.counter|divisibleby:2 == 0 %}<br />{% endif %}
+{% endfor %}
+<div class="page-break"></div>
+<h3>Closing Remarks</h3>
+<p align="justified">{{ program.closing_remarks }}</p>
+<div class="page-break"></div>
+<h3>Convention Map</h3>
+<img style="height: auto; width: 4.5in;" src="{{ event.location.map.url }}" />
+</body>
+</html>
