@@ -1,3 +1,5 @@
+import math
+
 from django.contrib.auth.decorators import login_required
 from django.db.models import Count
 from django.utils.decorators import method_decorator
@@ -5,8 +7,10 @@ from django.views.generic import ListView, TemplateView
 
 from afol.models import Shirt
 from event.models import Event, Schedule, Activity
+from mocs.models import Moc
 from vendor.models import Sponsor, Vendor
 from .models import Program, ProgramContributors, ProgramHighlightActivity
+
 
 class ProgramView(TemplateView):
     template_name = 'planning/program_print.html'
@@ -80,4 +84,22 @@ class SchedulePrintListView(ListView):
         context = super().get_context_data(**kwargs)
         context['event'] = self.obj_event
         context['printing'] = True
+        return context
+
+
+@method_decorator(login_required, name='dispatch')
+class MOCTablesView(ListView):
+    model = Moc
+    template_name = 'planning/moc_tables.html'
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super().get_context_data(**kwargs)
+        self.tables = list()
+        self.table_length = 72
+        self.table_width = 30
+        for obj_moc in self.object_list:
+            int_new_table_width = math.ceil(obj_moc.width / 30)
+            int_new_table_length = math.ceil(obj_moc.length / 72)
+
+        context['tables'] = self.tables
         return context

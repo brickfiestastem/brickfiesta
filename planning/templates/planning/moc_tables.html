@@ -1,0 +1,3 @@
+{% for object in object_list %}
+CREATED,{{ object.creator.first_name }},{{ object.creator.last_name }},example@example.com,{{ object.title }},Description,{{ object.length }},{{object.width}},{{object.height}},unknown,2018,REQUIREMENTS,LAYOUT,LOCATION,AREA</br>
+{% endfor %}
