@@ -6,6 +6,7 @@
     <h1>{{ object.title }}</h1>
     {% if moc_owner %}
             <a class="btn btn-info" href="{% url 'mocs:edit' object.id %}">Edit MOC Information</a>
+    <a class="btn btn-info" href="{% url 'mocs:tabletent' object.id %}">Printable Table Tent</a>
     {% endif %}
     <h4>By: {{ object.creator.first_name }}</h4>
     <p align="justified">{{ object.description }}</p>

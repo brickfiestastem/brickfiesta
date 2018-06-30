@@ -103,3 +103,17 @@ class MOCTablesView(ListView):
 
         context['tables'] = self.tables
         return context
+
+
+@method_decorator(login_required, name='dispatch')
+class MOCTableTentView(ListView):
+    model = Moc
+    template_name = 'planning/moc_table_tendss.html'
+
+    # def get_queryset(self):
+    #    obj_event = Event.objects.get(id=self.kwargs['event'])
+    #    return
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super().get_context_data(**kwargs)
+        return context

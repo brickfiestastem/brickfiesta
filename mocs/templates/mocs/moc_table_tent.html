@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/html">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="description"
+          content="Brick Fiesta - A non-profit hobby fan run family focused LEGO convention in Texas.">
+    <meta name="author" content="Brick Fiesta STEM">
+    <title>Brick Fiesta - {{ object.title }} - Table Tent</title>
+    <link rel="stylesheet" type="text/css"
+          href="https://maxcdn.bootstrapcdn.com/bootswatch/4.0.0/simplex/bootstrap.min.css"/>
+<body>
+<div style="bottom: 0%; position: fixed;">
+    <h1>{{ object.title }}</h1>
+    <h3>By: {{ object.creator.first_name }} {{ object.creator.last_name }} </h3>
+    <p style="height: 1.5in;" align="justified">{{ object.description }}</p>
+    <h3>MOC Categories</h3>
+    <p>{% for item in moc_categories %} {{ item.category }} {% endfor %}</p>
+    <h3>Year Built</h3>
+    <p>{{ object.year_built|date:'Y' }}</p>
+    <h3>Dimensions</h3>
+    <p>{{ object.length }}" x {{ object.width }}" x {{ object.height }}"</p>
+</div>
+<!-- div class="page-break"></div -->
+</body>
+</html>

@@ -24,11 +24,11 @@ class Program(BaseModel):
     welcome_message = models.TextField(verbose_name='Welcome Message', default='')
     closing_remarks = models.TextField(verbose_name='Closing Remarks', default='')
     disclaimer = models.TextField(verbose_name='Disclaimer',
-                default='Brick Fiesta is generously sponsored by Alamo, Inc, a 501(c)3 non-profit corporation.'
-                        'LEGO &reg; is a registered trademark of The LEGO Group, which does not sponsor,'
+                                  default='Brick Fiesta is generously sponsored by Alamo, Inc, a 501(c)3 non-profit corporation. '
+                                          'LEGO (r) is a registered trademark of The LEGO Group, which does not sponsor,'
                         ' authorize, or endorse this event or website.')
     volunteer_thanks = models.TextField(verbose_name='Volunteer Thanks',
-                default='Thank you to all our sponsor, vendors, members, and volunteers. Without you'
+                                        default='Thank you to all our sponsor, vendors, members, and volunteers. Without you '
                         'we would not have been able to have such an awesome event!')
 
 

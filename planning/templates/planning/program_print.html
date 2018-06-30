@@ -11,7 +11,10 @@
     <link rel="stylesheet" type="text/css"
           href="https://maxcdn.bootstrapcdn.com/bootswatch/4.0.0/simplex/bootstrap.min.css"/>
 <style>
-    @media print {
+@page {
+  size: 5.5in 8.5in;
+}
+@media print {
 	.page-break	{ display: block; page-break-before: always; }
 }
 </style>
@@ -53,7 +56,9 @@
 <div class="page-break"></div>
 {% for highlight in program_highlights %}
 <center>
+    {% if highlight.activity.picture %}
     <img style="height: auto; width: 2.5in;" src="{{ highlight.activity.picture.url }}" />
+    {% endif %}
     <h3>{{ highlight.activity.title }}</h3>
 </center>
 <p align="justified">{{ highlight.activity.description|linebreaks }}</p>
@@ -103,6 +108,8 @@
 <p align="justified">{{ program.closing_remarks|linebreaks }}</p>
 <div class="page-break"></div>
 <h3>Convention Map</h3>
+{% if event.location.map %}
 <img style="height: auto; width: 4.5in;" src="{{ event.location.map.url }}" />
+{% endif %}
 </body>
 </html>

@@ -1,7 +1,7 @@
 from django.urls import path
 
 from mocs.views import CategoryListView, EventCategoriesListView, EventListView, MocAddView, \
-    MocDetail, MocUpdateView, MocUpdateCategoryView, MocCreateCategoryView
+    MocDetail, MocUpdateView, MocUpdateCategoryView, MocCreateCategoryView, MocTableTent
 
 app_name = 'mocs'
 
@@ -18,5 +18,6 @@ urlpatterns = [
     path('add/', MocAddView.as_view(), name='add'),
     path('add/category/<uuid:pk>/',
          MocCreateCategoryView.as_view(), name='add-category'),
+    path('tabletent/<uuid:pk>/', MocTableTent.as_view(), name='tabletent'),
 
 ]
