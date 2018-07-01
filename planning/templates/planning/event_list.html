@@ -6,12 +6,25 @@
 {% for object in object_list %}
     <li>{{ object.title }}
         <ul>
-            <li><a href="{% url 'planning:program' object.id %}">Program</a></li>
-            <li>MOCS <a href="{% url 'planning:moc_table_tents' %}">Table Tents</a></li>
-            <li><a href="{% url 'planning:shirt' object.id %}">Shirt Summary</a></li>
-            <li><a href="{% url 'planning:schedule_list' object.id %}">List Schedule</a>
-                (<a href="{% url 'planning:schedule_print' object.id %}">Printable Schedule</a>)
+            <li><a href="{% url 'planning:afol_bags' object.id %}">AFOL Bag Check Lists</a></li>
+            <li>Exhibition
+                <ul>
+                    <li><a href="{% url 'planning:exhibition_will_call' object.id %}">Will Call List</a></li>
+                </ul>
             </li>
+            <li>MOCS<ul>
+                <li><a href="{% url 'planning:moc_table_tents' object.id %}">Table Tents</a></li>
+            </ul>
+            </li>
+            <li><a href="{% url 'planning:program' object.id %}">Program</a></li>
+            <li>Schedule
+                <ul>
+                    <li><a href="{% url 'planning:schedule_list' object.id %}">Full Schedule</a></li>
+                    <li><a href="{% url 'planning:schedule_print' object.id %}">Printable Schedule</a></li>
+                </ul>
+            </li>
+            <li><a href="{% url 'planning:shirt' object.id %}">Shirt Summary</a></li>
+
         </ul>
     </li>
 {% endfor %}

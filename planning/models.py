@@ -3,6 +3,7 @@ import uuid
 from django.db import models
 
 from event.models import Event, Activity
+from shop.models import Product
 
 
 # from django.conf import settings
@@ -20,17 +21,18 @@ class BaseModel(models.Model):
 
 
 class Program(BaseModel):
-    event = models.ForeignKey(Event, on_delete=models.CASCADE)
+    event = models.OneToOneField(Event, on_delete=models.CASCADE)
     welcome_message = models.TextField(verbose_name='Welcome Message', default='')
     closing_remarks = models.TextField(verbose_name='Closing Remarks', default='')
     disclaimer = models.TextField(verbose_name='Disclaimer',
-                                  default='Brick Fiesta is generously sponsored by Alamo, Inc, a 501(c)3 non-profit corporation. '
-                                          'LEGO (r) is a registered trademark of The LEGO Group, which does not sponsor,'
-                        ' authorize, or endorse this event or website.')
+                                  default='Brick Fiesta is generously sponsored by Alamo, Inc, '
+                                          'a 501(c)3 non-profit corporation. LEGO (r) is a '
+                                          'registered trademark of The LEGO Group, which does not sponsor, '
+                                          'authorize, or endorse this event or website.')
     volunteer_thanks = models.TextField(verbose_name='Volunteer Thanks',
-                                        default='Thank you to all our sponsor, vendors, members, and volunteers. Without you '
-                        'we would not have been able to have such an awesome event!')
-
+                                        default='Thank you to all our sponsor, vendors, members, '
+                                                'and volunteers. Without you we would not have been '
+                                                'able to have such an awesome event!')
 
 class ProgramContributors(BaseModel):
     program = models.ForeignKey(Program, on_delete=models.CASCADE)
@@ -56,3 +58,12 @@ class InventoryItem(BaseModel):
     condition = models.TextField(verbose_name='Condition', max_length=64)
     event = models.ForeignKey(Event, on_delete=models.CASCADE)
     # user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=None)
+
+
+class BagCheckListItems(BaseModel):
+    product = models.ForeignKey(Product, models.CASCADE)
+    item = models.CharField(verbose_name='Additional Item', max_length=64)
+
+    class Meta:
+        ordering = ['product', 'item']
+        verbose_name_plural = 'Bag Items'

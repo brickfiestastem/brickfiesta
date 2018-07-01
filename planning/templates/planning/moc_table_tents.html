@@ -7,21 +7,22 @@
     <meta name="description"
           content="Brick Fiesta - A non-profit hobby fan run family focused LEGO convention in Texas.">
     <meta name="author" content="Brick Fiesta STEM">
-    <title>Brick Fiesta - Schedule</title>
+    <title>Brick Fiesta - MOC Table Tents</title>
     <link rel="stylesheet" type="text/css"
           href="https://maxcdn.bootstrapcdn.com/bootswatch/4.0.0/simplex/bootstrap.min.css"/>
     <style>
 @page {
-  size: 5.5in 8.5in;
-}
+        size: Letter;
+        margin: 0.5in;
+    }
 @media print {
 	.page-break	{ display: block; page-break-before: always; }
 }
-
     </style>
 <body>
-
+{% for object in object_list %}
+{% include 'mocs/moc_table_tent_details.html' %}
 <div class="page-break"></div>
-
+{% endfor %}
 </body>
 </html>

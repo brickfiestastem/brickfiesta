@@ -10,18 +10,13 @@
     <title>Brick Fiesta - {{ object.title }} - Table Tent</title>
     <link rel="stylesheet" type="text/css"
           href="https://maxcdn.bootstrapcdn.com/bootswatch/4.0.0/simplex/bootstrap.min.css"/>
+    <style>
+    @page {
+        size: Letter;
+        margin: 0.5in;
+    }
+    </style>
 <body>
-<div style="bottom: 0%; position: fixed;">
-    <h1>{{ object.title }}</h1>
-    <h3>By: {{ object.creator.first_name }} {{ object.creator.last_name }} </h3>
-    <p style="height: 1.5in;" align="justified">{{ object.description }}</p>
-    <h3>MOC Categories</h3>
-    <p>{% for item in moc_categories %} {{ item.category }} {% endfor %}</p>
-    <h3>Year Built</h3>
-    <p>{{ object.year_built|date:'Y' }}</p>
-    <h3>Dimensions</h3>
-    <p>{{ object.length }}" x {{ object.width }}" x {{ object.height }}"</p>
-</div>
-<!-- div class="page-break"></div -->
+{% include 'mocs/moc_table_tent_details.html' %}
 </body>
 </html>

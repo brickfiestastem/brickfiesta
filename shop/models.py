@@ -27,12 +27,18 @@ class ProductManager(models.Manager):
 
 
 class Product(BaseModel):
+    CONVENTION = 'convention'
+    EXHIBITION = 'exhibition'
+    SPONSORSHIP = 'sponsor'
+    VENDOR = 'vendor'
+
+
     event = models.ForeignKey(Event, on_delete=models.CASCADE)
     PRODUCT_TYPE = (
-        ('convention', 'Fan Convention'),
-        ('exhibition', 'Public Exhibition'),
-        ('sponsor', 'Sponsorship'),
-        ('vendor', 'Vendor'),
+        (CONVENTION, 'Fan Convention'),
+        (EXHIBITION, 'Public Exhibition'),
+        (SPONSORSHIP, 'Sponsorship'),
+        (VENDOR, 'Vendor'),
     )
     product_type = models.CharField(
         max_length=64, blank=False, choices=PRODUCT_TYPE, default='convention')

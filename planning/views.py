@@ -9,6 +9,7 @@ from afol.models import Shirt
 from event.models import Event, Schedule, Activity
 from mocs.models import Moc
 from vendor.models import Sponsor, Vendor
+from shop.models import OrderItem, Product
 from .models import Program, ProgramContributors, ProgramHighlightActivity
 
 
@@ -108,12 +109,48 @@ class MOCTablesView(ListView):
 @method_decorator(login_required, name='dispatch')
 class MOCTableTentView(ListView):
     model = Moc
-    template_name = 'planning/moc_table_tendss.html'
+    template_name = 'planning/moc_table_tents.html'
 
+    # TODO filter only by MOCS that are in this event categories
     # def get_queryset(self):
     #    obj_event = Event.objects.get(id=self.kwargs['event'])
     #    return
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)
+        return context
+
+
+@method_decorator(login_required, name='dispatch')
+class AFOLBagCheckListView(ListView):
+    model = OrderItem
+    template_name = 'planning/afol_orderitem_list.html'
+
+    def get_queryset(self):
+        obj_event = Event.objects.get(id=self.kwargs['event'])
+        return OrderItem.objects.filter(product__event=obj_event,
+                                        product__product_type__in=[Product.SPONSORSHIP,
+                                                                   Product.VENDOR,
+                                                                   Product.CONVENTION, ]
+                                        ).order_by('user', 'user__first_name', 'user__last_name').select_related()
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super().get_context_data(**kwargs)
+        return context
+
+
+@method_decorator(login_required, name='dispatch')
+class ExhibitionWillCallView(ListView):
+    model = OrderItem
+    template_name = 'planning/will_call_list.html'
+
+    def get_queryset(self):
+        obj_event = Event.objects.get(id=self.kwargs['event'])
+        return OrderItem.objects.filter(product__event=obj_event,
+                                        product__product_type__in=[Product.EXHIBITION]
+                                        ).order_by('first_name', 'last_name').select_related()
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super().get_context_data(**kwargs)
+        print(self.object_list.query)
         return context

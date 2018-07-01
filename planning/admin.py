@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from .models import Program, ProgramContributors, ProgramHighlightActivity
+from .models import Program, ProgramContributors, ProgramHighlightActivity, BagCheckListItems
 
 
 class ProgramContributorsInLine(admin.TabularInline):
@@ -21,3 +21,10 @@ class ProgramAdmin(admin.ModelAdmin):
     list_display = ('event', )
 
 admin.site.register(Program, ProgramAdmin)
+
+
+class BagCheckListAdmin(admin.ModelAdmin):
+    list_display_links = ('item',)
+    list_display = ('product', 'item', )
+
+admin.site.register(BagCheckListItems, BagCheckListAdmin)
