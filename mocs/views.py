@@ -61,22 +61,8 @@ class MocDetail(DetailView):
 
 
 class MocTableTent(DetailView):
-    model = Moc
+    model = MocCategories
     template_name = 'mocs/moc_table_tent.html'
-
-    def get_context_data(self, **kwargs):
-        context = super(MocTableTent, self).get_context_data(**kwargs)
-        obj_fan = Fan.objects.filter(id=self.object.creator.id).get()
-        obj_moc = self.get_object()
-        context['moc_categories'] = MocCategories.objects.filter(
-            moc=obj_moc).order_by('category__event__start_date')
-        context['not_retired'] = False
-        context['moc_owner'] = False
-        if obj_moc.year_retired and obj_moc.year_built > obj_moc.year_retired:
-            context['not_retired'] = True
-        if obj_fan.user == self.request.user:
-            context['moc_owner'] = True
-        return context
 
 
 @method_decorator(login_required, name='dispatch')

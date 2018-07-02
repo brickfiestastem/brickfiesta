@@ -12,7 +12,8 @@
           href="https://maxcdn.bootstrapcdn.com/bootswatch/4.0.0/simplex/bootstrap.min.css"/>
 <style>
 @page {
-  size: 5.5in 8.5in;
+  size: Letter;
+  margin: 0.5in;
 }
 @media print {
 	.page-break	{ display: block; page-break-before: always; }
@@ -66,7 +67,9 @@
 <div class="page-break"></div>
 {% for sponsor in sponsor_list %}
     <h3>Sponsor: {{ sponsor.business.name }}</h3>
+    {% if sponsor.business.logo %}
     <center><img style="height: auto; width: 6in;" src="{{ sponsor.business.logo.url }}" /></center>
+    {% endif %}
     <p align="justified">{{ sponsor.business.description|linebreaks }}</p>
     <p align="center">{{ sponsor.business.street }}, {{ sponsor.business.locality }},
         {{ sponsor.business.region }}, {{ sponsor.business.postal_code }}</p>

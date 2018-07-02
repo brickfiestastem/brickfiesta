@@ -22,8 +22,10 @@ class BaseModel(models.Model):
 
 class Program(BaseModel):
     event = models.OneToOneField(Event, on_delete=models.CASCADE)
-    welcome_message = models.TextField(verbose_name='Welcome Message', default='')
-    closing_remarks = models.TextField(verbose_name='Closing Remarks', default='')
+    welcome_message = models.TextField(
+        verbose_name='Welcome Message', default='')
+    closing_remarks = models.TextField(
+        verbose_name='Closing Remarks', default='')
     disclaimer = models.TextField(verbose_name='Disclaimer',
                                   default='Brick Fiesta is generously sponsored by Alamo, Inc, '
                                           'a 501(c)3 non-profit corporation. LEGO (r) is a '
@@ -33,6 +35,7 @@ class Program(BaseModel):
                                         default='Thank you to all our sponsor, vendors, members, '
                                                 'and volunteers. Without you we would not have been '
                                                 'able to have such an awesome event!')
+
 
 class ProgramContributors(BaseModel):
     program = models.ForeignKey(Program, on_delete=models.CASCADE)

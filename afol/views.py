@@ -132,7 +132,8 @@ class AFOLVolunteerView(ListView):
         return kwargs
 
     def get_queryset(self):
-        obj_events = Attendee.objects.filter(fan__user=self.request.user).values('event')
+        obj_events = Attendee.objects.filter(
+            fan__user=self.request.user).values('event')
         today = datetime.date.today()
         return Schedule.objects.filter(event__end_date__gte=today, event__in=obj_events).annotate(
             volunteer_count=Count('schedulevolunteer'))

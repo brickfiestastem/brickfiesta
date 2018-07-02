@@ -1,12 +1,12 @@
 <div style="height: 7in;"></div>
 <div>
-    <h1>{{ object.title }}</h1>
-    <h3>By: {{ object.creator.first_name }} {{ object.creator.last_name }} </h3>
-    <p style="height: 1.5in;" align="justified">{{ object.description }}</p>
-    <h3>MOC Categories</h3>
-    <p>{% for item in moc_categories %} {{ item.category }} {% endfor %}</p>
+    <h1>{{ object.moc.title }}</h1>
+    <h3>By: {{ object.moc.creator.first_name }} {{ object.moc.creator.last_name }} </h3>
+    <p style="height: 1.5in;" align="justified">{{ object.moc.description }}</p>
+    <h3>MOC Category</h3>
+    <p>{{ object.category }}</p>
     <h3>Year Built</h3>
-    <p>{{ object.year_built|date:'Y' }}</p>
+    <p>{{ object.moc.year_built|date:'Y' }}</p>
     <h3>Dimensions</h3>
-    <p>{{ object.length }}" x {{ object.width }}" x {{ object.height }}"</p>
+    <p>{{ object.moc.length }}" x {{ object.moc.width }}" x {{ object.moc.height }}"</p>
 </div>

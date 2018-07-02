@@ -33,6 +33,9 @@ class Fan(BaseModel):
     last_name = models.CharField(max_length=128)
     birth_date = models.DateField(null=True, blank=True)
 
+    class Meta:
+        ordering = ['first_name', 'last_name']
+
     def __str__(self):
         return "{} {}".format(self.first_name, self.last_name)
 

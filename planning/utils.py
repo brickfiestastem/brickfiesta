@@ -1,6 +1,7 @@
 from PIL import Image
 import math
 
+
 def image_square(image_path, min_size=256, fill_color=(255, 0, 0, 0)):
     rectangle_image = Image.open(image_path)
     x, y = rectangle_image.size

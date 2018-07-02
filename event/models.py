@@ -33,7 +33,7 @@ class Location(BaseModel):
     latitude = models.FloatField(verbose_name='Latitude')
     longitude = models.FloatField(verbose_name='Longitude')
     map = models.ImageField(verbose_name='Convention Space Map',
-        upload_to=upload_path_location, null=True, blank=True)
+                            upload_to=upload_path_location, null=True, blank=True)
 
     def __str__(self):
         return self.name

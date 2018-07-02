@@ -6,10 +6,15 @@
 {% for object in object_list %}
     <li>{{ object.title }}
         <ul>
-            <li><a href="{% url 'planning:afol_bags' object.id %}">AFOL Bag Check Lists</a></li>
             <li>Exhibition
                 <ul>
                     <li><a href="{% url 'planning:exhibition_will_call' object.id %}">Will Call List</a></li>
+                </ul>
+            </li>
+            <li>Fan of LEGO
+                <ul>
+                    <li><a href="{% url 'planning:afol_bags' object.id %}">Bag Check Lists</a></li>
+                    <li><a href="{% url 'planning:afol_will_call' object.id %}">Will Call List</a></li>
                 </ul>
             </li>
             <li>MOCS<ul>
@@ -17,10 +22,16 @@
             </ul>
             </li>
             <li><a href="{% url 'planning:program' object.id %}">Program</a></li>
+            <li>Registation Booth
+                <ul>
+                    <li><a href="{% url 'planning:registration_booth_table_tents' %}">Table Tents</a></li>
+                </ul>
+            </li>
             <li>Schedule
                 <ul>
                     <li><a href="{% url 'planning:schedule_list' object.id %}">Full Schedule</a></li>
                     <li><a href="{% url 'planning:schedule_print' object.id %}">Printable Schedule</a></li>
+                    <li><a href="{% url 'planning:schedule_print_room' object.id %}">Printable Room Schedule</a></li>
                 </ul>
             </li>
             <li><a href="{% url 'planning:shirt' object.id %}">Shirt Summary</a></li>

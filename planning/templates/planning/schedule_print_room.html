@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="description"
+          content="Brick Fiesta - A non-profit hobby fan run family focused LEGO convention in Texas.">
+    <meta name="author" content="Brick Fiesta STEM">
+    <title>Brick Fiesta - Room Schedule</title>
+    <link rel="stylesheet" type="text/css"
+          href="https://maxcdn.bootstrapcdn.com/bootswatch/4.0.0/simplex/bootstrap.min.css"/>
+    <style>@media print {.page-break	{ display: block; page-break-before: always; }}</style>
+</head>
+<body>
+{% regroup schedule_list by date as schedule_item %}
+{% for object_by_day in schedule_item %}
+{% regroup object_by_day.list by space.name as schedule_item_by_room %}
+{% for object_by_room in schedule_item_by_room %}
+<h1>{{ object_by_day.grouper }} {{ object_by_room.grouper }}</h1>
+<table class="table table-striped">
+    <thead class="thead-light">
+    <tr>
+        <td align="right" width="20%">Time</td>
+        <td width="50%">Title</td>
+        <td width="10%"></td>
+        <td align="center" width="20%">Space</td>
+    </tr>
+    </thead>
+    <tbody>
+    {% for scheduled_activity in object_by_room.list %}
+    <tr>
+        <td align="right">
+            {{ scheduled_activity.start_time }} - {{ scheduled_activity.end_time }}
+        </td>
+        <td>{{ scheduled_activity.activity.title }}</td>
+        <td></td>
+        <td align="center">{{ scheduled_activity.space.name }}</td>
+    </tr>
+    {% endfor %}
+    </tbody>
+</table>
+<div class="page-break"></div>
+{% endfor %}
+{% endfor %}
+</body>
+</html>

@@ -32,7 +32,6 @@ class Product(BaseModel):
     SPONSORSHIP = 'sponsor'
     VENDOR = 'vendor'
 
-
     event = models.ForeignKey(Event, on_delete=models.CASCADE)
     PRODUCT_TYPE = (
         (CONVENTION, 'Fan Convention'),

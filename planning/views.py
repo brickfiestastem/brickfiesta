@@ -7,10 +7,14 @@ from django.views.generic import ListView, TemplateView
 
 from afol.models import Shirt
 from event.models import Event, Schedule, Activity
-from mocs.models import Moc
+from mocs.models import Moc, MocCategories
 from vendor.models import Sponsor, Vendor
 from shop.models import OrderItem, Product
 from .models import Program, ProgramContributors, ProgramHighlightActivity
+
+
+class RegistrationBoothSignsView(TemplateView):
+    template_name = 'planning/registration_booth_signs.html'
 
 
 class ProgramView(TemplateView):
@@ -25,12 +29,16 @@ class ProgramView(TemplateView):
         context['printing'] = True
         context['event'] = self.obj_event
         context['program'] = Program.objects.get(event=self.obj_event)
-        context['program_contributors'] = ProgramContributors.objects.filter(program=context['program']).order_by('order')
-        context['program_highlights'] = ProgramHighlightActivity.objects.filter(program=context['program'])
+        context['program_contributors'] = ProgramContributors.objects.filter(
+            program=context['program']).order_by('order')
+        context['program_highlights'] = ProgramHighlightActivity.objects.filter(
+            program=context['program'])
         context['sponsor_list'] = Sponsor.objects.all().order_by('business')\
             .filter(event=self.obj_event, status='approved')
-        context['schedule_list'] = Schedule.objects.filter(event=self.obj_event, is_public=True, is_printable=True)
+        context['schedule_list'] = Schedule.objects.filter(
+            event=self.obj_event, is_public=True, is_printable=True)
         # obj_activities = set(Schedule.objects.filter(event=self.obj_event, is_public=True).values_list('activity'))
+        #TODO adjust to only get activites that are scheduled for this event.
         context['activity_list'] = Activity.objects.all().order_by('title')
         context['vendor_list'] = Vendor.objects.all().order_by('business')\
             .filter(event=self.obj_event, status='approved')
@@ -49,7 +57,10 @@ class ShirtSummaryView(ListView):
 
     def get_queryset(self):
         self.obj_event = Event.objects.get(id=self.kwargs['event'])
-        return Shirt.objects.filter(event=self.obj_event).values('shirt_size').annotate(shirt_count=Count('shirt_size'))
+        return Shirt.objects.filter(event=self.obj_event)\
+                            .values('shirt_size')\
+                            .annotate(shirt_count=Count('shirt_size'))\
+                            .order_by('shirt_size')
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -111,10 +122,11 @@ class MOCTableTentView(ListView):
     model = Moc
     template_name = 'planning/moc_table_tents.html'
 
-    # TODO filter only by MOCS that are in this event categories
-    # def get_queryset(self):
-    #    obj_event = Event.objects.get(id=self.kwargs['event'])
-    #    return
+    def get_queryset(self):
+        obj_event = Event.objects.get(id=self.kwargs['event'])
+        obj_moc_categories = MocCategories.objects.filter(category__event=obj_event).order_by(
+            'moc__creator__first_name', 'moc__creator__last_name')
+        return obj_moc_categories
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -132,7 +144,7 @@ class AFOLBagCheckListView(ListView):
                                         product__product_type__in=[Product.SPONSORSHIP,
                                                                    Product.VENDOR,
                                                                    Product.CONVENTION, ]
-                                        ).order_by('user', 'user__first_name', 'user__last_name').select_related()
+                                        ).order_by('user__first_name', 'user__last_name', 'user__email')
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -147,10 +159,32 @@ class ExhibitionWillCallView(ListView):
     def get_queryset(self):
         obj_event = Event.objects.get(id=self.kwargs['event'])
         return OrderItem.objects.filter(product__event=obj_event,
-                                        product__product_type__in=[Product.EXHIBITION]
-                                        ).order_by('first_name', 'last_name').select_related()
+                                        product__product_type__in=[
+                                            Product.EXHIBITION]
+                                        ).order_by('first_name', 'last_name', 'user__email')
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)
-        print(self.object_list.query)
+        context['title'] = 'Public Exhibition'
+        context['check_item'] = 'Issued Wristband/Stamp'
+        return context
+
+
+@method_decorator(login_required, name='dispatch')
+class AFOLWillCallView(ListView):
+    model = OrderItem
+    template_name = 'planning/will_call_list.html'
+
+    def get_queryset(self):
+        obj_event = Event.objects.get(id=self.kwargs['event'])
+        return OrderItem.objects.filter(product__event=obj_event,
+                                        product__product_type__in=[Product.SPONSORSHIP,
+                                                                   Product.VENDOR,
+                                                                   Product.CONVENTION, ]
+                                        ).order_by('first_name', 'last_name', 'user__email')
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['title'] = 'Fan Of LEGO'
+        context['check_item'] = 'Goodie Bag'
         return context
