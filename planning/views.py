@@ -181,7 +181,7 @@ class AFOLWillCallView(ListView):
                                         product__product_type__in=[Product.SPONSORSHIP,
                                                                    Product.VENDOR,
                                                                    Product.CONVENTION, ]
-                                        ).order_by('first_name', 'last_name', 'user__email')
+                                        ).order_by('user__first_name', 'user__last_name', 'user__email')
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)
