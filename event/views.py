@@ -1,4 +1,5 @@
 import datetime
+from datetime import timedelta
 
 from django.conf import settings
 from django.db.models import Count
@@ -17,6 +18,7 @@ class FrontPage(TemplateView):
 
     def get_context_data(self, **kwargs):
         today = datetime.date.today()
+        yesterday = datetime.date.today() - timedelta(days=1)
         context = super().get_context_data(**kwargs)
         context['announcements'] = Announcement.objects.filter(
             end_date__gte=today)

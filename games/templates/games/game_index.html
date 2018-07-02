@@ -1,0 +1,14 @@
+{% extends "brickfiesta/base.html" %}
+{% block content %}
+
+<h1>Games</h1>
+<ul>
+    <li>
+        <a href="{% url 'games:doorprize' %}">Door Prize</a>
+        <ul>
+            <li><a href="{% url 'games:doorprize_winners' %}">Door Prize Winners</a></li>
+        </ul>
+    </li>
+</ul>
+
+{% endblock content %}

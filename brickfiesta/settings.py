@@ -67,6 +67,7 @@ ALLOWED_HOSTS = ['localhost', '127.0.0.1']
 INSTALLED_APPS = [
     'afol.apps.AfolConfig',
     'event.apps.EventConfig',
+    'games.apps.GamesConfig',
     'mocs.apps.MocsConfig',
     'news.apps.NewsConfig',
     'planning.apps.PlanningConfig',

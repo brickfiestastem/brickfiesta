@@ -1,6 +1,6 @@
 import math
 
-from django.contrib.auth.decorators import login_required
+from django.contrib.admin.views.decorators import staff_member_required
 from django.db.models import Count
 from django.utils.decorators import method_decorator
 from django.views.generic import ListView, TemplateView
@@ -8,15 +8,17 @@ from django.views.generic import ListView, TemplateView
 from afol.models import Shirt
 from event.models import Event, Schedule, Activity
 from mocs.models import Moc, MocCategories
-from vendor.models import Sponsor, Vendor
 from shop.models import OrderItem, Product
+from vendor.models import Sponsor, Vendor
 from .models import Program, ProgramContributors, ProgramHighlightActivity
 
 
+@method_decorator(staff_member_required, name='dispatch')
 class RegistrationBoothSignsView(TemplateView):
     template_name = 'planning/registration_booth_signs.html'
 
 
+@method_decorator(staff_member_required, name='dispatch')
 class ProgramView(TemplateView):
     template_name = 'planning/program_print.html'
 
@@ -45,13 +47,13 @@ class ProgramView(TemplateView):
         return context
 
 
-@method_decorator(login_required, name='dispatch')
+@method_decorator(staff_member_required, name='dispatch')
 class EventListingView(ListView):
     queryset = Event.objects.order_by('-end_date')
     template_name = 'planning/event_list.html'
 
 
-@method_decorator(login_required, name='dispatch')
+@method_decorator(staff_member_required, name='dispatch')
 class ShirtSummaryView(ListView):
     template_name = 'planning/shirt_list.html'
 
@@ -68,7 +70,7 @@ class ShirtSummaryView(ListView):
         return context
 
 
-@method_decorator(login_required, name='dispatch')
+@method_decorator(staff_member_required, name='dispatch')
 class ScheduleListView(ListView):
     template_name = 'planning/schedule_list.html'
 
@@ -84,7 +86,7 @@ class ScheduleListView(ListView):
         return context
 
 
-@method_decorator(login_required, name='dispatch')
+@method_decorator(staff_member_required, name='dispatch')
 class SchedulePrintListView(ListView):
     template_name = 'planning/schedule_print.html'
 
@@ -99,7 +101,7 @@ class SchedulePrintListView(ListView):
         return context
 
 
-@method_decorator(login_required, name='dispatch')
+@method_decorator(staff_member_required, name='dispatch')
 class MOCTablesView(ListView):
     model = Moc
     template_name = 'planning/moc_tables.html'
@@ -117,7 +119,7 @@ class MOCTablesView(ListView):
         return context
 
 
-@method_decorator(login_required, name='dispatch')
+@method_decorator(staff_member_required, name='dispatch')
 class MOCTableTentView(ListView):
     model = Moc
     template_name = 'planning/moc_table_tents.html'
@@ -133,7 +135,7 @@ class MOCTableTentView(ListView):
         return context
 
 
-@method_decorator(login_required, name='dispatch')
+@method_decorator(staff_member_required, name='dispatch')
 class AFOLBagCheckListView(ListView):
     model = OrderItem
     template_name = 'planning/afol_orderitem_list.html'
@@ -151,7 +153,7 @@ class AFOLBagCheckListView(ListView):
         return context
 
 
-@method_decorator(login_required, name='dispatch')
+@method_decorator(staff_member_required, name='dispatch')
 class ExhibitionWillCallView(ListView):
     model = OrderItem
     template_name = 'planning/will_call_list.html'
@@ -171,7 +173,7 @@ class ExhibitionWillCallView(ListView):
         return context
 
 
-@method_decorator(login_required, name='dispatch')
+@method_decorator(staff_member_required, name='dispatch')
 class AFOLWillCallView(ListView):
     model = OrderItem
     template_name = 'planning/will_call_list.html'
@@ -192,6 +194,7 @@ class AFOLWillCallView(ListView):
         return context
 
 
+@method_decorator(staff_member_required, name='dispatch')
 class VendorTableTentView(ListView):
     model = Vendor
     template_name = 'planning/business_table_tents.html'
@@ -201,6 +204,7 @@ class VendorTableTentView(ListView):
         return Vendor.objects.all().order_by('business').filter(event=self.obj_event, status='approved')
 
 
+@method_decorator(staff_member_required, name='dispatch')
 class SponsorTableTentView(ListView):
     model = Sponsor
     template_name = 'planning/business_table_tents.html'

@@ -70,16 +70,19 @@ class Moc(BaseModel):
     creator = models.ForeignKey(
         Fan, on_delete=models.CASCADE, default=uuid.uuid4)
     title = models.CharField(verbose_name='Title', unique=True, max_length=64)
-    description = models.TextField(verbose_name='Description')
+    description = models.TextField(verbose_name='Description',
+                                   help_text='<ul><li>We limit this to 300 words on the table tent.</li></ul>')
     display_requirements = models.TextField(verbose_name='Display requirements',
                                             help_text='<ul><li>Does this MOC have special display requirements like power or something more than just table space? Enter it here.</li></ul>',
                                             blank=True, null=True)
     height = models.IntegerField(verbose_name='Height', default=10,
                                  help_text="<ul><li>Enter in inches rounded up to the nearest inch.</li></ul>")
     length = models.IntegerField(verbose_name='Length', default=10,
-                                 help_text="<ul><li>Enter in inches rounded up to the nearest inch.</li><li>This value is important as the software will not calculate the correct table space if this value is inaccurate.</li></ul>")
+                                 help_text="<ul><li>Enter in inches rounded up to the nearest inch.</li>"
+                                           "<li>This value is important as the software will not calculate the correct table space if this value is inaccurate.</li></ul>")
     width = models.IntegerField(verbose_name='Width', default=10,
-                                help_text="<ul><li>Enter in inches rounded up to the nearest inch.</li><li>This value is important as the software will not calculate the correct table space if this value is inaccurate.</li></ul>")
+                                help_text="<ul><li>Enter in inches rounded up to the nearest inch.</li>"
+                                          "<li>This value is important as the software will not calculate the correct table space if this value is inaccurate.</li></ul>")
     viewable_sides = models.IntegerField(
         verbose_name='Viewable Sides', choices=SIDES, default=SIDE_FRONT)
     url_photo = models.URLField(

@@ -2,12 +2,14 @@
 SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 cd $SCRIPT_DIR
 cd ../
+echo $(pwd)
 echo "Environment [testing, staging, production]: "
 read DEPLOYMENT
 git pull
 python manage.py makemigrations afol --settings=brickfiesta.$DEPLOYMENT
 python manage.py makemigrations admin --settings=brickfiesta.$DEPLOYMENT
 python manage.py makemigrations event --settings=brickfiesta.$DEPLOYMENT
+python manage.py makemigrations games --settings=brickfiesta.$DEPLOYMENT
 python manage.py makemigrations mocs --settings=brickfiesta.$DEPLOYMENT
 python manage.py makemigrations news --settings=brickfiesta.$DEPLOYMENT
 python manage.py makemigrations planning --settings=brickfiesta.$DEPLOYMENT

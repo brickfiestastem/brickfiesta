@@ -64,6 +64,7 @@ clean_database() {
     cd ../
     find . -path "./afol/migrations/*.py" -delete -print
     find . -path "./event/migrations/*.py" -delete -print
+    find . -path "./games/migrations/*.py" -delete -print
     find . -path "./mocs/migrations/*.py" -delete -print
     find . -path "./news/migrations/*.py" -delete -print
     find . -path "./planning/migrations/*.py" -delete -print
@@ -77,6 +78,7 @@ clean_database() {
     python manage.py makemigrations auth
     python manage.py makemigrations contenttypes
     python manage.py makemigrations event
+    python manage.py makemigrations games
     python manage.py makemigrations mocs
     python manage.py makemigrations news
     python manage.py makemigrations planning

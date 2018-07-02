@@ -1,4 +1,5 @@
 import datetime
+from datetime import timedelta
 import uuid
 
 from django.contrib.auth.models import User
@@ -103,7 +104,7 @@ class Event(BaseModel):
     @property
     def is_current(self):
         today = datetime.date.today()
-        return self.start_date <= today and self.end_date >= today
+        return self.start_date <= (today - timedelta(days=1)) and self.end_date >= today
 
     @property
     def is_past(self):
