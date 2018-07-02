@@ -7,7 +7,7 @@
     <meta name="description"
           content="Brick Fiesta - A non-profit hobby fan run family focused LEGO convention in Texas.">
     <meta name="author" content="Brick Fiesta STEM">
-    <title>Brick Fiesta - Registration Table Tents</title>
+    <title>Brick Fiesta - Business Table Tents</title>
     <link rel="stylesheet" type="text/css"
           href="https://maxcdn.bootstrapcdn.com/bootswatch/4.0.0/simplex/bootstrap.min.css"/>
     <style>
@@ -20,37 +20,21 @@
 }
 h1 {
     font-weight: bold;
-    font-size: 8em;
+    font-size: 4em;
 }
     </style>
 </head>
 <body>
+{% for object in object_list %}
+{% for i in "x"|ljust:object.product_quantity %}
 <div style="height: 7in;"></div>
 <div align="center">
-    <h1>Fan of LEGO Will Call</h1>
-</div>
-<div style="height: 7in;"></div>
-<div align="center">
-    <h1>Public Exhibition Will Call</h1>
+    <h2>Table Reserved For</h2>
+    <h1>{{ object.business.name }}</h1>
 </div>
 <div class="page-break"></div>
+{% endfor %}
+{% endfor %}
 
-<div style="height: 7in;"></div>
-<div align="center">
-    <h1>Cash Only</h1>
-</div>
-<div class="page-break"></div>
-
-<div style="height: 7in;"></div>
-<div align="center">
-    <h1>Credit Card Only</h1>
-</div>
-<div class="page-break"></div>
-
-<div style="height: 7in;"></div>
-<div align="center">
-    <h1>Credit Card or Cash</h1>
-</div>
-<div class="page-break"></div>
 </body>
 </html>

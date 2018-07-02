@@ -38,7 +38,7 @@ class ProgramView(TemplateView):
         context['schedule_list'] = Schedule.objects.filter(
             event=self.obj_event, is_public=True, is_printable=True)
         # obj_activities = set(Schedule.objects.filter(event=self.obj_event, is_public=True).values_list('activity'))
-        #TODO adjust to only get activites that are scheduled for this event.
+        # TODO adjust to only get activites that are scheduled for this event.
         context['activity_list'] = Activity.objects.all().order_by('title')
         context['vendor_list'] = Vendor.objects.all().order_by('business')\
             .filter(event=self.obj_event, status='approved')
@@ -188,3 +188,21 @@ class AFOLWillCallView(ListView):
         context['title'] = 'Fan Of LEGO'
         context['check_item'] = 'Goodie Bag'
         return context
+
+
+class VendorTableTentView(ListView):
+    model = Vendor
+    template_name = 'planning/business_table_tents.html'
+
+    def get_queryset(self):
+        self.obj_event = Event.objects.get(id=self.kwargs['event'])
+        return Vendor.objects.all().order_by('business').filter(event=self.obj_event, status='approved')
+
+
+class SponsorTableTentView(ListView):
+    model = Sponsor
+    template_name = 'planning/business_table_tents.html'
+
+    def get_queryset(self):
+        self.obj_event = Event.objects.get(id=self.kwargs['event'])
+        return Sponsor.objects.all().order_by('business').filter(event=self.obj_event, status='approved')

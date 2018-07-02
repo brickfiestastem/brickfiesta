@@ -2,7 +2,7 @@ from django.urls import path
 
 from planning.views import EventListingView, ShirtSummaryView, ScheduleListView, SchedulePrintListView, ProgramView, \
     MOCTablesView, MOCTableTentView, AFOLBagCheckListView, ExhibitionWillCallView, AFOLWillCallView, \
-    RegistrationBoothSignsView
+    RegistrationBoothSignsView, VendorTableTentView, SponsorTableTentView
 
 app_name = "planning"
 
@@ -24,4 +24,8 @@ urlpatterns = [
     path('schedule/print/room/<event>', SchedulePrintListView.as_view(template_name='planning/schedule_print_room.html'),
          name='schedule_print_room',),
     path('shirts/<event>', ShirtSummaryView.as_view(), name='shirt'),
+    path('sponsor/table_tents/<event>',
+         SponsorTableTentView.as_view(), name='sponsor_table_tents'),
+    path('vendor/table_tents/<event>',
+         VendorTableTentView.as_view(), name='vendor_table_tents')
 ]
