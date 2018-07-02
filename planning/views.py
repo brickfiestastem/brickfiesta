@@ -157,8 +157,8 @@ class ExhibitionWillCallView(ListView):
     template_name = 'planning/will_call_list.html'
 
     def get_queryset(self):
-        obj_event = Event.objects.get(id=self.kwargs['event'])
-        return OrderItem.objects.filter(product__event=obj_event,
+        self.obj_event = Event.objects.get(id=self.kwargs['event'])
+        return OrderItem.objects.filter(product__event=self.obj_event,
                                         product__product_type__in=[
                                             Product.EXHIBITION]
                                         ).order_by('first_name', 'last_name', 'user__email')
@@ -167,6 +167,7 @@ class ExhibitionWillCallView(ListView):
         context = super().get_context_data(**kwargs)
         context['title'] = 'Public Exhibition'
         context['check_item'] = 'Issued Wristband/Stamp'
+        context['count'] = self.get_queryset().count()
         return context
 
 
@@ -176,8 +177,8 @@ class AFOLWillCallView(ListView):
     template_name = 'planning/will_call_list.html'
 
     def get_queryset(self):
-        obj_event = Event.objects.get(id=self.kwargs['event'])
-        return OrderItem.objects.filter(product__event=obj_event,
+        self.obj_event = Event.objects.get(id=self.kwargs['event'])
+        return OrderItem.objects.filter(product__event=self.obj_event,
                                         product__product_type__in=[Product.SPONSORSHIP,
                                                                    Product.VENDOR,
                                                                    Product.CONVENTION, ]
@@ -187,6 +188,7 @@ class AFOLWillCallView(ListView):
         context = super().get_context_data(**kwargs)
         context['title'] = 'Fan Of LEGO'
         context['check_item'] = 'Goodie Bag'
+        context['count'] = self.get_queryset().count()
         return context
 
 
