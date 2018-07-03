@@ -34,3 +34,4 @@ wcwidth==0.1.7
 wrapt==1.10.11
 python-barcode>=0.9.0
 qrcode>=6.0.0
+django-qr-code>=1.0.0

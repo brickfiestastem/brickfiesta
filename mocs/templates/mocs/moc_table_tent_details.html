@@ -1,8 +1,13 @@
+{% load qr_code %}
 <div style="height: 7in;"></div>
 <div>
     <h1>{{ object.moc.title }}</h1>
     <h3>By: {{ object.moc.creator.first_name }} {{ object.moc.creator.last_name }} </h3>
     <p style="height: 1.5in; text-align: justified;">{{ object.moc.description|truncatewords:300 }}</p>
+</div>
+<div>
+    <span style="display: inline-block; float:right;">
+        {% qr_from_text 'https://www.brickfiesta.com/mocs/details/'|add:object.moc.id size="L" %}</span>
     <h3>MOC Category</h3>
     <p>{{ object.category }}</p>
     <h3>Year Built</h3>
