@@ -94,7 +94,7 @@ class Moc(BaseModel):
         verbose_name='Year Retired', blank=True, null=True)
     is_public = models.BooleanField(
         verbose_name='Is Public',
-        help_text='Visible on Brick Fiesta Website',
+        help_text='<ul><li>Visible on Brick Fiesta Website</li></ul>',
         default=False)
 
     class Meta:
