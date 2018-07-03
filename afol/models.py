@@ -143,11 +143,7 @@ class Shirt(BaseModel):
 class ScheduleVolunteer(BaseModel):
 
     def volunteernumber():
-        int_number = ScheduleVolunteer.objects.all().aggregate(Max('order'))
-        if None == int_number['order__max']:
-            return 1
-        else:
-            return int_number['order__max'] + 1
+        return 1
 
     schedule = models.ForeignKey(Schedule, on_delete=models.CASCADE)
     fan = models.ForeignKey(Fan, on_delete=models.CASCADE)
@@ -164,11 +160,7 @@ class ScheduleVolunteer(BaseModel):
 class ScheduleAttendee(BaseModel):
 
     def attendeenumber():
-        int_number = ScheduleAttendee.objects.all().aggregate(Max('order'))
-        if None == int_number['order__max']:
-            return 1
-        else:
-            return int_number['order__max'] + 1
+        return 1
 
     schedule = models.ForeignKey(Schedule, on_delete=models.CASCADE)
     fan = models.ForeignKey(Fan, on_delete=models.CASCADE)

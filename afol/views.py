@@ -5,19 +5,17 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.models import User
 from django.db.models import Count
-from django.shortcuts import redirect
-from django.shortcuts import render
+from django.shortcuts import get_object_or_404, redirect, render
 from django.urls import reverse_lazy
 from django.utils.decorators import method_decorator
 from django.views import generic
-from django.views.generic import DetailView, ListView, UpdateView
-from django.views.generic.edit import CreateView
+from django.views.generic import DetailView, ListView, UpdateView, FormView, CreateView
 
 from event.models import Schedule
 from mocs.models import Moc
 from vendor.models import Business
 from .forms import AfolUserCreateForm, AfolUserChangeForm, ShirtChangeForm, ScheduleVolunteerForm
-from .models import Attendee, Profile, Fan, Shirt, ScheduleVolunteer, ScheduleAttendee
+from .models import Attendee, Profile, Fan, Shirt, ScheduleVolunteer
 
 
 class ProfileView(LoginRequiredMixin, DetailView):
@@ -138,17 +136,18 @@ class AFOLVolunteerView(ListView):
         return Schedule.objects.filter(event__end_date__gte=today, event__in=obj_events).annotate(
             volunteer_count=Count('schedulevolunteer'))
 
-    def get_context_data(self, **kwargs):
+    def get_context_data(self, *, object_list=None, **kwargs):
         context = super(AFOLVolunteerView, self).get_context_data(**kwargs)
         context['can_volunteer'] = True
         return context
 
-    def post(self, request):
-        obj_form = ScheduleVolunteerForm(request.POST, instance=Fan.objects.get(
-            fan=request.POST.get('fan'), schedule=request.POST.get('schedule')))
-        if obj_form.is_valid():
-            obj_form.save()
-        return
+    def post(self, request, *args, **kwargs):
+        # TODO figure out why create view is posting to list view refactor to form_valid logic
+        obj_fan = Fan.objects.get(id=request.POST['fan'])
+        obj_schedule = Schedule.objects.get(id=request.POST['schedule'])
+        obj_volunteer, created = ScheduleVolunteer.objects.get_or_create(fan=obj_fan, schedule=obj_schedule)
+        obj_volunteer.save()
+        return redirect('afol:volunteer_list')
 
 
 @method_decorator(login_required, name='dispatch')
@@ -157,15 +156,38 @@ class AFOLVolunteerCreateView(CreateView):
     form_class = ScheduleVolunteerForm
     success_url = reverse_lazy('afol:volunteer')
 
-    def dispatch(self, request, *args, **kwargs):
-        self.schedule = Schedule.objects.get(pk=kwargs['pk'])
-        return super(AFOLVolunteerCreateView, self).dispatch(request, *args, **kwargs)
-
     def get_form_kwargs(self):
         kwargs = super(AFOLVolunteerCreateView, self).get_form_kwargs()
         kwargs['user'] = self.request.user
         return kwargs
 
+    def get_context_data(self, **kwargs):
+        context = super(AFOLVolunteerCreateView, self).get_context_data(**kwargs)
+        context['schedule'] = get_object_or_404(Schedule, pk=self.kwargs['pk'])
+        return context
+
+    def get_initial(self):
+        self.obj_schedule = get_object_or_404(Schedule, pk=self.kwargs['pk'])
+        return {
+            'schedule': self.obj_schedule,
+        }
+
     def form_valid(self, form):
-        form.instance.schedule = self.schedule
-        return super(AFOLVolunteerCreateView, self).form_valid(form)
+        return super().form_valid(form)
+
+
+@method_decorator(login_required, name='dispatch')
+class AFOLVolunteerListView(ListView):
+    model = ScheduleVolunteer
+    template_name = 'afol/volunteer_list.html'
+    success_url = reverse_lazy('afol:volunteer')
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super(AFOLVolunteerListView, self).get_context_data(**kwargs)
+        obj_scheduled = ScheduleVolunteer.objects.filter(fan__user=self.request.user).values_list('schedule__id', flat=True)
+        context['schedule_list'] = Schedule.objects.filter(id__in=obj_scheduled)
+        return context
+
+    def get_queryset(self):
+        obj_scheduled = ScheduleVolunteer.objects.filter(fan__user=self.request.user)
+        return obj_scheduled

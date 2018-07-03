@@ -1,0 +1,27 @@
+{% extends "brickfiesta/base.html" %}
+
+{% block content %}
+<h1>{{ object.activity.title }}</h1>
+<h2>Scheduled Activity Details</h2>
+<p>On {{ object.date }} from {{ object.start_time }} to {{ object.end_time }} in {{ object.space }} at
+    <a href="{% url 'event:details' object.event.id %}">{{ object.event }}</a>.</p>
+<h2>Description</h2>
+<p>{{ object.activity.description|linebreaks }}</p>
+<h2>Rules</h2>
+<p>{{ object.activity.rules|linebreaks }}</p>
+<h2>Additional Information</h2>
+<p>The minimum people to participate in this event is {{ object.activity.min_people }} the maximum is
+    {% if object.activity.max_people == -1 %}unlimited{% else %}{{ object.activity.max_people }}{% endif %}.
+</p>
+{% if object.activity.signup_required %}
+<p>Sign up for this event is required. If sign up is full you will be added to a waiting list.
+    Sign up is enabled on the first day of the event at noon.</p>
+{% endif %}
+{% if schedule_list %}
+<h2>Scheduled</h2>
+{% include 'event/schedule_table.html' %}
+{% endif %}
+<h2>Historical Information</h2>
+<p>See when <a href="{% url 'event:activity' object.activity.id %}">{{ object.activity.title }}</a>
+    was ever scheduled and run.</p>
+{% endblock content %}

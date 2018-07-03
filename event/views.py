@@ -66,6 +66,22 @@ class ActivityDetail(DetailView):
                 activity=self.object, is_public=True)
         return context
 
+class ScheduledActivityView(DetailView):
+    model = Schedule
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['schedule_list'] = None
+        if self.request.user.is_authenticated:
+            context['schedule_list'] = Schedule.objects.filter(
+                activity=self.object.activity, event=self.object.event, is_public=True).annotate(
+                volunteer_count=Count('schedulevolunteer'),
+                attendee_count=Count('scheduleattendee'))
+            context['can_volunteer'] = True
+        else:
+            context['schedule_list'] = Schedule.objects.filter(
+                activity=self.object.activity, event=self.object.event, is_public=True)
+        return context
 
 class EventDetail(DetailView):
     model = Event

@@ -17,7 +17,8 @@
 {% for object_by_day in schedule_item %}
 {% regroup object_by_day.list by space.name as schedule_item_by_room %}
 {% for object_by_room in schedule_item_by_room %}
-<h1>{{ object_by_day.grouper }} {{ object_by_room.grouper }}</h1>
+<h1 align="center">{{ event }}</h1>
+<h2 align="center">{{ object_by_day.grouper }} {{ object_by_room.grouper }}</h2>
 <table class="table table-striped">
     <thead class="thead-light">
     <tr>

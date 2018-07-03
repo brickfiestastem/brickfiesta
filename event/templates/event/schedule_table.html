@@ -19,23 +19,23 @@
         <td>{% if printing %}
             {{ scheduled_activity.activity.title }}
             {% else %}
-            <a href="{% url 'event:activity' scheduled_activity.activity.id %}">
+            <a href="{% url 'event:schedule' scheduled_activity.id %}">
             {{ scheduled_activity.activity.title }}</a>
             {% endif %}
         </td>
         <td>
-            {% if scheduled_activity.attendee_count %}
+            {% if scheduled_activity.attendee_count != None %}
             {% if scheduled_activity.attendee_count > scheduled_activity.activity.max_people %}
             <span class="badge badge-warning">Wait List</span>
             {% else %}
             <span class="badge badge-info">Space Available</span>
             {% endif %}
             {% endif %}
-            {% if scheduled_activity.volunteer_count %}
+            {% if scheduled_activity.volunteer_count != None %}
             {% if scheduled_activity.volunteer_count < scheduled_activity.activity.number_volunteers %}
             {% if can_volunteer %}
             <a href="{% url 'afol:volunteercreate' scheduled_activity.id %}" class="badge badge-warning">Volunteers
-                Needed</a>
+                Needed ( {{ scheduled_activity.volunteer_count }} / {{ scheduled_activity.activity.number_volunteers }} )</a>
             {% else %}
             <span class="badge badge-warning">Volunteers Needed</span>
             {% endif %}

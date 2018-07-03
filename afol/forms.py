@@ -70,6 +70,7 @@ class ScheduleVolunteerForm(forms.ModelForm):
         }
 
     def __init__(self, *args, **kwargs):
-        obj_queryset = Fan.objects.filter(user=kwargs.pop('user'))
+        self.user = kwargs.pop('user', None)
+        obj_queryset = Fan.objects.filter(user=self.user)
         super(ScheduleVolunteerForm, self).__init__(*args, **kwargs)
         self.fields['fan'].queryset = obj_queryset
