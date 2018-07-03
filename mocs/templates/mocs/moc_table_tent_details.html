@@ -7,7 +7,7 @@
 </div>
 <div>
     {% url 'mocs:details' object.moc.id as moc_details_url %}
-    <span style="display: inline-block; float:right;">{% qr_from_text moc_details_url size="M" %}</span>
+    <span style="display: inline-block; float:right;">{% qr_from_text "https://testing.brickfiesta.com"|add:moc_details_url size="M" %}</span>
     <h3>MOC Category</h3>
     <p>{{ object.category }}</p>
     <h3>Year Built</h3>
