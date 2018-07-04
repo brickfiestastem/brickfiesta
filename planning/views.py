@@ -147,7 +147,7 @@ class AFOLBagCheckListView(ListView):
                                                                    Product.VENDOR,
                                                                    Product.CONVENTION, ]
                                         ).order_by('user__first_name', 'user__last_name',
-                                                   'user__email').select_related()
+                                                   'user__email', 'product__product_type').select_related()
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -164,7 +164,7 @@ class ExhibitionWillCallView(ListView):
         return OrderItem.objects.filter(product__event=self.obj_event,
                                         product__product_type__in=[
                                             Product.EXHIBITION]
-                                        ).order_by('first_name', 'last_name', 'user__email')
+                                        ).order_by('first_name', 'last_name', 'user__email', 'product__product_type')
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)
