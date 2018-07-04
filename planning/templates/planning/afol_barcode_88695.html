@@ -3,7 +3,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 	<meta http-equiv="content-type" content="text/html; charset=utf-8" />
-	<title>Generate Barcodes</title>
+	<title>Fan Bar Codes</title>
 <style>
 html, body, div, span, applet, object, iframe,
 h1, h2, h3, h4, h5, h6, p, blockquote, pre,
@@ -90,7 +90,7 @@ article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, 
 <div class='label'>
         <h1>{{ object.fan }}</h1>
         <div class='f_right'>
-            {% if object.fan.bar_code %}<img src='{{ object.fan.bar_code.url }}' />{% endif %}
+            {% if object.fan.bar_code %}<img style="max-width:100%; max-height:100%;" src='{{ object.fan.bar_code.url }}' />{% endif %}
             <div class='title'>{{ object.get_role_display }}</div>
         </div>
 </div>
