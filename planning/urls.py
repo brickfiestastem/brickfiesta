@@ -3,7 +3,7 @@ from django.urls import path
 from planning.views import EventListingView, ShirtSummaryView, ScheduleListView, SchedulePrintListView, ProgramView, \
     MOCTablesView, MOCTableTentView, AFOLBagCheckListView, ExhibitionWillCallView, AFOLWillCallView, \
     RegistrationBoothSignsView, VendorTableTentView, SponsorTableTentView, AFOLBarCodeView, ShirtCheckListView, \
-    BadgeCheckListView, ScheduleActivitiesPrintListView
+    BadgeCheckListView, ScheduleActivitiesPrintListView, AFOLCSVView
 
 app_name = "planning"
 
@@ -11,6 +11,7 @@ urlpatterns = [
     path('', EventListingView.as_view(), name='index'),
     path('activities/sheets/<event>', ScheduleActivitiesPrintListView.as_view(), name='activities_sheets'),
     path('afol/bag/<event>', AFOLBagCheckListView.as_view(), name='afol_bags'),
+    path('afol/csv/<event>', AFOLCSVView.as_view(), name='afol_csv'),
     path('afol/barcodes/<event>/<str:role>', AFOLBarCodeView.as_view(), name='afol_barcodes'),
     path('afol/barcodes/88695/<event>/<str:role>', AFOLBarCodeView.as_view(template_name='planning/afol_barcode_88695.html'),
          name='afol_barcodes_88695'),

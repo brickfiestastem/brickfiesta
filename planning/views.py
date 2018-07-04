@@ -252,3 +252,15 @@ class SponsorTableTentView(ListView):
     def get_queryset(self):
         self.obj_event = Event.objects.get(id=self.kwargs['event'])
         return Sponsor.objects.all().order_by('business').filter(event=self.obj_event, status='approved')
+
+
+@method_decorator(staff_member_required, name='dispatch')
+class AFOLCSVView(ListView):
+    model = Attendee
+    template_name = 'planning/afol_csv.html'
+
+    def get_queryset(self):
+        obj_event = Event.objects.get(id=self.kwargs['event'])
+        obj_attendee = Attendee.objects.filter(event=obj_event,
+                                       ).order_by('fan__first_name', 'fan__last_name')
+        return obj_attendee

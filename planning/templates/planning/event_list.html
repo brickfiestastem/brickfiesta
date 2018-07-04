@@ -22,11 +22,12 @@
             </li>
             <li>Fan of LEGO
                 <ul>
+                    <li><a href="{% url 'planning:afol_bags' object.id %}">Bag Check Lists</a></li>
                     <li>All Access <a href="{% url 'planning:afol_barcodes'  object.id  'allaccess' %}">Bar Codes 8160 Avery</a>
                         (<a href="{% url 'planning:afol_barcodes_88695'  object.id  'allaccess' %}">88895 Avery</a>)</li>
                     <li>Companion <a href="{% url 'planning:afol_barcodes'  object.id  'companion' %}">Bar Codes 8160 Avery</a>
                         (<a href="{% url 'planning:afol_barcodes_88695'  object.id  'companion' %}">88895 Avery</a>)</li>
-                    <li><a href="{% url 'planning:afol_bags' object.id %}">Bag Check Lists</a></li>
+                    <li><a href="{% url 'planning:afol_csv' object.id %}">Simple CSV List</a></li>
                     <li><a href="{% url 'planning:afol_will_call' object.id %}">Will Call List</a></li>
                 </ul>
             </li>
