@@ -58,6 +58,8 @@
         <td>[&nbsp;&nbsp;&nbsp;]</td>
     </tr>
     {% endfor %}{# end bag items #}
+    {# TODO: Fix this view so that it checks the products has shirts and has badges but checks the day ordered on the shirt and badge #}
+    {% if object.product.product_type == 'convention' %}
     {% for fan_details in object.user.fan_set.all %}
         {% for badge_details in fan_details.badge_set.all %}
             {% if object.product.event == badge_details.event and object.first_name == badge_details.fan.first_name and object.last_name == badge_details.fan.last_name %}
@@ -85,8 +87,9 @@
     </tr>
         {% endif %}
         {% endfor %}{# end shirts #}
-    {% endfor %}
-{% endfor %}
+    {% endfor %}{# end fan #}
+    {% endif %}
+{% endfor %}{# end user #}
 
     </tbody>
 </table>
