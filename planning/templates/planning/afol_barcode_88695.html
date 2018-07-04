@@ -88,7 +88,6 @@ article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, 
 <div class="page">
 {% for object in object_list %}
 <div class='label'>
-        <h1>{{ object.fan }}</h1>
         <div class='f_right'>
             {% if object.fan.bar_code %}<img style="max-width:100%; max-height:100%;" src='{{ object.fan.bar_code.url }}' />{% endif %}
             <div class='title'>{{ object.get_role_display }}</div>
