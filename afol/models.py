@@ -41,7 +41,7 @@ class Fan(BaseModel):
     def generate_barcode(self):
         buffer = BytesIO()
         generate('CODE128', str(self.id), writer=ImageWriter(), output=buffer,
-                 text=None)
+                 text=self.first_name + ' ' + self.last_name)
         filename = 'barcode-%s.png' % str(self.id)
         filebuffer = InMemoryUploadedFile(
              buffer, None, filename, 'image/png', buffer.__sizeof__(), None)

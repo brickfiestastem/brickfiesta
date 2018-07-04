@@ -183,7 +183,7 @@ class AFOLBagCheckListView(ListView):
 @method_decorator(staff_member_required, name='dispatch')
 class AFOLBarCodeView(ListView):
     model = Attendee
-    template_name = 'planning/afol_barcode_88695.html'
+    template_name = 'planning/afol_barcode_8160.html'
 
     def get_queryset(self):
         obj_event = Event.objects.get(id=self.kwargs['event'])
