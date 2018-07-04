@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="description"
+          content="Brick Fiesta - A non-profit hobby fan run family focused LEGO convention in Texas.">
+    <meta name="author" content="Brick Fiesta STEM">
+    <title>Brick Fiesta - Schedule Activites</title>
+    <link rel="stylesheet" type="text/css"
+          href="https://maxcdn.bootstrapcdn.com/bootswatch/4.0.0/simplex/bootstrap.min.css"/>
+    <style>@media print {.page-break	{ display: block; page-break-before: always; }}</style>
+</head>
+<body>
+{% for object in object_list %}
+<h1>{{ object.date }} at {{ object.start_time }} to {{ object.end_time }} in {{ object.space.name }}</h1>
+<h2>{{ object.activity.title }}</h2>
+<h3>Materials</h3>
+{{ object.activity.materials_list|linebreaks }}
+<h3>Description</h3>
+{% if object.activity.signup_required %}
+<p>Sign up for this event is required.</p>
+{% endif %}
+<p>The minimum people to participate in this event is {{ object.activity.min_people }} the maximum is
+    {% if object.activity.max_people == -1 %}unlimited{% else %}{{ object.activity.max_people }}{% endif %}.
+</p>
+{{ object.activity.description|linebreaks }}
+<h3>Rules</h3>
+{{ object.activity.rules|linebreaks }}
+<div class="page-break"></div>
+{% endfor %}
+</body>
+</html>

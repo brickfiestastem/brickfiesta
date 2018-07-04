@@ -110,7 +110,8 @@ class ScheduleActivitiesPrintListView(ListView):
 
     def get_queryset(self):
         self.obj_event = Event.objects.get(id=self.kwargs['event'])
-        return Schedule.objects.filter(event=self.obj_event, is_public=True, is_printable=True)
+        return Schedule.objects.filter(event=self.obj_event, is_public=True, is_printable=True)\
+            .order_by('date', 'start_time')
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)

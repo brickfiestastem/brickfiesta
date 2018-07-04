@@ -86,16 +86,20 @@ article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, 
 <body>
 
 <div class="page">
-    {% for object in object_list %}
+{% for object in object_list %}
 <div class='label'>
         <h1>{{ object.fan }}</h1>
-        <div class='f_right'><img src='{{ object.fan.bar_code }}' />
+        <div class='f_right'>
+            {% if object.fan.bar_code %}<img src='{{ object.fan.bar_code.url }}' />{% endif %}
             <div class='title'>{{ object.get_role_display }}</div>
         </div>
 </div>
-    {% endfor %}
+{% if forloop.counter|divisibleby:30 %}
 </div>
-
+<div class="page">
+{% endif %}
+{% endfor %}
+</div>
 </body>
 </html>
 

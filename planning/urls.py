@@ -3,12 +3,13 @@ from django.urls import path
 from planning.views import EventListingView, ShirtSummaryView, ScheduleListView, SchedulePrintListView, ProgramView, \
     MOCTablesView, MOCTableTentView, AFOLBagCheckListView, ExhibitionWillCallView, AFOLWillCallView, \
     RegistrationBoothSignsView, VendorTableTentView, SponsorTableTentView, AFOLBarCodeView, ShirtCheckListView, \
-    BadgeCheckListView
+    BadgeCheckListView, ScheduleActivitiesPrintListView
 
 app_name = "planning"
 
 urlpatterns = [
     path('', EventListingView.as_view(), name='index'),
+    path('activities/sheets/<event>', ScheduleActivitiesPrintListView.as_view(), name='activities_sheets'),
     path('afol/bag/<event>', AFOLBagCheckListView.as_view(), name='afol_bags'),
     path('afol/barcodes/<event>', AFOLBarCodeView.as_view(), name='afol_barcodes'),
     path('afol/willcall/<event>', AFOLWillCallView.as_view(), name='afol_will_call'),

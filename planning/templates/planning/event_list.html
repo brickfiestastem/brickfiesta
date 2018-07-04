@@ -6,6 +6,10 @@
 {% for object in object_list %}
     <li>{{ object.title }}
         <ul>
+            <li>Activities</li>
+            <ul>
+                <li><a href="{% url 'planning:activities_sheets' object.id %}">Activities Sheets</a></li>
+            </ul>
             <li>Badge
                 <ul>
                     <li><a href="{% url 'planning:badge_check_list' object.id %}">Badge Check List</a></li>
