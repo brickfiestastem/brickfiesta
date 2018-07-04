@@ -43,17 +43,54 @@
     <tbody>
 {% for object in object_user.list %}
     <tr>
-        <td>{{ object.product.title }}</td>
+        <td><b>{{ object.product.title }}</b></td>
         <td>{{ object.first_name }}</td>
         <td>{{ object.last_name }}</td>
         <td>[&nbsp;&nbsp;&nbsp;]</td>
         <td>[&nbsp;&nbsp;&nbsp;]</td>
     </tr>
+    {% for product_details in object.product.bagchecklistitems_set.all %}
+    <tr>
+        <td>Bag Item: {{ product_details.item }}</td>
+        <td></td>
+        <td></td>
+        <td>[&nbsp;&nbsp;&nbsp;]</td>
+        <td>[&nbsp;&nbsp;&nbsp;]</td>
+    </tr>
+    {% endfor %}{# end bag items #}
+    {% for fan_details in object.user.fan_set.all %}
+        {% for badge_details in fan_details.badge_set.all %}
+            {% if object.product.event == badge_details.event and object.first_name == badge_details.fan.first_name and object.last_name == badge_details.fan.last_name %}
+        <tr>
+            <td>Badge: [{{ badge_details.badge_name }}],
+                [{{ badge_details.rlug_name }}],
+                [{{ badge_details.locality }},
+                {{ badge_details.region }}]
+            </td>
+            <td>{{ badge_details.fan.first_name }}</td>
+            <td>{{ badge_details.fan.last_name }}</td>
+            <td>[&nbsp;&nbsp;&nbsp;]</td>
+            <td>[&nbsp;&nbsp;&nbsp;]</td>
+        </tr>
+            {% endif %}
+        {% endfor %}{# end badge #}
+        {% for shirt_details in fan_details.shirt_set.all %}
+        {% if object.product.event == shirt_details.event and object.first_name == shirt_details.fan.first_name and object.last_name == shirt_details.fan.last_name %}
+    <tr>
+        <td>Shirt: {{ shirt_details.get_shirt_size_display }}</td>
+        <td>{{ shirt_details.fan.first_name }}</td>
+        <td>{{ shirt_details.fan.last_name }}</td>
+        <td>[&nbsp;&nbsp;&nbsp;]</td>
+        <td>[&nbsp;&nbsp;&nbsp;]</td>
+    </tr>
+        {% endif %}
+        {% endfor %}{# end shirts #}
+    {% endfor %}
 {% endfor %}
+
     </tbody>
 </table>
 <div class="page-break"></div>
 {% endfor %}
-
 </body>
 </html>

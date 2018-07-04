@@ -35,14 +35,14 @@ class ProgramView(TemplateView):
             program=context['program']).order_by('order')
         context['program_highlights'] = ProgramHighlightActivity.objects.filter(
             program=context['program'])
-        context['sponsor_list'] = Sponsor.objects.all().order_by('business')\
+        context['sponsor_list'] = Sponsor.objects.all().order_by('business') \
             .filter(event=self.obj_event, status='approved')
         context['schedule_list'] = Schedule.objects.filter(
             event=self.obj_event, is_public=True, is_printable=True)
         # obj_activities = set(Schedule.objects.filter(event=self.obj_event, is_public=True).values_list('activity'))
         # TODO adjust to only get activites that are scheduled for this event.
         context['activity_list'] = Activity.objects.all().order_by('title')
-        context['vendor_list'] = Vendor.objects.all().order_by('business')\
+        context['vendor_list'] = Vendor.objects.all().order_by('business') \
             .filter(event=self.obj_event, status='approved')
         return context
 
@@ -59,10 +59,10 @@ class ShirtSummaryView(ListView):
 
     def get_queryset(self):
         self.obj_event = Event.objects.get(id=self.kwargs['event'])
-        return Shirt.objects.filter(event=self.obj_event)\
-                            .values('shirt_size')\
-                            .annotate(shirt_count=Count('shirt_size'))\
-                            .order_by('shirt_size')
+        return Shirt.objects.filter(event=self.obj_event) \
+            .values('shirt_size') \
+            .annotate(shirt_count=Count('shirt_size')) \
+            .order_by('shirt_size')
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -146,7 +146,8 @@ class AFOLBagCheckListView(ListView):
                                         product__product_type__in=[Product.SPONSORSHIP,
                                                                    Product.VENDOR,
                                                                    Product.CONVENTION, ]
-                                        ).order_by('user__first_name', 'user__last_name', 'user__email')
+                                        ).order_by('user__first_name', 'user__last_name',
+                                                   'user__email').select_related()
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)
