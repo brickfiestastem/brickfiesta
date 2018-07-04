@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="description"
+          content="Brick Fiesta - A non-profit hobby fan run family focused LEGO convention in Texas.">
+    <meta name="author" content="Brick Fiesta STEM">
+    <title>Brick Fiesta - Shirt Check List</title>
+    <link rel="stylesheet" type="text/css"
+          href="https://maxcdn.bootstrapcdn.com/bootswatch/4.0.0/simplex/bootstrap.min.css"/>
+    <style>@media print {.page-break	{ display: block; page-break-before: always; }}</style>
+</head>
+<body>
+<h1>Shirt Check List</h1>
+<table class="table table-striped table-sm">
+    <thead class="thead-light">
+    <tr>
+        <td>Fan First Name</td>
+        <td>Fan Last Name</td>
+        <td>Associated User</td>
+        <td>Shirt Size</td>
+        <td>Date Ordered</td>
+        <td>Placed in Bag</td>
+    </tr>
+    </thead>
+    <tbody>
+    {% for object in object_list %}
+    <tr>
+        <td>{{ object.fan.first_name }}</td>
+        <td>{{ object.fan.last_name }}</td>
+        <td>{{ object.fan.user }}</td>
+        <td>{{ object.get_shirt_size_display }}</td>
+        <td>{{ object.date_ordered }}</td>
+        <td>[&nbsp;&nbsp;&nbsp;]</td>
+    </tr>
+    {% endfor %}
+    </tbody>
+</table></body>
+</html>

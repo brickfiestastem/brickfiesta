@@ -2,14 +2,17 @@ from django.urls import path
 
 from planning.views import EventListingView, ShirtSummaryView, ScheduleListView, SchedulePrintListView, ProgramView, \
     MOCTablesView, MOCTableTentView, AFOLBagCheckListView, ExhibitionWillCallView, AFOLWillCallView, \
-    RegistrationBoothSignsView, VendorTableTentView, SponsorTableTentView
+    RegistrationBoothSignsView, VendorTableTentView, SponsorTableTentView, AFOLBarCodeView, ShirtCheckListView, \
+    BadgeCheckListView
 
 app_name = "planning"
 
 urlpatterns = [
     path('', EventListingView.as_view(), name='index'),
     path('afol/bag/<event>', AFOLBagCheckListView.as_view(), name='afol_bags'),
+    path('afol/barcodes/<event>', AFOLBarCodeView.as_view(), name='afol_barcodes'),
     path('afol/willcall/<event>', AFOLWillCallView.as_view(), name='afol_will_call'),
+    path('badge/checklist/<event>', BadgeCheckListView.as_view(), name='badge_check_list'),
     path('exhibition/willcall/<event>',
          ExhibitionWillCallView.as_view(), name='exhibition_will_call'),
     path('program/<event>', ProgramView.as_view(), name='program'),
@@ -21,9 +24,11 @@ urlpatterns = [
     path('schedule/list/<event>', ScheduleListView.as_view(), name='schedule_list'),
     path('schedule/print/<event>',
          SchedulePrintListView.as_view(), name='schedule_print'),
-    path('schedule/print/room/<event>', SchedulePrintListView.as_view(template_name='planning/schedule_print_room.html'),
-         name='schedule_print_room',),
+    path('schedule/print/room/<event>',
+         SchedulePrintListView.as_view(template_name='planning/schedule_print_room.html'),
+         name='schedule_print_room', ),
     path('shirts/<event>', ShirtSummaryView.as_view(), name='shirt'),
+    path('shirts/checklist/<event>', ShirtCheckListView.as_view(), name='shirt_check_list'),
     path('sponsor/table_tents/<event>',
          SponsorTableTentView.as_view(), name='sponsor_table_tents'),
     path('vendor/table_tents/<event>',

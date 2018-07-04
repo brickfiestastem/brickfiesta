@@ -1,0 +1,104 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+	<title>Generate Barcodes</title>
+<style>
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed,
+figure, figcaption, footer, header, hgroup,
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font: inherit;
+  font-size: 100%;
+  vertical-align: baseline; }
+
+html {
+  line-height: 1; }
+
+ol, ul {
+  list-style: none; }
+
+table {
+  border-collapse: collapse;
+  border-spacing: 0; }
+
+caption, th, td {
+  text-align: left;
+  font-weight: normal;
+  vertical-align: middle; }
+
+q, blockquote {
+  quotes: none; }
+  q:before, q:after, blockquote:before, blockquote:after {
+    content: "";
+    content: none; }
+
+a img {
+  border: none; }
+
+article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, section, summary {
+  display: block; }
+
+.page {
+  width: 8.5in;
+  margin: 0;
+  padding: .50in 0 0 .30in;
+  font-family: "arial";
+  text-align: center;
+  page-break-after: always; }
+
+.f_right {
+  font-size: .7em; }
+
+.title span {
+  font-weight: 700;
+  color: tomato; }
+
+.label {
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+  width: 2.625in;
+  height: 1in;
+  padding: .025in .3in 0;
+  margin-right: .155in;
+  margin-top: .025in;
+  float: left;
+  text-align: center;
+  overflow: hidden;
+  outline: 1px dotted #ccc;
+/* outline doesn't occupy space like border does */ }
+</style>
+</head>
+<body>
+
+<div class="page">
+    {% for object in object_list %}
+<div class='label'>
+        <h1>{{ object.fan }}</h1>
+        <div class='f_right'><img src='{{ object.fan.bar_code }}' />
+            <div class='title'>{{ object.get_role_display }}</div>
+        </div>
+</div>
+    {% endfor %}
+</div>
+
+</body>
+</html>
+
+
+
+

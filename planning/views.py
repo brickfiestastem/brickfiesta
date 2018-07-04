@@ -5,7 +5,7 @@ from django.db.models import Count
 from django.utils.decorators import method_decorator
 from django.views.generic import ListView, TemplateView
 
-from afol.models import Shirt
+from afol.models import Shirt, Attendee, Badge
 from event.models import Event, Schedule, Activity
 from mocs.models import Moc, MocCategories
 from shop.models import OrderItem, Product
@@ -71,6 +71,24 @@ class ShirtSummaryView(ListView):
 
 
 @method_decorator(staff_member_required, name='dispatch')
+class ShirtCheckListView(ListView):
+    template_name = 'planning/shirt_check_list.html'
+
+    def get_queryset(self):
+        self.obj_event = Event.objects.get(id=self.kwargs['event'])
+        return Shirt.objects.filter(event=self.obj_event).order_by('fan__first_name', 'fan__last_name')
+
+
+@method_decorator(staff_member_required, name='dispatch')
+class BadgeCheckListView(ListView):
+    template_name = 'planning/badge_check_list.html'
+
+    def get_queryset(self):
+        self.obj_event = Event.objects.get(id=self.kwargs['event'])
+        return Badge.objects.filter(event=self.obj_event).order_by('fan__first_name', 'fan__last_name')
+
+
+@method_decorator(staff_member_required, name='dispatch')
 class ScheduleListView(ListView):
     template_name = 'planning/schedule_list.html'
 
@@ -83,6 +101,21 @@ class ScheduleListView(ListView):
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)
         context['event'] = self.obj_event
+        return context
+
+
+@method_decorator(staff_member_required, name='dispatch')
+class ScheduleActivitiesPrintListView(ListView):
+    template_name = 'planning/schedule_activities_print.html'
+
+    def get_queryset(self):
+        self.obj_event = Event.objects.get(id=self.kwargs['event'])
+        return Schedule.objects.filter(event=self.obj_event, is_public=True, is_printable=True)
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['event'] = self.obj_event
+        context['printing'] = True
         return context
 
 
@@ -130,10 +163,6 @@ class MOCTableTentView(ListView):
             'moc__creator__first_name', 'moc__creator__last_name')
         return obj_moc_categories
 
-    def get_context_data(self, *, object_list=None, **kwargs):
-        context = super().get_context_data(**kwargs)
-        return context
-
 
 @method_decorator(staff_member_required, name='dispatch')
 class AFOLBagCheckListView(ListView):
@@ -149,9 +178,17 @@ class AFOLBagCheckListView(ListView):
                                         ).order_by('user__first_name', 'user__last_name',
                                                    'user__email', 'product__product_type').select_related()
 
-    def get_context_data(self, *, object_list=None, **kwargs):
-        context = super().get_context_data(**kwargs)
-        return context
+
+@method_decorator(staff_member_required, name='dispatch')
+class AFOLBarCodeView(ListView):
+    model = Attendee
+    template_name = 'planning/afol_barcode_88695.html'
+
+    def get_queryset(self):
+        obj_event = Event.objects.get(id=self.kwargs['event'])
+        obj_attendee = Attendee.objects.filter(event=obj_event, role=Attendee.ROLE_ALLACCESS,
+                                       ).order_by('fan__first_name', 'fan__last_name')
+        return obj_attendee
 
 
 @method_decorator(staff_member_required, name='dispatch')
@@ -185,7 +222,8 @@ class AFOLWillCallView(ListView):
                                         product__product_type__in=[Product.SPONSORSHIP,
                                                                    Product.VENDOR,
                                                                    Product.CONVENTION, ]
-                                        ).order_by('user__last_name', 'user__first_name', 'user__email', 'product__product_type')
+                                        ).order_by('user__last_name', 'user__first_name', 'user__email',
+                                                   'product__product_type')
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)

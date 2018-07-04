@@ -16,7 +16,7 @@ class AttendeeAdmin(admin.ModelAdmin):
     ordering = ("event__title", "fan__last_name", "fan__first_name")
     list_filter = ("event", "role")
     list_display = ('event', 'fan', 'role')
-    list_display_links = ('role', )
+    list_display_links = ('role',)
     search_fields = ('fan__last_name', 'fan__first_name')
 
 
@@ -34,7 +34,7 @@ badge_ordered.short_description = "Set the date ordered on badge"
 
 
 class BadgeAdmin(admin.ModelAdmin):
-    list_filter = ("event", )
+    list_filter = ("event",)
     list_display = ('event', 'fan', 'badge_name', 'date_ordered')
     search_fields = ('fan__last_name', 'fan__first_name',
                      'badge_name', 'date_ordered')
@@ -44,9 +44,18 @@ class BadgeAdmin(admin.ModelAdmin):
 admin.site.register(Badge, BadgeAdmin)
 
 
+def generate_barcode(modeladmin, request, queryset):
+    for obj_fan in queryset:
+        obj_fan.generate_barcode()
+
+
+generate_barcode.short_description = "Generate barcode"
+
+
 class FanAdmin(admin.ModelAdmin):
     list_display = ('user', 'first_name', 'last_name')
     search_fields = ('first_name', 'last_name')
+    actions = [generate_barcode]
 
 
 admin.site.register(Fan, FanAdmin)
@@ -75,7 +84,7 @@ fix_order_password.short_description = "Fix users password problem"
 
 
 class CustomUserAdmin(UserAdmin):
-    inlines = (ProfileInline, )
+    inlines = (ProfileInline,)
     actions = [fix_order_password]
 
     def get_inline_instances(self, request, obj=None):

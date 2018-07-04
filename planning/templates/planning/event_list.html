@@ -6,6 +6,11 @@
 {% for object in object_list %}
     <li>{{ object.title }}
         <ul>
+            <li>Badge
+                <ul>
+                    <li><a href="{% url 'planning:badge_check_list' object.id %}">Badge Check List</a></li>
+                </ul>
+            </li>
             <li>Exhibition
                 <ul>
                     <li><a href="{% url 'planning:exhibition_will_call' object.id %}">Will Call List</a></li>
@@ -13,6 +18,7 @@
             </li>
             <li>Fan of LEGO
                 <ul>
+                    <li><a href="{% url 'planning:afol_barcodes' object.id %}">Bar Codes</a></li>
                     <li><a href="{% url 'planning:afol_bags' object.id %}">Bag Check Lists</a></li>
                     <li><a href="{% url 'planning:afol_will_call' object.id %}">Will Call List</a></li>
                 </ul>
@@ -34,7 +40,11 @@
                     <li><a href="{% url 'planning:schedule_print_room' object.id %}">Printable Room Schedule</a></li>
                 </ul>
             </li>
-            <li><a href="{% url 'planning:shirt' object.id %}">Shirt Summary</a></li>
+            <li>Shirts
+                <ul>
+                    <li><a href="{% url 'planning:shirt' object.id %}">Shirt Summary</a></li></li>
+                    <li><a href="{% url 'planning:shirt_check_list' object.id %}">Shirt Check List</a></li>
+                </ul>
             <li>Sponsors
                 <ul>
                     <li><a href="{% url 'planning:sponsor_table_tents' object.id %}">Sponsor Table Tents</a> </li>
