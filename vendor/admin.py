@@ -46,6 +46,16 @@ class BusinessAdmin(admin.ModelAdmin):
     actions = [adjust_logo]
     search_fields = ['name', 'phone_number', 'street', 'url']
 
+    readonly_fields = ['logo_image', ]
+
+    def logo_image(self, obj):
+        return mark_safe('<img src="{url}" width="{width}" height={height} />'.format(
+            url=obj.logo.url,
+            width=obj.logo.width,
+            height=obj.logo.height,
+        )
+        )
+
 
 admin.site.register(Business, BusinessAdmin)
 
