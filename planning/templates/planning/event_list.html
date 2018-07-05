@@ -45,7 +45,8 @@
                 <ul>
                     <li><a href="{% url 'planning:schedule_list' object.id %}">Full Schedule</a></li>
                     <li><a href="{% url 'planning:schedule_print' object.id %}">Printable Schedule</a></li>
-                    <li><a href="{% url 'planning:schedule_print_room' object.id %}">Printable Room Schedule</a></li>
+                    <li><a href="{% url 'planning:schedule_print_room' object.id %}">Printable Room Schedule</a> Needs work!</li>
+                    <li><a href="{% url 'planning:schedule_activities_print' object.id %}">Printable Schedule Activities Sheet</a> (Rules, Materials, etc.)</li>
                 </ul>
             </li>
             <li>Shirts

@@ -16,9 +16,10 @@
 {% for object in object_list %}
 <h1>{{ object.date }} at {{ object.start_time }} to {{ object.end_time }} in {{ object.space.name }}</h1>
 <h2>{{ object.activity.title }}</h2>
-<h3>Materials</h3>
+<h3>Winners:</h3>
+<h3>Materials:</h3>
 {{ object.activity.materials_list|linebreaks }}
-<h3>Description</h3>
+<h3>Description:</h3>
 {% if object.activity.signup_required %}
 <p>Sign up for this event is required.</p>
 {% endif %}
@@ -26,7 +27,7 @@
     {% if object.activity.max_people == -1 %}unlimited{% else %}{{ object.activity.max_people }}{% endif %}.
 </p>
 {{ object.activity.description|linebreaks }}
-<h3>Rules</h3>
+<h3>Rules:</h3>
 {{ object.activity.rules|linebreaks }}
 <div class="page-break"></div>
 {% endfor %}

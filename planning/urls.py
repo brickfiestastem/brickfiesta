@@ -31,6 +31,8 @@ urlpatterns = [
     path('schedule/list/<event>', ScheduleListView.as_view(), name='schedule_list'),
     path('schedule/print/<event>',
          SchedulePrintListView.as_view(), name='schedule_print'),
+    path('schedule/print/scheduled/<event>',
+         SchedulePrintListView.as_view(template_name='planning/schedule_activities_print.html'), name='schedule_activities_print'),
     path('schedule/print/room/<event>',
          SchedulePrintListView.as_view(
              template_name='planning/schedule_print_room.html'),
