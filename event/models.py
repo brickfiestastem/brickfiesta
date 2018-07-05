@@ -102,11 +102,6 @@ class Event(BaseModel):
         return self.title
 
     @property
-    def is_current(self):
-        today = datetime.date.today()
-        return self.start_date <= (today - timedelta(days=1)) and self.end_date >= today
-
-    @property
     def is_past(self):
         today = datetime.date.today()
         return self.end_date < today
@@ -115,6 +110,11 @@ class Event(BaseModel):
     def is_upcoming(self):
         today = datetime.date.today()
         return self.start_date > today
+
+    @property
+    def is_current(self):
+        today = datetime.date.today()
+        return self.start_date <= today <= self.end_date
 
 
 class Announcement(BaseModel):

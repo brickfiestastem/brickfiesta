@@ -22,17 +22,18 @@ class FrontPage(TemplateView):
         context = super().get_context_data(**kwargs)
         context['announcements'] = Announcement.objects.filter(
             end_date__gte=today)
-        context['events_current'] = Event.objects.all().order_by(
+        obj_events_current = Event.objects.all().order_by(
             '-start_date').filter(start_date__lte=today, end_date__gte=today)
+        context['events_current'] = obj_events_current
         obj_events_upcoming = Event.objects.all().order_by(
             'start_date').filter(start_date__gt=today)
         context['events_upcoming'] = obj_events_upcoming
         context['events_past'] = Event.objects.all().order_by(
             '-start_date').filter(end_date__lt=today)
         context['sponsor_list'] = Sponsor.objects.all().order_by(
-            'business').filter(event__in=obj_events_upcoming, status='approved')
+            'business').filter(event__in=obj_events_upcoming | obj_events_current, status='approved')
         context['vendor_list'] = Vendor.objects.all().order_by(
-            'business').filter(event__in=obj_events_upcoming, status='approved')
+            'business').filter(event__in=obj_events_upcoming | obj_events_current, status='approved')
         return context
 
 
