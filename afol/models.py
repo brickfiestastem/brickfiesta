@@ -36,7 +36,8 @@ class Fan(BaseModel):
     first_name = models.CharField(max_length=32)
     last_name = models.CharField(max_length=128)
     birth_date = models.DateField(null=True, blank=True)
-    bar_code = models.ImageField(upload_to=upload_path_barcodes, null=True, blank=True)
+    bar_code = models.ImageField(
+        upload_to=upload_path_barcodes, null=True, blank=True)
 
     def generate_barcode(self):
         buffer = BytesIO()
@@ -44,9 +45,8 @@ class Fan(BaseModel):
                  text=self.first_name + ' ' + self.last_name)
         filename = 'barcode-%s.png' % str(self.id)
         filebuffer = InMemoryUploadedFile(
-             buffer, None, filename, 'image/png', buffer.__sizeof__(), None)
+            buffer, None, filename, 'image/png', buffer.__sizeof__(), None)
         self.bar_code.save(filename, filebuffer)
-
 
     class Meta:
         ordering = ['first_name', 'last_name']

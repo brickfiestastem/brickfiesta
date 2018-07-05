@@ -8,6 +8,7 @@ from django.contrib.auth.admin import UserAdmin
 from django.contrib.auth.models import User
 from django.core.mail import send_mail
 from django.template import loader
+from django.utils.html import mark_safe
 
 from .models import Attendee, Badge, Fan, Profile, Shirt
 
@@ -56,6 +57,16 @@ class FanAdmin(admin.ModelAdmin):
     list_display = ('user', 'first_name', 'last_name')
     search_fields = ('first_name', 'last_name')
     actions = [generate_barcode]
+
+    readonly_fields = ['barcode_image', ]
+
+    def barcode_image(self, obj):
+        return mark_safe('<img src="{url}" width="{width}" height={height} />'.format(
+            url=obj.bar_code.url,
+            width=obj.bar_code.width,
+            height=obj.bar_code.height,
+        )
+        )
 
 
 admin.site.register(Fan, FanAdmin)

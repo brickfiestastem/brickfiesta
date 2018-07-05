@@ -188,7 +188,7 @@ class AFOLBarCodeView(ListView):
     def get_queryset(self):
         obj_event = Event.objects.get(id=self.kwargs['event'])
         obj_attendee = Attendee.objects.filter(event=obj_event, role=self.kwargs['role'],
-                                       ).order_by('fan__first_name', 'fan__last_name')
+                                               ).order_by('fan__first_name', 'fan__last_name')
         return obj_attendee
 
 
@@ -262,5 +262,5 @@ class AFOLCSVView(ListView):
     def get_queryset(self):
         obj_event = Event.objects.get(id=self.kwargs['event'])
         obj_attendee = Attendee.objects.filter(event=obj_event,
-                                       ).order_by('fan__first_name', 'fan__last_name')
+                                               ).order_by('fan__first_name', 'fan__last_name')
         return obj_attendee

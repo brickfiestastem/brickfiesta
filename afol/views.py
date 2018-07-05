@@ -145,7 +145,8 @@ class AFOLVolunteerView(ListView):
         # TODO figure out why create view is posting to list view refactor to form_valid logic
         obj_fan = Fan.objects.get(id=request.POST['fan'])
         obj_schedule = Schedule.objects.get(id=request.POST['schedule'])
-        obj_volunteer, created = ScheduleVolunteer.objects.get_or_create(fan=obj_fan, schedule=obj_schedule)
+        obj_volunteer, created = ScheduleVolunteer.objects.get_or_create(
+            fan=obj_fan, schedule=obj_schedule)
         obj_volunteer.save()
         return redirect('afol:volunteer_list')
 
@@ -162,7 +163,8 @@ class AFOLVolunteerCreateView(CreateView):
         return kwargs
 
     def get_context_data(self, **kwargs):
-        context = super(AFOLVolunteerCreateView, self).get_context_data(**kwargs)
+        context = super(AFOLVolunteerCreateView,
+                        self).get_context_data(**kwargs)
         context['schedule'] = get_object_or_404(Schedule, pk=self.kwargs['pk'])
         return context
 
@@ -184,10 +186,13 @@ class AFOLVolunteerListView(ListView):
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super(AFOLVolunteerListView, self).get_context_data(**kwargs)
-        obj_scheduled = ScheduleVolunteer.objects.filter(fan__user=self.request.user).values_list('schedule__id', flat=True)
-        context['schedule_list'] = Schedule.objects.filter(id__in=obj_scheduled)
+        obj_scheduled = ScheduleVolunteer.objects.filter(
+            fan__user=self.request.user).values_list('schedule__id', flat=True)
+        context['schedule_list'] = Schedule.objects.filter(
+            id__in=obj_scheduled)
         return context
 
     def get_queryset(self):
-        obj_scheduled = ScheduleVolunteer.objects.filter(fan__user=self.request.user)
+        obj_scheduled = ScheduleVolunteer.objects.filter(
+            fan__user=self.request.user)
         return obj_scheduled
