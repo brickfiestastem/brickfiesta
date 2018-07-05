@@ -1,6 +1,8 @@
 import uuid
+from random import randint
 
 from django.db import models
+from django.db.models.aggregates import Count
 
 from afol.models import Fan
 from event.models import Event, Schedule
@@ -26,6 +28,13 @@ class DoorPrizeWinner(BaseModel):
 
     class Meta:
         unique_together = ('fan', 'event')
+
+
+class DoorPrizePoolManager(models.Manager):
+    def random(self):
+        count = self.aggregate(count=Count('id'))['count']
+        random_index = randint(0, count - 1)
+        return self.all()[random_index]
 
 
 class DoorPrizePool(BaseModel):

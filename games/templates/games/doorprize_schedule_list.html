@@ -1,0 +1,15 @@
+{% extends "brickfiesta/base.html" %}
+{% block content %}
+
+<h1>Door Prize</h1>
+<ul>
+    <li>Pick Scheduled Activity
+        <ul>
+            {% for object in object_list %}
+            <li><a href="{% url 'games:doorprize_schedule' object.id %}">{{ object }}</a></li>
+            {% endfor %}
+        </ul>
+    </li>
+</ul>
+
+{% endblock content %}
