@@ -12,14 +12,14 @@
             <a href="{% url 'vendor:sponsor-request' %}">Sponsor Request</a> based on your interest.</p>
     </div>
 
-    <div class="col-12"><h2>Sponsors</h2></div>
+    <div class="col-12"><h2><a href="{% url 'vendor:sponsors' %}">Sponsors</a></h2></div>
     {% for obj_sponsor in sponsor_list %}
     <div class="col-sm-4">
         {% include "vendor/sponsor_card.html" %}
     </div>
     {% endfor %}
     <hr />
-    <div class="col-12"><h2>Vendors</h2></div>
+    <div class="col-12"><h2><a href="{% url 'vendor:vendors' %}">Vendors</a></h2></div>
     {% for obj_vendor in vendor_list %}
     <div class="col-sm-3">
         {% include "vendor/vendor_card.html" %}
