@@ -140,6 +140,10 @@ class MOCTablesView(ListView):
     model = Moc
     template_name = 'planning/moc_tables.html'
 
+    def get_queryset(self):
+        self.obj_event = Event.objects.get(id=self.kwargs['event'])
+        return Moc.objects.filter(moccategories__category__event=self.obj_event)
+
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)
         self.tables = list()

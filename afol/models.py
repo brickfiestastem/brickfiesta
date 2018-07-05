@@ -72,6 +72,7 @@ class Profile(BaseModel):
 @receiver(post_save, sender=User)
 def create_or_update_user_profile(sender, instance, created, **kwargs):
     if created:
+        # TODO: Fix so the profile and fan names are synced
         Fan.objects.create(
             user=instance, first_name=instance.first_name, last_name=instance.last_name)
         Profile.objects.create(user=instance)

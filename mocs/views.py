@@ -146,3 +146,5 @@ class MocCreateCategoryView(CreateView):
                 None, 'You failed the human test. Try the reCAPTCHA again.')
             return super(MocCreateCategoryView, self).form_invalid(form)
         return super(MocCreateCategoryView, self).form_valid(form)
+
+
