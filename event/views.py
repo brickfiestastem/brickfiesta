@@ -7,6 +7,7 @@ from django.shortcuts import render
 from django.views.generic import DetailView, TemplateView
 from django.views.generic.edit import FormView
 
+from afol.models import Fan, ScheduleVolunteer, ScheduleAttendee
 from event.models import Announcement, Event, Location, Schedule, Activity
 from shop.utils import check_recaptcha
 from vendor.models import Sponsor, Vendor
@@ -73,16 +74,17 @@ class ScheduledActivityView(DetailView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['schedule_list'] = None
+        context['schedule_list'] = Schedule.objects.filter(
+                activity=self.object.activity, event=self.object.event, is_public=True)
         if self.request.user.is_authenticated:
             context['schedule_list'] = Schedule.objects.filter(
                 activity=self.object.activity, event=self.object.event, is_public=True).annotate(
                 volunteer_count=Count('schedulevolunteer'),
                 attendee_count=Count('scheduleattendee'))
             context['can_volunteer'] = True
-        else:
-            context['schedule_list'] = Schedule.objects.filter(
-                activity=self.object.activity, event=self.object.event, is_public=True)
+            obj_fan = Fan.objects.filter(user=self.request.user)
+            context['is_volunteer'] = ScheduleVolunteer.objects.filter(schedule=self.object, fan__in=obj_fan).count()
+            context['attendees'] = ScheduleAttendee.objects.filter(schedule=self.object).order_by('created')
         return context
 
 

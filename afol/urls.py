@@ -1,12 +1,19 @@
 from django.urls import path, include
 
 from .views import ProfileView, ProfileEditView, SignUpView, AFOLMOCsView, AFOLShirtView, AFOLShirtEditView, \
-    AFOLVolunteerView, AFOLVolunteerCreateView, AFOLVolunteerListView
+    AFOLVolunteerView, AFOLVolunteerCreateView, AFOLVolunteerListView, AFOLActivitiesCreateView, \
+    AFOLActivitiesListView, AFOLActivitiesView
 
 app_name = 'afol'
 
 urlpatterns = [
     path('', SignUpView.as_view(), name='signup'),
+
+    path('activities/', AFOLActivitiesView.as_view(), name='activities'),
+    path('activities/<uuid:pk>', AFOLActivitiesCreateView.as_view(),
+         name='activitiescreate'),
+    path('activities/list/', AFOLActivitiesListView.as_view(),
+         name='activities_list'),
     path('mocs/', AFOLMOCsView.as_view(), name='mocs'),
     path('shirts/', AFOLShirtView.as_view(), name='shirts'),
     path('shirts/<uuid:pk>', AFOLShirtEditView.as_view(), name='shirtedit'),

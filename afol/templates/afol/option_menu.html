@@ -15,8 +15,9 @@
 <h4>Fan of LEGO</h4>
 <ul class="list-group">
     <li class="list-group-item d-flex justify-content-between align-items-center">
-        My Activities
+        <a href="{% url 'afol:activities_list' %}">My Activities</a>
         <!-- span class="badge badge-primary badge-pill">0</span -->
+        <a class="btn btn-success" href="{% url 'afol:activities' %}">Sign Up</a>
     </li>
     <li class="list-group-item d-flex justify-content-between align-items-center">
         <a href="{% url 'afol:mocs' %}">My MOCs</a>

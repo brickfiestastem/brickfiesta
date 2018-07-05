@@ -25,10 +25,10 @@
         </td>
         <td>
             {% if scheduled_activity.attendee_count != None %}
-            {% if scheduled_activity.attendee_count > scheduled_activity.activity.max_people %}
-            <span class="badge badge-warning">Wait List</span>
+            {% if scheduled_activity.attendee_count >= scheduled_activity.activity.max_people %}
+            <a href="{% url 'afol:activitiescreate' scheduled_activity.id %}" class="badge badge-warning">Wait List</a>
             {% else %}
-            <span class="badge badge-info">Space Available</span>
+            <a href="{% url 'afol:activitiescreate' scheduled_activity.id %}" class="badge badge-info">Space Available</a>
             {% endif %}
             {% endif %}
             {% if scheduled_activity.volunteer_count != None %}

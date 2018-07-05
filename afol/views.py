@@ -14,8 +14,8 @@ from django.views.generic import DetailView, ListView, UpdateView, FormView, Cre
 from event.models import Schedule
 from mocs.models import Moc
 from vendor.models import Business
-from .forms import AfolUserCreateForm, AfolUserChangeForm, ShirtChangeForm, ScheduleVolunteerForm
-from .models import Attendee, Profile, Fan, Shirt, ScheduleVolunteer
+from .forms import AfolUserCreateForm, AfolUserChangeForm, ShirtChangeForm, ScheduleVolunteerForm, ScheduleAttendeeForm
+from .models import Attendee, Profile, Fan, Shirt, ScheduleVolunteer, ScheduleAttendee
 
 
 class ProfileView(LoginRequiredMixin, DetailView):
@@ -196,3 +196,84 @@ class AFOLVolunteerListView(ListView):
         obj_scheduled = ScheduleVolunteer.objects.filter(
             fan__user=self.request.user)
         return obj_scheduled
+
+
+@method_decorator(login_required, name='dispatch')
+class AFOLActivitiesView(ListView):
+    model = Schedule
+    template_name = 'afol/activities_list.html'
+
+    def get_form_kwargs(self):
+        kwargs = super(AFOLActivitiesView, self).get_form_kwargs()
+        kwargs['user'] = self.request.user
+        return kwargs
+
+    def get_queryset(self):
+        obj_events = Attendee.objects.filter(
+            fan__user=self.request.user).values('event')
+        today = datetime.date.today()
+        return Schedule.objects.filter(event__end_date__gte=today, event__in=obj_events).annotate(
+            attendee_count=Count('scheduleattendee'))
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super(AFOLActivitiesView, self).get_context_data(**kwargs)
+        context['can_attend'] = True
+        return context
+
+    def post(self, request, *args, **kwargs):
+        # TODO figure out why create view is posting to list view refactor to form_valid logic
+        obj_fan = Fan.objects.get(id=request.POST['fan'])
+        obj_schedule = Schedule.objects.get(id=request.POST['schedule'])
+        obj_volunteer, created = ScheduleAttendee.objects.get_or_create(
+            fan=obj_fan, schedule=obj_schedule)
+        obj_volunteer.save()
+        return redirect('afol:activities_list')
+
+
+@method_decorator(login_required, name='dispatch')
+class AFOLActivitiesCreateView(CreateView):
+    model = ScheduleAttendee
+    form_class = ScheduleAttendeeForm
+    success_url = reverse_lazy('afol:activities')
+
+    def get_form_kwargs(self):
+        kwargs = super(AFOLActivitiesCreateView, self).get_form_kwargs()
+        kwargs['user'] = self.request.user
+        return kwargs
+
+    def get_context_data(self, **kwargs):
+        context = super(AFOLActivitiesCreateView,
+                        self).get_context_data(**kwargs)
+        context['schedule'] = get_object_or_404(Schedule, pk=self.kwargs['pk'])
+        return context
+
+    def get_initial(self):
+        self.obj_schedule = get_object_or_404(Schedule, pk=self.kwargs['pk'])
+        return {
+            'schedule': self.obj_schedule,
+        }
+
+    def form_valid(self, form):
+        return super().form_valid(form)
+
+
+@method_decorator(login_required, name='dispatch')
+class AFOLActivitiesListView(ListView):
+    model = ScheduleAttendee
+    template_name = 'afol/activities_list.html'
+    success_url = reverse_lazy('afol:activities')
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super(AFOLActivitiesListView, self).get_context_data(**kwargs)
+        obj_scheduled = ScheduleAttendee.objects.filter(
+            fan__user=self.request.user).values_list('schedule__id', flat=True)
+        context['schedule_list'] = Schedule.objects.filter(
+            id__in=obj_scheduled)
+        return context
+
+    def get_queryset(self):
+        obj_scheduled = ScheduleAttendee.objects.filter(
+            fan__user=self.request.user)
+        return obj_scheduled
+
+

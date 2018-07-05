@@ -74,3 +74,18 @@ class ScheduleVolunteerForm(forms.ModelForm):
         obj_queryset = Fan.objects.filter(user=self.user)
         super(ScheduleVolunteerForm, self).__init__(*args, **kwargs)
         self.fields['fan'].queryset = obj_queryset
+
+
+class ScheduleAttendeeForm(forms.ModelForm):
+    class Meta:
+        model = ScheduleAttendee
+        fields = ('fan', 'schedule',)
+        widgets = {
+            'schedule': forms.HiddenInput(),
+        }
+
+    def __init__(self, *args, **kwargs):
+        self.user = kwargs.pop('user', None)
+        obj_queryset = Fan.objects.filter(user=self.user)
+        super(ScheduleAttendeeForm, self).__init__(*args, **kwargs)
+        self.fields['fan'].queryset = obj_queryset

@@ -90,7 +90,7 @@ class BadgeCheckListView(ListView):
 
 @method_decorator(staff_member_required, name='dispatch')
 class ScheduleListView(ListView):
-    template_name = 'planning/schedule_list.html'
+    template_name = 'planning/activities_list.html'
 
     def get_queryset(self):
         self.obj_event = Event.objects.get(id=self.kwargs['event'])

@@ -9,6 +9,10 @@
 <p>{{ object.activity.description|linebreaks }}</p>
 <h2>Rules</h2>
 <p>{{ object.activity.rules|linebreaks }}</p>
+{% if is_volunteer %}
+<h2>Materials List</h2>
+<p>{{ object.activity.materials_list|linebreaks }}</p>
+{% endif %}
 <h2>Additional Information</h2>
 <p>The minimum people to participate in this event is {{ object.activity.min_people }} the maximum is
     {% if object.activity.max_people == -1 %}unlimited{% else %}{{ object.activity.max_people }}{% endif %}.
@@ -16,6 +20,23 @@
 {% if object.activity.signup_required %}
 <p>Sign up for this event is required. If sign up is full you will be added to a waiting list.
     Sign up is enabled on the first day of the event at noon.</p>
+{% endif %}
+{% if is_volunteer %}
+<h2>Signed Up</h2>
+<table class="table table-sm">
+    <thead>
+        <tr>
+            <th>Fan</th>
+            <th>Sign Up Time</th>
+        </tr>
+    </thead>
+{% for obj_fan in attendees %}
+    <tr>
+        <td>{{ obj_fan.fan }}</td>
+        <td>{{ obj_fan.created }}</td>
+    </tr>
+{% endfor %}
+</table>
 {% endif %}
 {% if schedule_list %}
 <h2>Scheduled</h2>
