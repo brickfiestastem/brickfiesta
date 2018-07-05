@@ -3,15 +3,15 @@
 "{{ object.creator.first_name }}", {# First Name #}
 "{{ object.creator.last_name }}", {# Last Name #}
 {{ object.creator.user.email }}, {# Email Address #}
-"{{ object.title }}", {# MOC Name #}
+`{{ object.title }}`, {# MOC Name #}
 Description, {# MOC Description #}
 {{ object.length }}, {# MOC Length #}
 {{object.width}}, {# MOC Width #}
 {{object.height}}, {# MOC Height #}
-"{{ object.moccategories_set }}", {# Prominent Theme #}
+"{{ object.moccategories.category.category.title }}", {# Prominent Theme #}
 "{{ object.year_built }}", {# Year Built #}
 REQUIREMENTS, {# Additional Display Requirements #}
 LAYOUT, {# Is this MOC to be part of a larger display layout? #}
-"{{object.moccategories_all }}", {# Location Details For Processor #}
+"{{object.moccategories.category.category.title }}", {# Location Details For Processor #}
 AREA</br>  {# Area #}
 {% endfor %}

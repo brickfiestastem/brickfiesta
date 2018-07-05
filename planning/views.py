@@ -142,7 +142,7 @@ class MOCTablesView(ListView):
 
     def get_queryset(self):
         self.obj_event = Event.objects.get(id=self.kwargs['event'])
-        return Moc.objects.filter(moccategories__category__event=self.obj_event)
+        return Moc.objects.filter(moccategories__category__event=self.obj_event).select_related()
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)
