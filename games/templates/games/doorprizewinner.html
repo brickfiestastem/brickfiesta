@@ -6,7 +6,12 @@
     <li>
         <a href="{% url 'games:doorprize' %}">Door Prize</a>
         <ul>
-            <h1>{{ winner.fan.first_name }} {{ winner.fan.last_name }}</h1>
+            <h1>{% if winner %}
+                {{ winner.fan.first_name }} {{ winner.fan.last_name }}
+                {% else %}
+                No People Have Not Already Won
+                {% endif %}
+            </h1>
         </ul>
         <h3>Debug Number: {{ number }}</h3>
     </li>

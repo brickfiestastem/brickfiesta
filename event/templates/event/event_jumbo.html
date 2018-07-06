@@ -3,7 +3,8 @@
         <div class="col-md-7">
             <h1 class="display-4"><a href="{% url 'event:details' event.id %}">{{ event.title }}</a></h1>
             <h3>{{ event.theme }}</h3>
-            <p class="lead">{{ event.start_date }} to {{ event.end_date }} at {{ event.location.name }}
+            <p class="lead">{{ event.start_date }} to {{ event.end_date }} at
+                <a href="{% url 'event:location' event.location.id %}">{{ event.location.name }}</a>
             <br />{{ event.location.locality }}, {{ event.location.region }}</p>
         </div>
         <div class="col-md-5"><img style="height: auto; width: 300px; display: block; margin: 0 auto;" src="{{ event.logo.url }}" alt="Event Logo"/></div>
@@ -12,7 +13,7 @@
     <p>{{ event.description|linebreaks }}</p>
     {% for announcement in announcements %}
         {% if announcement.event == event %}
-            <p class="alert alert-danger font-weight-bold" role="alert">{{ announcement.description }}</p>
+            <p class="alert alert-danger font-weight-bold" role="alert">{{ announcement.description|linebreaks }}</p>
         {% endif %}
     {% endfor %}
     <p class="lead">

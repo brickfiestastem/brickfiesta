@@ -25,7 +25,7 @@ class Command(BaseCommand):
             self.int_label_width = 1109
             self.int_label_height = 696
             self.int_label_length = '62'
-        self.printer = "/dev/usb/lp3"
+        self.printer = "/dev/usb/lp0"
         self.tmp_image = "./tmp/barcode-{}".format(options['id'])
         self.tmp_image_label = "./tmp/label-{}.png".format(options['id'])
         self.tmp_bin = "./tmp/{}.bin".format(options['id'])

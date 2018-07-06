@@ -27,6 +27,7 @@ class DoorPrizeWinner(BaseModel):
         return "{} won at {}".format(self.fan, self.event)
 
     class Meta:
+        ordering = ('created', 'event')
         unique_together = ('fan', 'event')
 
 

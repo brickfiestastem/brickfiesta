@@ -12,6 +12,6 @@ read FAN_NAME
 python manage.py fan_barcode "$FAN_ID" "$FAN_NAME"
 brother_ql_create --model QL-800 --label-size 29x90 --rotate 90 ./tmp/label-$FAN_ID.png > ./tmp/$FAN_ID.bin
 # brother_ql_create --model QL-800 --label-size 62 --rotate 90 ./tmp/label-$FAN_ID.png > ./tmp/$FAN_ID.bin
-cat ./tmp/$FAN_ID.bin > /dev/usb/lp3
+cat ./tmp/$FAN_ID.bin > /dev/usb/lp0
 rm -rf ./tmp
 set +e
