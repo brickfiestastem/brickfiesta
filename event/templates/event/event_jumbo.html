@@ -10,13 +10,13 @@
         <div class="col-md-5"><img style="height: auto; width: 300px; display: block; margin: 0 auto;" src="{{ event.logo.url }}" alt="Event Logo"/></div>
     </div>
     <hr class="my-4">
-    <p>{{ event.description|linebreaks }}</p>
+    <div style="text-align: justify;">{{ event.description|linebreaks }}</div>
     {% for announcement in announcements %}
         {% if announcement.event == event %}
-            <p class="alert alert-danger font-weight-bold" role="alert">{{ announcement.description|linebreaks }}</p>
+            <div class="alert alert-danger font-weight-bold" role="alert">{{ announcement.description|linebreaks }}</div>
         {% endif %}
     {% endfor %}
-    <p class="lead">
+    <div class="lead">
         {% if event.is_current %}
         <p class="alert alert-warning font-weight-bold" role="alert"><strong>Advanced purchasing online for this event is now closed.</strong> Please visit the registration booth at the event for
         pickup and purchases.</p>
@@ -28,5 +28,5 @@
         {% if event.is_upcoming and event.hotel_code_url %}
         <a class="btn btn-info btn-lg" href="{{ event.hotel_code_url }}" role="button">Hotel Reservations</a>
         {% endif %}
-    </p>
+    </div>
 </div>
