@@ -10,12 +10,12 @@
         <div class="col-md-5"><img style="height: auto; width: 300px; display: block; margin: 0 auto;" src="{{ event.logo.url }}" alt="Event Logo"/></div>
     </div>
     <hr class="my-4">
-    <div style="text-align: justify;">{{ event.description|linebreaks }}</div>
     {% for announcement in announcements %}
         {% if announcement.event == event %}
-            <div class="alert alert-danger font-weight-bold" role="alert">{{ announcement.description|linebreaks }}</div>
+    <div class="alert alert-danger font-weight-bold" role="alert">{{ announcement.description|linebreaks }}</div>
         {% endif %}
     {% endfor %}
+    <div style="text-align: justify;">{{ event.description|linebreaks }}</div>
     <div class="lead">
         {% if event.is_current %}
         <p class="alert alert-warning font-weight-bold" role="alert"><strong>Advanced purchasing online for this event is now closed.</strong> Please visit the registration booth at the event for

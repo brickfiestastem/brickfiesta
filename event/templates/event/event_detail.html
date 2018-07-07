@@ -14,12 +14,12 @@
     </div>
 </div>
 <div>
-    <div style="text-align: justify;">{{ event.description|linebreaks }}</div>
     {% for announcement in announcements %}
         {% if announcement.event == event %}
     <div class="alert alert-danger font-weight-bold" role="alert">{{ announcement.description|linebreaks }}</div>
         {% endif %}
     {% endfor %}
+    <div style="text-align: justify;">{{ event.description|linebreaks }}</div>
     <p class="alert alert-info" align="right">Tag us on social media: #{{ event.hashtag }}</p>
 </div>
 
