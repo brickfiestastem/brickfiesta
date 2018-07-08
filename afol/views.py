@@ -12,7 +12,7 @@ from django.views import generic
 from django.views.generic import DetailView, ListView, UpdateView, FormView, CreateView
 
 from event.models import Schedule
-from mocs.models import Moc
+from mocs.models import Moc, Vote
 from vendor.models import Business
 from .forms import AfolUserCreateForm, AfolUserChangeForm, ShirtChangeForm, ScheduleVolunteerForm, ScheduleAttendeeForm
 from .models import Attendee, Profile, Fan, Shirt, ScheduleVolunteer, ScheduleAttendee
@@ -277,3 +277,10 @@ class AFOLActivitiesListView(ListView):
         return obj_scheduled
 
 
+class AFOLVoteListView(ListView):
+    model = Vote
+    template_name = 'afol/vote_list.html'
+
+    def get_queryset(self):
+        obj_fan = Fan.objects.filter(user=self.request.user)
+        return Vote.objects.filter(fan__in=obj_fan)

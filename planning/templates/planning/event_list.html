@@ -64,7 +64,12 @@
                     <li><a href="{% url 'planning:vendor_table_tents' object.id %}">Vendor Table Tents</a> </li>
                 </ul>
             </li>
-
+            <li>Votes
+                <ul>
+                    <li><a href="{% url 'planning:vote_fan' object.id %}">Fan</a></li>
+                    <li><a href="{% url 'planning:vote_public' object.id %}">Public</a></li>
+                </ul>
+            </li>
         </ul>
     </li>
 {% endfor %}

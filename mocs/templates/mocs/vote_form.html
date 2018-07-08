@@ -4,8 +4,9 @@
     <div class="col-2"></div>
     <div class="col-lg-8">
         <fieldset>
-            <legend>Public Vote</legend>
+            <legend>Fan Vote</legend>
             <h3> {{ moc }} - {{ eventcategory }}</h3>
+            <p style="alert-warning">Note: Currently there is not a way to change your vote in a category. All votes are final!</p>
             <form method="post" action="." enctype="multipart/form-data">
                 {% csrf_token %}
                 {% include 'brickfiesta/form_formatting.html' %}

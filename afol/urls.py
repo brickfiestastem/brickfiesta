@@ -2,7 +2,7 @@ from django.urls import path, include
 
 from .views import ProfileView, ProfileEditView, SignUpView, AFOLMOCsView, AFOLShirtView, AFOLShirtEditView, \
     AFOLVolunteerView, AFOLVolunteerCreateView, AFOLVolunteerListView, AFOLActivitiesCreateView, \
-    AFOLActivitiesListView, AFOLActivitiesView
+    AFOLActivitiesListView, AFOLActivitiesView, AFOLVoteListView
 
 app_name = 'afol'
 
@@ -24,5 +24,6 @@ urlpatterns = [
          name='volunteer_list'),
     path('profile/', ProfileView.as_view(template_name='afol/profile_detail.html'), name='profile'),
     path('profile/edit/', ProfileEditView.as_view(), name='edit'),
+    path('vote/', AFOLVoteListView.as_view(), name='vote_list'),
     path('', include('django.contrib.auth.urls')),
 ]

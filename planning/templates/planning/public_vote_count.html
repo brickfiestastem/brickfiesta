@@ -1,0 +1,12 @@
+{% extends "brickfiesta/base.html" %}
+{% load template_extras %}
+{% block content %}
+<ul class="row">
+    <div class="col-12">
+        <h1>Fan Vote Count</h1>
+    </div>
+{% for object in object_list %}
+    <li>{{ object }}</li>
+{% endfor %}
+</div>
+{% endblock content %}

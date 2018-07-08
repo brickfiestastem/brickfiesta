@@ -7,7 +7,7 @@ from django.views.generic import ListView, TemplateView
 
 from afol.models import Shirt, Attendee, Badge
 from event.models import Event, Schedule, Activity
-from mocs.models import Moc, MocCategories
+from mocs.models import Moc, MocCategories, Vote, PublicVote, EventCategory
 from shop.models import OrderItem, Product
 from vendor.models import Sponsor, Vendor
 from .models import Program, ProgramContributors, ProgramHighlightActivity
@@ -268,3 +268,30 @@ class AFOLCSVView(ListView):
         obj_attendee = Attendee.objects.filter(event=obj_event,
                                                ).order_by('fan__first_name', 'fan__last_name')
         return obj_attendee
+
+
+@method_decorator(staff_member_required, name='dispatch')
+class VoteCategoryCounts(ListView):
+    model = Vote
+    template_name = 'planning/fan_vote_count.html'
+
+    def get_queryset(self):
+        return Vote.objects.get_counts_by_event_category_uuid(event_category_uuid=self.kwargs['eventcategory'])
+
+
+@method_decorator(staff_member_required, name='dispatch')
+class VoteCounts(ListView):
+    model = EventCategory
+    template_name = 'planning/fan_vote_eventcategory.html'
+
+    def get_queryset(self):
+        return EventCategory.objects.filter(event=self.kwargs['event'])
+
+
+@method_decorator(staff_member_required, name='dispatch')
+class PublicVoteCounts(ListView):
+    model = PublicVote
+    template_name = 'planning/public_vote_count.html'
+
+    def get_queryset(self):
+        return None

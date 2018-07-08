@@ -1,0 +1,35 @@
+{% extends "brickfiesta/base.html" %}
+{% block content %}
+
+<div class="row">
+    <div class="col-sm-12"><h1>MOCs</h1></div>
+</div>
+<div class="row">
+    <div class="col-sm-4">
+        {% include 'afol/option_menu.html' %}
+    </div>
+    <div class="col-sm-8">
+        <h3>My Votes</h3>
+        <table class="table table-hover" width="100%">
+            <thead>
+            <tr>
+                <th scope="col">Fan</th>
+                <th scope="col">Category</th>
+                <th scope="col">MOC</th>
+                <th scope="col"></th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for vote in object_list %}
+            <tr>
+                <td>{{ vote.fan }}</td>
+                <td>{{ vote.category }}</td>
+                <td><a href="{% url 'mocs:details' vote.moc.id %}">{{ vote.moc.title }}</a></td>
+                <td><!-- a class="btn btn-warning" href="{% url 'mocs:vote_delete' vote.id %}">Delete</a --></td>
+            </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock content %}

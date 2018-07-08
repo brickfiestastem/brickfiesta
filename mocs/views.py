@@ -2,12 +2,12 @@ import uuid
 
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, reverse
+from django.urls import reverse_lazy
 from django.utils.decorators import method_decorator
 from django.views.generic import DetailView
-from django.views.generic.edit import CreateView, UpdateView, BaseCreateView
+from django.views.generic.edit import CreateView, UpdateView, BaseCreateView, DeleteView
 from django.views.generic.list import ListView
 from django.contrib import messages
-from pylint.pyreverse.diagrams import PackageDiagram
 
 from afol.models import Fan
 from event.models import Event
@@ -94,6 +94,15 @@ class MocPublicVote(CreateView):
         return reverse('mocs:details', kwargs={'pk': self.kwargs['moc']})
 
 
+@method_decorator(login_required, name='dispatch')
+class MocDeleteVoteView(DeleteView):
+    model = Vote
+
+    def get_success_url(self):
+        return reverse('mocs:details', kwargs={'pk': self.get_object().id})
+
+
+@method_decorator(login_required, name='dispatch')
 class MocFanVote(CreateView):
     model = Vote
     form_class = FanVoteForm
