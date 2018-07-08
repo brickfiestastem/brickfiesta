@@ -133,7 +133,7 @@ class AFOLVolunteerView(ListView):
         obj_events = Attendee.objects.filter(
             fan__user=self.request.user).values('event')
         today = datetime.date.today()
-        return Schedule.objects.filter(event__end_date__gte=today, event__in=obj_events).annotate(
+        return Schedule.objects.filter(event__end_date__gte=today, event__in=obj_events, is_public=True).annotate(
             volunteer_count=Count('schedulevolunteer'))
 
     def get_context_data(self, *, object_list=None, **kwargs):
@@ -212,7 +212,7 @@ class AFOLActivitiesView(ListView):
         obj_events = Attendee.objects.filter(
             fan__user=self.request.user).values('event')
         today = datetime.date.today()
-        return Schedule.objects.filter(event__end_date__gte=today, event__in=obj_events).annotate(
+        return Schedule.objects.filter(event__end_date__gte=today, event__in=obj_events, is_public=True).annotate(
             attendee_count=Count('scheduleattendee'))
 
     def get_context_data(self, *, object_list=None, **kwargs):

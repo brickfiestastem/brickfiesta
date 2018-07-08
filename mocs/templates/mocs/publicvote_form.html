@@ -1,0 +1,20 @@
+{% extends "brickfiesta/base.html" %}
+{% block content %}
+<div class="row">
+    <div class="col-2"></div>
+    <div class="col-lg-8">
+        <fieldset>
+            <legend>Public Vote</legend>
+            <h3> {{ moc }} - {{ eventcategory }}</h3>
+            <form method="post" action="." enctype="multipart/form-data">
+                {% csrf_token %}
+                {% include 'brickfiesta/form_formatting.html' %}
+                <div align="right">
+                    <a class="btn btn-warning" href="{% url 'mocs:details' moc.id %}">Cancel</a>
+                    <input class="btn btn-success" type="submit" value="Confirm Vote!"/>
+                </div>
+            </form>
+        </fieldset>
+    </div>
+</div>
+{% endblock content %}

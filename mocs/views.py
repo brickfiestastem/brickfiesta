@@ -1,14 +1,18 @@
+import uuid
+
 from django.contrib.auth.decorators import login_required
-from django.shortcuts import render
+from django.shortcuts import render, reverse
 from django.utils.decorators import method_decorator
 from django.views.generic import DetailView
-from django.views.generic.edit import CreateView, UpdateView
+from django.views.generic.edit import CreateView, UpdateView, BaseCreateView
 from django.views.generic.list import ListView
+from django.contrib import messages
+from pylint.pyreverse.diagrams import PackageDiagram
 
 from afol.models import Fan
 from event.models import Event
-from mocs.forms import MOCsForm
-from mocs.models import Moc, MocCategories, EventCategory
+from mocs.forms import MOCsForm, PublicVoteForm, FanVoteForm
+from mocs.models import Moc, MocCategories, EventCategory, Vote, PublicVote
 from shop.utils import check_recaptcha
 
 
@@ -42,15 +46,20 @@ class EventCategoriesListView(ListView):
                       {'object_list': obj_eventcategory, 'obj_event': obj_eventcategory.first()})
 
 
-class MocDetail(DetailView):
+class MocDetail(DetailView, BaseCreateView):
     model = Moc
+    fields = '__all__'
+
+    def get_success_url(self):
+        return reverse('mocs:details', kwargs={'pk': self.get_object().id})
 
     def get_context_data(self, **kwargs):
         context = super(MocDetail, self).get_context_data(**kwargs)
         obj_fan = Fan.objects.filter(id=self.object.creator.id).get()
         obj_moc = self.get_object()
-        context['moc_categories'] = MocCategories.objects.filter(
+        obj_moccategories = MocCategories.objects.filter(
             moc=obj_moc).order_by('category__event__start_date')
+        context['moc_categories'] = obj_moccategories
         context['not_retired'] = False
         context['moc_owner'] = False
         if obj_moc.year_retired and obj_moc.year_built > obj_moc.year_retired:
@@ -58,6 +67,58 @@ class MocDetail(DetailView):
         if obj_fan.user == self.request.user:
             context['moc_owner'] = True
         return context
+
+
+class MocPublicVote(CreateView):
+    model = PublicVote
+    form_class = PublicVoteForm
+
+    def get_context_data(self, **kwargs):
+        context = super(MocPublicVote, self).get_context_data(**kwargs)
+        context['moc'] = Moc.objects.get(id=self.kwargs['moc'])
+        context['eventcategory'] = EventCategory.objects.get(id=self.kwargs['eventcategory'])
+        return context
+
+    def get_initial(self):
+        initial = super(MocPublicVote, self).get_initial()
+        initial = initial.copy()
+        str_session = self.request.session.get('public_vote_id', str(uuid.uuid4()))
+        self.request.session['public_vote_id'] = str_session
+        initial['session'] = str_session
+        initial['moc'] = Moc.objects.get(id=self.kwargs['moc'])
+        initial['category'] = EventCategory.objects.get(id=self.kwargs['eventcategory'])
+        return initial
+
+    def get_success_url(self):
+        messages.add_message(self.request, messages.INFO, "Vote Recorded!")
+        return reverse('mocs:details', kwargs={'pk': self.kwargs['moc']})
+
+
+class MocFanVote(CreateView):
+    model = Vote
+    form_class = FanVoteForm
+
+    def get_context_data(self, **kwargs):
+        context = super(MocFanVote, self).get_context_data(**kwargs)
+        context['moc'] = Moc.objects.get(id=self.kwargs['moc'])
+        context['eventcategory'] = EventCategory.objects.get(id=self.kwargs['eventcategory'])
+        return context
+
+    def get_form_kwargs(self):
+        kwargs = super(MocFanVote, self).get_form_kwargs()
+        kwargs['user'] = self.request.user
+        return kwargs
+
+    def get_initial(self):
+        initial = super(MocFanVote, self).get_initial()
+        initial = initial.copy()
+        initial['moc'] = Moc.objects.get(id=self.kwargs['moc'])
+        initial['category'] = EventCategory.objects.get(id=self.kwargs['eventcategory'])
+        return initial
+
+    def get_success_url(self):
+        messages.add_message(self.request, messages.INFO, "Vote Recorded!")
+        return reverse('mocs:details', kwargs={'pk': self.kwargs['moc']})
 
 
 class MocTableTent(DetailView):
@@ -146,5 +207,3 @@ class MocCreateCategoryView(CreateView):
                 None, 'You failed the human test. Try the reCAPTCHA again.')
             return super(MocCreateCategoryView, self).form_invalid(form)
         return super(MocCreateCategoryView, self).form_valid(form)
-
-

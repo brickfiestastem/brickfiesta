@@ -14,7 +14,7 @@
 <div class="form-group has-danger">
     <label for="{{ field.id_for_label }}">{{ field.label }}</label>
     {{ field|addcss:"form-control is-invalid" }}
-    {% for error in  field.errors %} <small class="invalid-feedback">{{ error }}</small> {% endfor %}
+    {% for error in field.errors %} <small class="invalid-feedback">{{ error }}</small> {% endfor %}
 </div>
 {% else %}
 <div class="form-group">

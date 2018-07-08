@@ -3,7 +3,7 @@ import datetime
 from django import forms
 
 from afol.models import Fan
-from mocs.models import Moc
+from mocs.models import Moc, Vote, PublicVote
 
 
 class MOCsForm(forms.ModelForm):
@@ -33,3 +33,33 @@ class MOCsForm(forms.ModelForm):
         fields = ('creator', 'title', 'description', 'display_requirements', 'height', 'length',
                   'width', 'viewable_sides', 'url_photo', 'url_flickr',
                   'year_built', 'year_retired', 'is_public')
+
+
+class PublicVoteForm(forms.ModelForm):
+
+    class Meta:
+        model = PublicVote
+        fields = ('session', 'moc', 'category',)
+        widgets = {'session': forms.HiddenInput, 'moc': forms.HiddenInput, 'category': forms.HiddenInput}
+
+
+class FanVoteForm(forms.ModelForm):
+
+    class Meta:
+        model = Vote
+        fields = ('fan', 'moc', 'category',)
+        widgets = {'moc': forms.HiddenInput, 'category': forms.HiddenInput}
+
+    def __init__(self, *args, **kwargs):
+        user = kwargs.pop('user')
+        super(FanVoteForm, self).__init__(*args, **kwargs)
+        self.fields['fan'].queryset = Fan.objects.filter(user=user)
+
+    def clean_fan(self):
+        fan = self.cleaned_data['fan']
+        category = self.cleaned_data.get("category")
+        try:
+            Vote.objects.get(fan=fan, category=category)
+        except Vote.DoesNotExist:
+            return fan
+        raise forms.ValidationError("This fan already voted in this category.")

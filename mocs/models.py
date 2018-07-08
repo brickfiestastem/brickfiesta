@@ -134,7 +134,9 @@ class VoteManager(models.Manager):
 
 
 class Vote(BaseModel):
-    fan = models.ForeignKey(Fan, on_delete=models.CASCADE)
+    fan = models.ForeignKey(Fan, on_delete=models.CASCADE,
+            help_text="<ul><li>Please note that if the form doesn't submit then this fan"
+                      " has already voted in this category.</li></ul>")
     moc = models.ForeignKey(Moc, on_delete=models.CASCADE)
     category = models.ForeignKey(EventCategory, on_delete=models.CASCADE)
     value = models.IntegerField(default=1)
@@ -148,6 +150,12 @@ class Vote(BaseModel):
         if self.value > 1:
             self.value = 1
         super(Vote, self).save(*args, **kwargs)
+
+
+class PublicVote(BaseModel):
+    session = models.UUIDField(verbose_name='Session ID')
+    moc = models.ForeignKey(Moc, on_delete=models.CASCADE)
+    category = models.ForeignKey(EventCategory, on_delete=models.CASCADE)
 
 
 class Layout(BaseModel):

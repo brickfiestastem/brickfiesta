@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from .models import Category, EventCategory, MocCategories, MocNote, Moc, Vote
+from .models import Category, EventCategory, MocCategories, MocNote, Moc, Vote, PublicVote
 
 
 class CategoryAdmin(admin.ModelAdmin):
@@ -47,6 +47,14 @@ class MOCAdmin(admin.ModelAdmin):
 
 
 admin.site.register(Moc, MOCAdmin)
+
+
+class PublicVoteAdmin(admin.ModelAdmin):
+    # List display for the admin
+    list_display = ('session', 'moc', 'category',)
+
+
+admin.site.register(PublicVote, PublicVoteAdmin)
 
 
 class VoteAdmin(admin.ModelAdmin):

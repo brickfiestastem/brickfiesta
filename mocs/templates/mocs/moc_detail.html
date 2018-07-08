@@ -5,8 +5,8 @@
     <h2>My Own Creation Details (MOC)</h2>
     <h1>{{ object.title }}{% if moc_owner %}
             <a class="btn btn-info" href="{% url 'mocs:edit' object.id %}">Edit MOC Information</a>
-    {% endif %}</h1>
-
+    {% endif %}
+    </h1>
     <h4>By: {{ object.creator.first_name }}</h4>
     <p align="justified">{{ object.description }}</p>
     <ul>
@@ -25,9 +25,14 @@
         {% for item in moc_categories %}
         <li>{% if moc_owner %}
         <a class="btn btn-info" href="{% url 'mocs:edit-category' item.id %}">Edit {{ item.category }}</a>
-            <a class="btn btn-info" href="{% url 'mocs:tabletent' item.id %}">Printable Table Tent</a>
+        <a class="btn btn-info" href="{% url 'mocs:tabletent' item.id %}">Printable Table Tent</a>
         {% else %}
         {{ item.category }}
+        {% endif %}
+        {% if user.is_authenticated %}
+            <a class="btn btn-success" href="{% url 'mocs:vote' object.id item.category.id %}">Vote!</a>
+        {% else %}
+            <a class="btn btn-success" href="{% url 'mocs:public_vote' object.id item.category.id %}">Vote!</a>
         {% endif %}</li>
         {% endfor %}
     </ul>
