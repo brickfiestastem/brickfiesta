@@ -3,10 +3,15 @@
 {% block content %}
 <ul class="row">
     <div class="col-12">
-        <h1>Fan Vote Count</h1>
+        <h1>Public Vote Count</h1>
     </div>
+    <table class="table table-small">
 {% for object in object_list %}
-    <li>{{ object }}</li>
+        <tr>
+            <td><a href="{% url 'mocs:details' object.moc %}">{{ object.moc }}</a></td>
+            <td>{{ object.moc_count }}</td>
+        </tr>
 {% endfor %}
+    </table>
 </div>
 {% endblock content %}

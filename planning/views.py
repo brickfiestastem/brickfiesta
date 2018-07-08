@@ -276,7 +276,8 @@ class VoteCounts(ListView):
     template_name = 'planning/fan_vote_count.html'
 
     def get_queryset(self):
-        obj_votes = Vote.objects.filter(category=self.kwargs['eventcategory']).values('moc').annotate(moc_count=Count('moc'))
+        obj_votes = Vote.objects.filter(category=self.kwargs['eventcategory']) \
+            .values('moc').annotate(moc_count=Count('moc')).order_by('moc_count')
         return obj_votes
 
 
@@ -295,4 +296,5 @@ class PublicVoteCounts(ListView):
     template_name = 'planning/public_vote_count.html'
 
     def get_queryset(self):
-        return None
+        return PublicVote.objects.filter(category__event=self.kwargs['event']) \
+            .values('moc').annotate(moc_count=Count('moc')).order_by('moc_count')
