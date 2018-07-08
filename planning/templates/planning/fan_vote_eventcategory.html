@@ -7,7 +7,7 @@
     </div>
 <ul>
 {% for object in object_list %}
-    <li><a href="{% url 'planning:vote_fan' object.id %}">{{ object }}</a></li>
+    <li><a href="{% url 'planning:vote_fan_count' object.id %}">{{ object }}</a></li>
 {% endfor %}
 </ul>
 </div>

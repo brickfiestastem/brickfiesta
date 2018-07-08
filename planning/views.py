@@ -271,16 +271,17 @@ class AFOLCSVView(ListView):
 
 
 @method_decorator(staff_member_required, name='dispatch')
-class VoteCategoryCounts(ListView):
+class VoteCounts(ListView):
     model = Vote
     template_name = 'planning/fan_vote_count.html'
 
     def get_queryset(self):
-        return Vote.objects.get_counts_by_event_category_uuid(event_category_uuid=self.kwargs['eventcategory'])
+        obj_votes = Vote.objects.filter(category=self.kwargs['eventcategory']).values('moc').annotate(moc_count=Count('moc'))
+        return obj_votes
 
 
 @method_decorator(staff_member_required, name='dispatch')
-class VoteCounts(ListView):
+class VoteCategories(ListView):
     model = EventCategory
     template_name = 'planning/fan_vote_eventcategory.html'
 
