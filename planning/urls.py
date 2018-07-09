@@ -3,7 +3,8 @@ from django.urls import path
 from planning.views import EventListingView, ShirtSummaryView, ScheduleListView, SchedulePrintListView, ProgramView, \
     MOCTablesView, MOCTableTentView, AFOLBagCheckListView, ExhibitionWillCallView, AFOLWillCallView, \
     RegistrationBoothSignsView, VendorTableTentView, SponsorTableTentView, AFOLBarCodeView, ShirtCheckListView, \
-    BadgeCheckListView, ScheduleActivitiesPrintListView, AFOLCSVView, VoteCounts, PublicVoteCounts, VoteCategories
+    BadgeCheckListView, ScheduleActivitiesPrintListView, AFOLCSVView, VoteCounts, PublicVoteCounts, VoteCategories, \
+    VolunteerList
 
 app_name = "planning"
 
@@ -46,5 +47,6 @@ urlpatterns = [
          VendorTableTentView.as_view(), name='vendor_table_tents'),
     path('vote/fan/<event>', VoteCategories.as_view(), name='vote_fan_category'),
     path('vote/fan/category/<eventcategory>', VoteCounts.as_view(), name='vote_fan_count'),
-    path('vote/public/<event>', PublicVoteCounts.as_view(), name='vote_public')
+    path('vote/public/<event>', PublicVoteCounts.as_view(), name='vote_public'),
+    path('volunteers/<event>', VolunteerList.as_view(), name='volunteer_list')
 ]

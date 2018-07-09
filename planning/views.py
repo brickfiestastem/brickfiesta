@@ -5,7 +5,7 @@ from django.db.models import Count
 from django.utils.decorators import method_decorator
 from django.views.generic import ListView, TemplateView
 
-from afol.models import Shirt, Attendee, Badge
+from afol.models import Shirt, Attendee, Badge, ScheduleVolunteer
 from event.models import Event, Schedule, Activity
 from mocs.models import Moc, MocCategories, Vote, PublicVote, EventCategory
 from shop.models import OrderItem, Product
@@ -298,3 +298,13 @@ class PublicVoteCounts(ListView):
     def get_queryset(self):
         return PublicVote.objects.filter(category__event=self.kwargs['event']) \
             .values('moc').annotate(moc_count=Count('moc')).order_by('-moc_count')
+
+
+@method_decorator(staff_member_required, name='dispatch')
+class VolunteerList(ListView):
+    model = ScheduleVolunteer
+    template_name = 'planning/schedulevolunteer_list.html'
+
+    def get_queryset(self):
+        return ScheduleVolunteer.objects.filter(schedule__event=self.kwargs['event'])\
+            .order_by('fan__last_name', 'fan__first_name', 'schedule__start_time')
