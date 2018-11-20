@@ -14,6 +14,7 @@ class ProductAdmin(admin.ModelAdmin):
     inlines = (ProductBulletPointInline,)
     list_filter = ('event', 'product_type', 'is_public')
     list_display = ('title', 'event', 'product_type', 'is_public', 'price')
+    ordering = ('-event', 'product_type', 'title')
 
 
 admin.site.register(Product, ProductAdmin)
@@ -38,6 +39,7 @@ class OrderAdmin(admin.ModelAdmin):
     # List display for the admin
     inlines = (OrderItemInLine, )
     list_display = ('id', 'user', 'created')
+    ordering = ('-created', 'user')
     search_fields = ('user__last_name', 'user__first_name', 'transaction_id')
     actions = [reprocess_order]
 
