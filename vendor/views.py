@@ -109,7 +109,7 @@ class VendorRequestDetail(View):
                               message="A new vendor has requested to be added to {}.".format(
                                   obj_event.title),
                               from_email=settings.DEFAULT_FROM_EMAIL,
-                              recipient_list=['vendor.support@brickfiesta.com'])
+                              recipient_list=['vendor.coordinator@brickfiesta.com'])
                 else:
                     form.add_error(
                         'product', 'Already submitted request for this event.')
@@ -190,7 +190,7 @@ class SponsorRequestDetail(View):
                               message="A new sponsor has requested to be added to {}.".format(
                                   obj_event.title),
                               from_email=settings.DEFAULT_FROM_EMAIL,
-                              recipient_list=['vendor.support@brickfiesta.com'])
+                              recipient_list=['vendor.coordinator@brickfiesta.com'])
                 else:
                     form.add_error(
                         'product', 'Already submitted request for this event.')
