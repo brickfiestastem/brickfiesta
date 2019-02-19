@@ -7,6 +7,7 @@ from django.contrib import messages
 from django.core.mail import send_mail
 from django.core.management import call_command
 from django.template import loader
+from django.utils.safestring import mark_safe
 
 from shop.models import CartItem
 from .models import Business, BusinessNote, Vendor, Sponsor
