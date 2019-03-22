@@ -46,6 +46,7 @@ class EventCategory(BaseModel):
     class Meta:
         verbose_name_plural = 'EventCategories'
         unique_together = ('category', 'event')
+        ordering = ['-event', 'category']
 
 
 class Moc(BaseModel):

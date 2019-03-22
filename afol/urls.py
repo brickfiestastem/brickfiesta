@@ -1,4 +1,4 @@
-from django.urls import path, include
+from django.urls import path, include, reverse_lazy
 
 from .views import ProfileView, ProfileEditView, SignUpView, AFOLMOCsView, AFOLShirtView, AFOLShirtEditView, \
     AFOLVolunteerView, AFOLVolunteerCreateView, AFOLVolunteerListView, AFOLActivitiesCreateView, \
