@@ -24,18 +24,18 @@ class UpcomingView(TemplateView):
         context = super().get_context_data(**kwargs)
         today = datetime.date.today()
         # obj_events_upcoming = Event.objects.all().order_by('start_date').filter(start_date__gt=today)
-        context['sponsor_list'] = Sponsor.objects.filter(status='approved').order_by('business')
-        context['vendor_list'] = Vendor.objects.filter(status='approved').order_by('business')
+        context['sponsor_list'] = Sponsor.objects.filter(status='approved').order_by('business').distinct()
+        context['vendor_list'] = Vendor.objects.filter(status='approved').order_by('business').distinct()
         return context
 
 
 class SponsorListView(ListView):
-    queryset = Sponsor.objects.filter(status='approved').order_by('business')
+    queryset = Sponsor.objects.filter(status='approved').order_by('business').distinct()
     template_name = 'vendor/sponsor_list.html'
 
 
 class VendorListView(ListView):
-    queryset = Vendor.objects.filter(status='approved').order_by('business')
+    queryset = Vendor.objects.filter(status='approved').order_by('business').distinct()
     template_name = 'vendor/vendor_list.html'
 
 
