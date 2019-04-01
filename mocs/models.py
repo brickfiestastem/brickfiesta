@@ -34,6 +34,7 @@ class Category(BaseModel):
 
     class Meta:
         verbose_name_plural = 'categories'
+        ordering = ['title', ]
 
 
 class EventCategory(BaseModel):
