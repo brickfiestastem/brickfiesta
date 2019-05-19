@@ -1,4 +1,5 @@
 import datetime
+from datetime import timedelta
 
 from django.conf import settings
 from django.contrib.auth.decorators import login_required
@@ -14,6 +15,7 @@ from shop.models import Product
 from shop.utils import check_recaptcha
 from .forms import SponsorForm, VendorForm
 from .models import Business, Vendor, Sponsor
+from event.models import Event
 
 
 class UpcomingView(TemplateView):
@@ -23,9 +25,12 @@ class UpcomingView(TemplateView):
         # Call the base implementation first to get a context
         context = super().get_context_data(**kwargs)
         today = datetime.date.today()
-        # obj_events_upcoming = Event.objects.all().order_by('start_date').filter(start_date__gt=today)
-        context['sponsor_list'] = Sponsor.objects.filter(status='approved').order_by('business').distinct()
-        context['vendor_list'] = Vendor.objects.filter(status='approved').order_by('business').distinct()
+        obj_events_current = Event.objects.all().order_by(
+            '-start_date').filter(start_date__lte=today, end_date__gte=today)
+        obj_events_upcoming = Event.objects.all().order_by(
+            'start_date').filter(start_date__gt=today)
+        context['sponsor_list'] = Sponsor.objects.filter(event__in=obj_events_upcoming | obj_events_current, status='approved').order_by('business').distinct()
+        context['vendor_list'] = Vendor.objects.filter(event__in=obj_events_upcoming | obj_events_current, status='approved').order_by('business').distinct()
         return context
 
 

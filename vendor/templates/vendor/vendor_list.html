@@ -9,10 +9,15 @@
             list of all our vendors over the years. If you like would to be a vendor at one of our upcoming
             events please create an account and the select <a href="{% url 'vendor:vendor-request' %}">Vendor Request</a>.</p>
     </div>
-    {% for obj_vendor in object_list %}
-    <div class="col-sm-3">
-        {% include "vendor/vendor_card.html" %}
-    </div>
+    {% regroup vendor_list by event as sorted_vendor_list  %}
+    {% for event_grouping in sorted_vendor_list %}
+    <div class="col-12"><h3>
+        {{ event_grouping.grouper }} {{ event_grouping.id }}</h3></div>
+        {% for obj_vendor in event_grouping.list %}
+        <div class="col-sm-3">
+            {% include "vendor/vendor_card.html" %}
+        </div>
+        {% endfor %}
     {% endfor %}
 </div>
 {% endblock content %}
