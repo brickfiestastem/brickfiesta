@@ -29,18 +29,18 @@ class UpcomingView(TemplateView):
             '-start_date').filter(start_date__lte=today, end_date__gte=today)
         obj_events_upcoming = Event.objects.all().order_by(
             'start_date').filter(start_date__gt=today)
-        context['sponsor_list'] = Sponsor.objects.filter(event__in=obj_events_upcoming | obj_events_current, status='approved').order_by('business').distinct()
-        context['vendor_list'] = Vendor.objects.filter(event__in=obj_events_upcoming | obj_events_current, status='approved').order_by('business').distinct()
+        context['sponsor_list'] = Sponsor.objects.filter(event__in=obj_events_upcoming | obj_events_current, status='approved').order_by('event', 'business').distinct()
+        context['vendor_list'] = Vendor.objects.filter(event__in=obj_events_upcoming | obj_events_current, status='approved').order_by('event', 'business').distinct()
         return context
 
 
 class SponsorListView(ListView):
-    queryset = Sponsor.objects.filter(status='approved').order_by('business')
+    queryset = Sponsor.objects.filter(status='approved').order_by('event', 'business')
     template_name = 'vendor/sponsor_list.html'
 
 
 class VendorListView(ListView):
-    queryset = Vendor.objects.filter(status='approved').order_by('business')
+    queryset = Vendor.objects.filter(status='approved').order_by('event', 'business')
     template_name = 'vendor/vendor_list.html'
 
 
