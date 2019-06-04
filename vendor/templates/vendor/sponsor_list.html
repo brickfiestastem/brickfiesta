@@ -9,7 +9,7 @@
             list of all our sponsors over the years. If you would like to be a sponsor at one of our upcoming
             events please create an account and the select <a href="{% url 'vendor:sponsor-request' %}">Sponsor Request</a>.</p>
     </div>
-    {% regroup sponsor_list by event as sorted_sponsor_list  %}
+    {% regroup sponsor_list by event.title as sorted_sponsor_list  %}
 
     {% for event_grouping in sorted_sponsor_list %}
     <div class="col-12"><h3>
