@@ -35,12 +35,12 @@ class UpcomingView(TemplateView):
 
 
 class SponsorListView(ListView):
-    queryset = Sponsor.objects.filter(status='approved').order_by('business').distinct()
+    queryset = Sponsor.objects.filter(status='approved').order_by('business')
     template_name = 'vendor/sponsor_list.html'
 
 
 class VendorListView(ListView):
-    queryset = Vendor.objects.filter(status='approved').order_by('business').distinct()
+    queryset = Vendor.objects.filter(status='approved').order_by('business')
     template_name = 'vendor/vendor_list.html'
 
 
