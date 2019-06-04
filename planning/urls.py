@@ -1,7 +1,7 @@
 from django.urls import path
 
 from planning.views import EventListingView, ShirtSummaryView, ScheduleListView, SchedulePrintListView, ProgramView, \
-    MOCTablesView, MOCTableTentView, AFOLBagCheckListView, ExhibitionWillCallView, AFOLWillCallView, \
+    MOCListView, MOCTablesView, MOCTableTentView, AFOLBagCheckListView, ExhibitionWillCallView, AFOLWillCallView, \
     RegistrationBoothSignsView, VendorTableTentView, SponsorTableTentView, AFOLBarCodeView, ShirtCheckListView, \
     BadgeCheckListView, ScheduleActivitiesPrintListView, AFOLCSVView, VoteCounts, PublicVoteCounts, VoteCategories, \
     VolunteerList
@@ -24,6 +24,7 @@ urlpatterns = [
     path('exhibition/willcall/<event>',
          ExhibitionWillCallView.as_view(), name='exhibition_will_call'),
     path('program/<event>', ProgramView.as_view(), name='program'),
+    path('mocs/list/<event>', MOCListView.as_view(), name='moc_list'),
     path('mocs/tables/<event>', MOCTablesView.as_view(), name='moc_tables'),
     path('mocs/table_tents/<event>',
          MOCTableTentView.as_view(), name='moc_table_tents'),

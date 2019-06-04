@@ -90,7 +90,7 @@ class BadgeCheckListView(ListView):
 
 @method_decorator(staff_member_required, name='dispatch')
 class ScheduleListView(ListView):
-    template_name = 'planning/activities_list.html'
+    template_name = 'planning/schedule_list.html'
 
     def get_queryset(self):
         self.obj_event = Event.objects.get(id=self.kwargs['event'])
@@ -155,6 +155,18 @@ class MOCTablesView(ListView):
 
         context['tables'] = self.tables
         return context
+
+
+@method_decorator(staff_member_required, name='dispatch')
+class MOCListView(ListView):
+    model = Moc
+    template_name = 'planning/moc_list.html'
+
+    def get_queryset(self):
+        obj_event = Event.objects.get(id=self.kwargs['event'])
+        obj_moc_categories = MocCategories.objects.filter(category__event=obj_event).order_by(
+            'category', 'moc__width', 'moc__length')
+        return obj_moc_categories
 
 
 @method_decorator(staff_member_required, name='dispatch')
