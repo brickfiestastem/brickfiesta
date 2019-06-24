@@ -39,7 +39,11 @@ class EventListView(ListView):
 class EventProductView(View):
     def get(self, request, event_id):
         obj_products = Product.objects.filter(
-            event__id__exact=event_id, is_public=True)
+            event__id__exact=event_id, is_public=True).extra(
+            select={'is_top': "product_type = '" + Product.EXHIBITION + "'"})
+        date_two_weeks = datetime.date.today() + datetime.timedelta(days=14)
+        if obj_products.first().event.start_date <= date_two_weeks:
+            obj_products = obj_products.extra(order_by=['-is_top'])
         return render(request,
                       'shop/product_list.html',
                       {'object_list': obj_products, 'first': obj_products.first()})
