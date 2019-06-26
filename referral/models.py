@@ -21,4 +21,9 @@ class Referral(BaseModel):
     event = models.ForeignKey(Event, on_delete=models.CASCADE)
     group_name = models.CharField(max_length=64)
     description = models.TextField()
-    code = models.UUIDField(default=uuid.uuid4, editable=False)
+    url = models.URLField(default='https://www.brickfiesta.com/')
+    code = models.UUIDField(default=uuid.uuid4, unique=True, editable=False)
+    count = models.IntegerField(default=0, editable=False)
+
+    def __str__(self):
+        return "Refer {} to {}".format(self.code, self.url)
