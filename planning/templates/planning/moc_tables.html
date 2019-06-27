@@ -1,17 +1,17 @@
 {% for object in object_list %}
-"{{object.created}}", {# Timestamp #}
-"{{ object.creator.first_name }}", {# First Name #}
-"{{ object.creator.last_name }}", {# Last Name #}
-{{ object.creator.user.email }}, {# Email Address #}
-`{{ object.title }}`, {# MOC Name #}
+"{{object.moc.created}}", {# Timestamp #}
+"{{ object.moc.creator.first_name }}", {# First Name #}
+"{{ object.moc.creator.last_name }}", {# Last Name #}
+{{ object.moc.creator.user.email }}, {# Email Address #}
+`{{ object.moc.title }}`, {# MOC Name #}
 Description, {# MOC Description #}
-{{ object.length }}, {# MOC Length #}
-{{object.width}}, {# MOC Width #}
-{{object.height}}, {# MOC Height #}
-"{{ object.moccategories.category.category.title }}", {# Prominent Theme #}
-"{{ object.year_built }}", {# Year Built #}
+{{ object.moc.length }}, {# MOC Length #}
+{{object.moc.width}}, {# MOC Width #}
+{{object.moc.height}}, {# MOC Height #}
+"{{ object.category.title }}", {# Prominent Theme #}
+"{{ object.moc.year_built }}", {# Year Built #}
 REQUIREMENTS, {# Additional Display Requirements #}
 LAYOUT, {# Is this MOC to be part of a larger display layout? #}
-"{{object.moccategories.category.category.title }}", {# Location Details For Processor #}
+"{{object.category }}", {# Location Details For Processor #}
 AREA</br>  {# Area #}
 {% endfor %}

@@ -11,6 +11,7 @@ from mocs.models import Moc, MocCategories, Vote, PublicVote, EventCategory
 from shop.models import OrderItem, Product
 from vendor.models import Sponsor, Vendor
 from .models import Program, ProgramContributors, ProgramHighlightActivity
+from .utils import Table
 
 
 @method_decorator(staff_member_required, name='dispatch')
@@ -141,17 +142,18 @@ class MOCTablesView(ListView):
     template_name = 'planning/moc_tables.html'
 
     def get_queryset(self):
-        self.obj_event = Event.objects.get(id=self.kwargs['event'])
-        return Moc.objects.all().select_related()
+        obj_event = Event.objects.get(id=self.kwargs['event'])
+        obj_moc_categories = MocCategories.objects.filter(category__event=obj_event).order_by(
+            'category', 'moc__width', 'moc__length')
+        return obj_moc_categories
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)
         self.tables = list()
-        self.table_length = 72
-        self.table_width = 30
+        int_table_number = 1
+        obj_table = Table()
         for obj_moc in self.object_list:
-            int_new_table_width = math.ceil(obj_moc.width / 30)
-            int_new_table_length = math.ceil(obj_moc.length / 72)
+            int_new_table_width = math.ceil(obj_moc.moc.width / 30)
 
         context['tables'] = self.tables
         return context
