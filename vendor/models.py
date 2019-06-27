@@ -51,6 +51,7 @@ class BusinessNote(BaseModel):
 class Vendor(BaseModel):
     STATUS_TYPE = (
         ('submitted', 'Submitted'),
+        ('cancelled', 'Cancelled'),
         ('review', 'Review'),
         ('denied', 'Denied'),
         ('pending', 'Pending Payment'),
@@ -76,6 +77,7 @@ class Vendor(BaseModel):
 class Sponsor(BaseModel):
     STATUS_TYPE = (
         ('submitted', 'Submitted'),
+        ('cancelled', 'Cancelled'),
         ('review', 'Review'),
         ('denied', 'Denied'),
         ('pending', 'Pending Payment'),
