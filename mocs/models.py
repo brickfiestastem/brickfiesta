@@ -137,8 +137,8 @@ class VoteManager(models.Manager):
 
 class Vote(BaseModel):
     fan = models.ForeignKey(Fan, on_delete=models.CASCADE,
-            help_text="<ul><li>Please note that if the form doesn't submit then this fan"
-                      " has already voted in this category.</li></ul>")
+                            help_text="<ul><li>Please note that if the form doesn't submit then this fan"
+                            " has already voted in this category.</li></ul>")
     moc = models.ForeignKey(Moc, on_delete=models.CASCADE)
     category = models.ForeignKey(EventCategory, on_delete=models.CASCADE)
     value = models.IntegerField(default=1)

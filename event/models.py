@@ -94,7 +94,8 @@ class Event(BaseModel):
     end_date = models.DateField(verbose_name='End Date')
     location = models.ForeignKey(Location, on_delete=models.CASCADE)
     logo = models.ImageField(upload_to=upload_path_event, null=True)
-    enable_voting = models.BooleanField(verbose_name='Enable Voting', default=False)
+    enable_voting = models.BooleanField(
+        verbose_name='Enable Voting', default=False)
 
     class Meta:
         ordering = ['start_date']

@@ -76,17 +76,20 @@ class MocPublicVote(CreateView):
     def get_context_data(self, **kwargs):
         context = super(MocPublicVote, self).get_context_data(**kwargs)
         context['moc'] = Moc.objects.get(id=self.kwargs['moc'])
-        context['eventcategory'] = EventCategory.objects.get(id=self.kwargs['eventcategory'])
+        context['eventcategory'] = EventCategory.objects.get(
+            id=self.kwargs['eventcategory'])
         return context
 
     def get_initial(self):
         initial = super(MocPublicVote, self).get_initial()
         initial = initial.copy()
-        str_session = self.request.session.get('public_vote_id', str(uuid.uuid4()))
+        str_session = self.request.session.get(
+            'public_vote_id', str(uuid.uuid4()))
         self.request.session['public_vote_id'] = str_session
         initial['session'] = str_session
         initial['moc'] = Moc.objects.get(id=self.kwargs['moc'])
-        initial['category'] = EventCategory.objects.get(id=self.kwargs['eventcategory'])
+        initial['category'] = EventCategory.objects.get(
+            id=self.kwargs['eventcategory'])
         return initial
 
     def get_success_url(self):
@@ -110,7 +113,8 @@ class MocFanVote(CreateView):
     def get_context_data(self, **kwargs):
         context = super(MocFanVote, self).get_context_data(**kwargs)
         context['moc'] = Moc.objects.get(id=self.kwargs['moc'])
-        context['eventcategory'] = EventCategory.objects.get(id=self.kwargs['eventcategory'])
+        context['eventcategory'] = EventCategory.objects.get(
+            id=self.kwargs['eventcategory'])
         return context
 
     def get_form_kwargs(self):
@@ -122,7 +126,8 @@ class MocFanVote(CreateView):
         initial = super(MocFanVote, self).get_initial()
         initial = initial.copy()
         initial['moc'] = Moc.objects.get(id=self.kwargs['moc'])
-        initial['category'] = EventCategory.objects.get(id=self.kwargs['eventcategory'])
+        initial['category'] = EventCategory.objects.get(
+            id=self.kwargs['eventcategory'])
         return initial
 
     def get_success_url(self):

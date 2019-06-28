@@ -75,7 +75,7 @@ class ScheduledActivityView(DetailView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['schedule_list'] = Schedule.objects.filter(
-                activity=self.object.activity, event=self.object.event, is_public=True)
+            activity=self.object.activity, event=self.object.event, is_public=True)
         if self.request.user.is_authenticated:
             context['schedule_list'] = Schedule.objects.filter(
                 activity=self.object.activity, event=self.object.event, is_public=True).annotate(
@@ -83,8 +83,10 @@ class ScheduledActivityView(DetailView):
                 attendee_count=Count('scheduleattendee'))
             context['can_volunteer'] = True
             obj_fan = Fan.objects.filter(user=self.request.user)
-            context['is_volunteer'] = ScheduleVolunteer.objects.filter(schedule=self.object, fan__in=obj_fan).count()
-            context['attendees'] = ScheduleAttendee.objects.filter(schedule=self.object).order_by('created')
+            context['is_volunteer'] = ScheduleVolunteer.objects.filter(
+                schedule=self.object, fan__in=obj_fan).count()
+            context['attendees'] = ScheduleAttendee.objects.filter(
+                schedule=self.object).order_by('created')
         return context
 
 

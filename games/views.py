@@ -28,7 +28,8 @@ class PickDoorPrizePersonView(View):
 
     def get(self, request, *args, **kwargs):
         obj_scheduled_event = Schedule.objects.get(id=kwargs['schedule'])
-        int_number = DoorPrizePool.objects.filter(schedule=obj_scheduled_event).count()
+        int_number = DoorPrizePool.objects.filter(
+            schedule=obj_scheduled_event).count()
         # import ipdb; ipdb.set_trace()
         # No one is in the group so add people form the list of attendees
         if int_number == 0:
@@ -39,10 +40,12 @@ class PickDoorPrizePersonView(View):
                        fan__attendee__role=Attendee.ROLE_ALLACCESS,
                        )
             for fol in obj_fols:
-                obj_fol, created = DoorPrizePool.objects.get_or_create(schedule=fol.schedule, fan=fol.fan)
+                obj_fol, created = DoorPrizePool.objects.get_or_create(
+                    schedule=fol.schedule, fan=fol.fan)
         if DoorPrizePool.objects.all().count():
             obj_winner = DoorPrizePool.objects.order_by('?').first()
-            obj_entree = DoorPrizeWinner.objects.create(fan=obj_winner.fan, event=obj_winner.schedule.event)
+            obj_entree = DoorPrizeWinner.objects.create(
+                fan=obj_winner.fan, event=obj_winner.schedule.event)
             obj_winner.delete()
             return render(request, self.template_name,
                           {'number': int_number, 'winner': obj_winner, 'schedule': obj_winner.schedule})

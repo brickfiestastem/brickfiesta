@@ -149,11 +149,28 @@ class MOCTablesView(ListView):
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)
+        self.themes = dict()
         self.tables = list()
-        int_table_number = 1
-        obj_table = Table()
-        for obj_moc in self.object_list:
-            int_new_table_width = math.ceil(obj_moc.moc.width / 30)
+        self.int_current_table = 0
+        self.total_number_of_tables = 0
+        for obj_moc_categories in self.object_list:
+            if obj_moc_categories.category not in self.themes:
+                self.total_number_of_tables += 1
+                int_new_table_width = math.ceil(
+                    obj_moc_categories.moc.width / 30)
+                int_new_table_length = math.ceil(
+                    obj_moc_categories.moc.length / 60)
+                obj_table = Table()
+                obj_table.width = int_new_table_width * 30
+                obj_table.length = int_new_table_length * 60
+                obj_table.number = self.total_number_of_tables + 1
+                self.tables.append(obj_table)
+                self.themes[obj_moc_categories.category] = list()
+                self.themes[obj_moc_categories.category].append(
+                    self.total_number_of_tables)
+            else:
+                self.int_current_table = self.themes[obj_moc_categories.category].count(
+                ) - 1
 
         context['tables'] = self.tables
         return context

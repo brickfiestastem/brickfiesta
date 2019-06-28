@@ -43,7 +43,8 @@ class Product(BaseModel):
         max_length=64, blank=False, choices=PRODUCT_TYPE, default='convention')
     title = models.CharField(max_length=64)
     description = models.TextField()
-    refund_policy = models.TextField(default='No refund after custom items ordered or one month prior to event.')
+    refund_policy = models.TextField(
+        default='No refund after custom items ordered or one month prior to event.')
     price = models.FloatField()
     image = models.ImageField(upload_to=upload_path_product, null=True)
     quantity_available = models.IntegerField(

@@ -40,7 +40,8 @@ class PublicVoteForm(forms.ModelForm):
     class Meta:
         model = PublicVote
         fields = ('session', 'moc', 'category',)
-        widgets = {'session': forms.HiddenInput, 'moc': forms.HiddenInput, 'category': forms.HiddenInput}
+        widgets = {'session': forms.HiddenInput,
+                   'moc': forms.HiddenInput, 'category': forms.HiddenInput}
 
 
 class FanVoteForm(forms.ModelForm):

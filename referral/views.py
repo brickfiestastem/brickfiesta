@@ -9,6 +9,7 @@ from .models import Referral
 
 # Create your views here.
 
+
 class ReferralIndex(View):
 
     def get(self, request, referral_id):

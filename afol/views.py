@@ -264,7 +264,8 @@ class AFOLActivitiesListView(ListView):
     success_url = reverse_lazy('afol:activities')
 
     def get_context_data(self, *, object_list=None, **kwargs):
-        context = super(AFOLActivitiesListView, self).get_context_data(**kwargs)
+        context = super(AFOLActivitiesListView,
+                        self).get_context_data(**kwargs)
         obj_scheduled = ScheduleAttendee.objects.filter(
             fan__user=self.request.user).values_list('schedule__id', flat=True)
         context['schedule_list'] = Schedule.objects.filter(
