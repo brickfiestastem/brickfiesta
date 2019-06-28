@@ -38,6 +38,7 @@ urlpatterns = [
     #        {'post_reset_redirect': '/afol/password_reset_complete'},
     #        name='password_reset_confirm'),
     path('afol/', include('afol.urls'), name='afol'),
+    path('donations/', include('donations.urls'), name='donations'),
     path('events/', include('event.urls')),
     path('games/', include('games.urls')),
     path('news/', include('news.urls')),

@@ -17,48 +17,21 @@
         <thead class="thead-light">
         <tr>
             <td align="right" width="20%">Item</td>
-            <td width="50%">Title</td>
             <td width="10%"></td>
-            <td align="center" width="20%">Space</td>
+            <td width="50%">Fan / Business</td>
+            <td align="center" width="20%">Approximate Value</td>
         </tr>
         </thead>
         <tbody>
         {% for obj_donation in event_grouping.list %}
         <tr>
-            <td align="right">
-                {{ obj_donation.item }}
-            </td>
-            <td>{% if printing %}
-                {{ scheduled_activity.activity.title }}
-                {% else %}
-                <a href="{% url 'event:schedule' scheduled_activity.id %}">
-                    {{ scheduled_activity.activity.title }}</a>
-                {% endif %}
-
-            </td>
-            <td>
-                {% if scheduled_activity.attendee_count != None %}
-                {% if scheduled_activity.attendee_count >= scheduled_activity.activity.max_people %}
-                <a href="{% url 'afol:activitiescreate' scheduled_activity.id %}" class="badge badge-warning">Wait
-                    List</a>
-                {% else %}
-                <a href="{% url 'afol:activitiescreate' scheduled_activity.id %}" class="badge badge-info">Space
-                    Available</a>
-                {% endif %}
-                {% endif %}
-                {% if scheduled_activity.volunteer_count != None %}
-                {% if scheduled_activity.volunteer_count < scheduled_activity.activity.number_volunteers %}
-                {% if can_volunteer %}
-                <a href="{% url 'afol:volunteercreate' scheduled_activity.id %}" class="badge badge-warning">Volunteers
-                    Needed ( {{ scheduled_activity.volunteer_count }} / {{ scheduled_activity.activity.number_volunteers
-                    }} )</a>
-                {% else %}
-                <span class="badge badge-warning">Volunteers Needed</span>
-                {% endif %}
-                {% endif %}
-                {% endif %}
-            </td>
-            <td align="center">{{ scheduled_activity.space.name }}</td>
+            <td align="right">{{ obj_donation.item }}</td>
+            <td></td>
+            <td>{{ obj_donation.fan|default_if_none:"" }}
+                {% if obj_donation.business  %}
+                <a href="{% url 'vendor:details' obj_donation.business.id %}">{{ obj_donation.business.name }}</a>
+                {% endif %}</td>
+            <td align="center">{% if obj_donation.is_price_public %} {{ obj_donation.item_value }} {% endif %}</td>
         </tr>
         {% endfor %}
         </tbody>
@@ -66,7 +39,6 @@
     <div class="page-break"></div>
 
 
-    {% endfor %}
     {% endfor %}
 </div>
 {% endblock content %}

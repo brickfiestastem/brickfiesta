@@ -8,6 +8,7 @@ read DEPLOYMENT
 git pull
 python manage.py makemigrations afol --settings=brickfiesta.$DEPLOYMENT
 python manage.py makemigrations admin --settings=brickfiesta.$DEPLOYMENT
+python manage.py makemigrations donations --settings=brickfiesta.$DEPLOYMENT
 python manage.py makemigrations event --settings=brickfiesta.$DEPLOYMENT
 python manage.py makemigrations games --settings=brickfiesta.$DEPLOYMENT
 python manage.py makemigrations mocs --settings=brickfiesta.$DEPLOYMENT

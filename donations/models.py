@@ -22,8 +22,10 @@ class BaseModel(models.Model):
 
 class Donations(BaseModel):
     event = models.ForeignKey(Event, on_delete=models.CASCADE)
-    business = models.ForeignKey(Business, on_delete=models.CASCADE, blank=True, null=True)
-    fan = models.ForeignKey(Fan, on_delete=models.CASCADE, blank=True, null=True)
+    business = models.ForeignKey(
+        Business, on_delete=models.CASCADE, blank=True, null=True)
+    fan = models.ForeignKey(
+        Fan, on_delete=models.CASCADE, blank=True, null=True)
     item = models.CharField(verbose_name='Item Donated', max_length=256)
     item_value = models.DecimalField(max_digits=10, decimal_places=2)
     is_public = models.BooleanField(verbose_name='Is Public?', default=True)
