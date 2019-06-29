@@ -33,7 +33,7 @@ class Donations(BaseModel):
         verbose_name='Is Price Public?', default=False)
 
     def __str__(self):
-        return f"{self.event} - {self.item}"
+        return str(self.event) + " - " + self.item
 
     class Meta:
         verbose_name_plural = "donations"
