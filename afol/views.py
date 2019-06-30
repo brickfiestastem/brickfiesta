@@ -86,7 +86,7 @@ class AFOLMOCsView(ListView):
 
     def get(self, request):
         obj_mocs = Moc.objects.filter(
-            creator__in=Fan.objects.filter(user=request.user))
+            creator__in=Fan.objects.filter(user=request.user)).annotate(category_count=Count('moccategories'))
         return render(request,
                       'afol/moc_list.html', {'object_list': obj_mocs})
 
