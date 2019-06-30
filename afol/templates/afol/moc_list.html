@@ -19,6 +19,7 @@
                 <th scope="col">Title</th>
                 <th scope="col">Year Built</th>
                 <th scope="col">Is Public</th>
+                <th scope="col"># of Categories</th>
             </tr>
             </thead>
             <tbody>
@@ -28,9 +29,16 @@
                 <td><a href="{% url 'mocs:details' moc.id %}">{{ moc.title }}</a></td>
                 <td>{{ moc.year_built }}</td>
                 <td>{{ moc.is_public }}</td>
+                {% if moc.category_count is 0 %}
+                <td><a class="btn btn-info" href="{% url 'mocs:add-category' moc.id %}">Add MOC Categories</a></td>
+                {% else %}
+                <td>{{ moc.category_count }}</td>
+                {% endif %}
             </tr>
             {% endfor %}
             </tbody>
+            <caption>Each MOC should have a number of categories equal to the number of events you bring it to.
+                Please double check the MOCs you are bringing have the current event category.</caption>
         </table>
     </div>
 </div>
