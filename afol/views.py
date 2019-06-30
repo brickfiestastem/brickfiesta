@@ -9,7 +9,7 @@ from django.shortcuts import get_object_or_404, redirect, render
 from django.urls import reverse_lazy
 from django.utils.decorators import method_decorator
 from django.views import generic
-from django.views.generic import DetailView, ListView, UpdateView, FormView, CreateView
+from django.views.generic import DetailView, ListView, UpdateView, FormView, CreateView, DeleteView
 
 from event.models import Schedule
 from mocs.models import Moc, Vote
@@ -181,7 +181,7 @@ class AFOLVolunteerCreateView(CreateView):
 @method_decorator(login_required, name='dispatch')
 class AFOLVolunteerListView(ListView):
     model = ScheduleVolunteer
-    template_name = 'afol/volunteer_list.html'
+    template_name = 'afol/volunteer_fan_list.html'
     success_url = reverse_lazy('afol:volunteer')
 
     def get_context_data(self, *, object_list=None, **kwargs):
@@ -258,9 +258,15 @@ class AFOLActivitiesCreateView(CreateView):
 
 
 @method_decorator(login_required, name='dispatch')
+class AFOLActivitiesDeleteView(DeleteView):
+    model = ScheduleAttendee
+    success_url = reverse_lazy('activities_list')
+
+
+@method_decorator(login_required, name='dispatch')
 class AFOLActivitiesListView(ListView):
     model = ScheduleAttendee
-    template_name = 'afol/activities_list.html'
+    template_name = 'afol/activities_fan_list.html'
     success_url = reverse_lazy('afol:activities')
 
     def get_context_data(self, *, object_list=None, **kwargs):

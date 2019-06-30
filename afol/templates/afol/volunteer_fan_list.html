@@ -1,0 +1,15 @@
+{% extends "brickfiesta/base.html" %}
+{% block content %}
+
+<div class="row">
+    <div class="col-sm-12"><h1>Volunteer</h1></div>
+</div>
+<div class="row">
+    <div class="col-sm-4">
+        {% include 'afol/option_menu.html' %}
+    </div>
+    <div class="col-sm-8">
+        {% include 'afol/schedule_fan_table.html' %}
+    </div>
+</div>
+{% endblock content %}

@@ -1,0 +1,55 @@
+{% regroup object_list by schedule.date as schedule_item %}
+{% for object in schedule_item %}
+<h4>{{ object.grouper|date:"F j, Y - l" }}</h4>
+<table class="table table-striped table-sm">
+    <thead class="thead-light">
+    <tr>
+        <td align="right" width="20%">Time</td>
+        <td width="30%">Title</td>
+        <td width="20%">Fan</td>
+        <td width="10%"></td>
+        <td align="center" width="20%">Space</td>
+    </tr>
+    </thead>
+    <tbody>
+    {% for scheduled_activity in object.list %}
+    <tr>
+        <td align="right">
+            {{ scheduled_activity.schedule.start_time }} - {{ scheduled_activity.schedule.end_time }}
+        </td>
+        <td>{% if printing %}
+            {{ scheduled_activity.schedule.activity.title }}
+            {% else %}
+            <a href="{% url 'event:schedule' scheduled_activity.schedule.id %}">
+            {{ scheduled_activity.schedule.activity.title }}</a>
+            {% endif %}
+
+        </td>
+        <td>{{ scheduled_activity.fan }}</td>
+        <td>
+            {% if scheduled_activity.schedule.attendee_count != None %}
+            {% if scheduled_activity.schedule.attendee_count >= scheduled_activity.activity.max_people %}
+            <a href="{% url 'afol:activitiescreate' scheduled_activity.schedule.id %}" class="badge badge-warning">Wait List</a>
+            {% else %}
+            <a href="{% url 'afol:activitiescreate' scheduled_activity.schedule.id %}" class="badge badge-info">Space Available</a>
+            {% endif %}
+            {% endif %}
+            {% if scheduled_activity.schedule.volunteer_count != None %}
+            {% if scheduled_activity.schedule.volunteer_count < scheduled_activity.schedule.activity.number_volunteers %}
+            {% if can_volunteer %}
+            <a href="{% url 'afol:volunteercreate' scheduled_activity.schedule.id %}" class="badge badge-warning">Volunteers
+                Needed ( {{ scheduled_activity.schedule.volunteer_count }} / {{ scheduled_activity.schedule.activity.number_volunteers }} )</a>
+            {% else %}
+            <span class="badge badge-warning">Volunteers Needed</span>
+            {% endif %}
+            {% endif %}
+            {% endif %}
+            <!-- a class="btn btn-warning" href="{% url 'afol:activitiesdelete' scheduled_activity.id %}">Remove</a -->
+        </td>
+        <td align="center">{{ scheduled_activity.schedule.space.name }}</td>
+    </tr>
+    {% endfor %}
+    </tbody>
+</table>
+<div class="page-break"></div>
+{% endfor %}

@@ -2,7 +2,7 @@ from django.urls import path, include, reverse_lazy
 
 from .views import ProfileView, ProfileEditView, SignUpView, AFOLMOCsView, AFOLShirtView, AFOLShirtEditView, \
     AFOLVolunteerView, AFOLVolunteerCreateView, AFOLVolunteerListView, AFOLActivitiesCreateView, \
-    AFOLActivitiesListView, AFOLActivitiesView, AFOLVoteListView
+    AFOLActivitiesListView, AFOLActivitiesView, AFOLVoteListView, AFOLActivitiesDeleteView
 
 app_name = 'afol'
 
@@ -12,6 +12,8 @@ urlpatterns = [
     path('activities/', AFOLActivitiesView.as_view(), name='activities'),
     path('activities/<uuid:pk>', AFOLActivitiesCreateView.as_view(),
          name='activitiescreate'),
+    path('activities/delete/<uuid:pk>', AFOLActivitiesDeleteView.as_view(),
+         name='activitiesdelete'),
     path('activities/list/', AFOLActivitiesListView.as_view(),
          name='activities_list'),
     path('mocs/', AFOLMOCsView.as_view(), name='mocs'),
