@@ -20,6 +20,7 @@
     <tr>
         <td># of Category</td>
         <td>Title</td>
+        <td>Created</td>
         <td>Dimensions</td>
         <td>Viewing Side</td>
         <td>First Name</td>
@@ -31,6 +32,7 @@
     <tr>
         <td>{{ object.category_count }}</td>
         <td><a href="{% url 'admin:mocs_moc_change' object.id %}">{{ object.title }}</a></td>
+        <td>{{ object.created|date }}</td>
         <td>{{ object.length }}" x {{ object.width }}" x {{ object.height }}"</td>
         <td>{{ object.get_viewable_sides_display }}</td>
         <td>{{ object.creator.first_name }}</td>
