@@ -33,6 +33,7 @@
             </li>
             <li>MOCS<ul>
                 <li><a href="{% url 'planning:moc_list' object.id %}">Listing</a></li>
+                <li><a href="{% url 'planning:moc_full_list' object.id %}">Full Listing</a> Warning: This is EVERY MOC in the system.</li>
                 <li><a href="{% url 'planning:moc_tables' object.id %}">Table Space</a></li>
                 <li><a href="{% url 'planning:moc_table_tents' object.id %}">Table Tents</a></li>
             </ul>

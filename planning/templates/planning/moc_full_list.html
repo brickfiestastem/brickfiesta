@@ -1,0 +1,42 @@
+{% load admin_urls %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="description"
+          content="Brick Fiesta - A non-profit hobby fan run family focused LEGO convention in Texas.">
+    <meta name="author" content="Brick Fiesta STEM">
+    <title>Brick Fiesta - MOC List</title>
+    <link rel="stylesheet" type="text/css"
+          href="https://maxcdn.bootstrapcdn.com/bootswatch/4.0.0/simplex/bootstrap.min.css"/>
+    <style>@media print {.page-break	{ display: block; page-break-before: always; }}</style>
+</head>
+<body>
+<h1>Full MOC List</h1>
+<table class="table table-striped table-sm">
+    <thead class="thead-light">
+    <tr>
+        <td># of Category</td>
+        <td>Title</td>
+        <td>Dimensions</td>
+        <td>Viewing Side</td>
+        <td>First Name</td>
+        <td>Last Name</td>
+    </tr>
+    </thead>
+    <tbody>
+    {% for object in object_list %}
+    <tr>
+        <td>{{ object.category_count }}</td>
+        <td><a href="{% url 'admin:mocs_moc_change' object.id %}">{{ object.title }}</a></td>
+        <td>{{ object.length }}" x {{ object.width }}" x {{ object.height }}"</td>
+        <td>{{ object.get_viewable_sides_display }}</td>
+        <td>{{ object.creator.first_name }}</td>
+        <td>{{ object.creator.last_name }}</td>
+    </tr>
+    {% endfor %}
+    </tbody>
+</table></body>
+</html>

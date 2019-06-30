@@ -189,6 +189,16 @@ class MOCListView(ListView):
 
 
 @method_decorator(staff_member_required, name='dispatch')
+class MOCFullListView(ListView):
+    model = Moc
+    template_name = 'planning/moc_full_list.html'
+
+    def get_queryset(self):
+        obj_mocs = Moc.objects.all().annotate(category_count=Count('moccategories')).order_by('category_count')
+        return obj_mocs
+
+
+@method_decorator(staff_member_required, name='dispatch')
 class MOCTableTentView(ListView):
     model = Moc
     template_name = 'planning/moc_table_tents.html'
