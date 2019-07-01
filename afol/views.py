@@ -189,12 +189,14 @@ class AFOLVolunteerListView(ListView):
         obj_scheduled = ScheduleVolunteer.objects.filter(
             fan__user=self.request.user).values_list('schedule__id', flat=True)
         context['schedule_list'] = Schedule.objects.filter(
-            id__in=obj_scheduled).order_by('-event')
+            id__in=obj_scheduled).order_by('-schedule__date', 'schedule__start_time', 'fan__last_name',
+                                           'fan__first_name')
         return context
 
     def get_queryset(self):
         obj_scheduled = ScheduleVolunteer.objects.filter(
-            fan__user=self.request.user)
+            fan__user=self.request.user).order_by('-schedule__date', 'schedule__start_time', 'fan__last_name',
+                                                  'fan__first_name')
         return obj_scheduled
 
 
@@ -275,12 +277,14 @@ class AFOLActivitiesListView(ListView):
         obj_scheduled = ScheduleAttendee.objects.filter(
             fan__user=self.request.user).values_list('schedule__id', flat=True)
         context['schedule_list'] = Schedule.objects.filter(
-            id__in=obj_scheduled).order_by('-event')
+            id__in=obj_scheduled).order_by('-event').order_by('-schedule__date', 'schedule__start_time',
+                                                              'fan__last_name', 'fan__first_name')
         return context
 
     def get_queryset(self):
         obj_scheduled = ScheduleAttendee.objects.filter(
-            fan__user=self.request.user)
+            fan__user=self.request.user).order_by('-schedule__date', 'schedule__start_time', 'fan__last_name',
+                                                  'fan__first_name')
         return obj_scheduled
 
 
