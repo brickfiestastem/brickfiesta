@@ -16,21 +16,25 @@
     <table class="table table-striped table-sm">
         <thead class="thead-light">
         <tr>
-            <td align="right" width="20%">Item</td>
-            <td width="10%"></td>
-            <td width="50%">Fan / Business</td>
-            <td align="center" width="20%">Approximate Value</td>
+            <td width="25%">Item</td>
+            <td width="25%">Fan / Business</td>
+            <td width="45%">Cause</td>
+            <td align="center" width="5%">Approximate Value</td>
         </tr>
         </thead>
         <tbody>
         {% for obj_donation in event_grouping.list %}
         <tr>
-            <td align="right">{{ obj_donation.item }}</td>
-            <td></td>
+            <td>{{ obj_donation.item }}</td>
             <td>{{ obj_donation.fan|default_if_none:"" }}
                 {% if obj_donation.business  %}
                 <a href="{% url 'vendor:details' obj_donation.business.id %}">{{ obj_donation.business.name }}</a>
-                {% endif %}</td>
+                {% endif %}
+                {% if obj_donation.fan is None and obj_donation.business is None %}
+                Anonymous Friend of Brick Fiesta
+                {% endif %}
+            </td>
+            <td></td>
             <td align="center">{% if obj_donation.is_price_public %} {{ obj_donation.item_value }} {% endif %}</td>
         </tr>
         {% endfor %}

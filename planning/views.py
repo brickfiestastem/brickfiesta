@@ -194,7 +194,8 @@ class MOCFullListView(ListView):
     template_name = 'planning/moc_full_list.html'
 
     def get_queryset(self):
-        obj_mocs = Moc.objects.all().annotate(category_count=Count('moccategories')).order_by('category_count', 'created')
+        obj_mocs = Moc.objects.all().annotate(category_count=Count(
+            'moccategories')).order_by('category_count', 'created')
         return obj_mocs
 
 

@@ -20,6 +20,18 @@ class BaseModel(models.Model):
         abstract = True
 
 
+class Cause(BaseModel):
+    event = models.ForeignKey(Event, on_delete=models.CASCADE)
+    title = models.CharField(verbose_name='Cause Title', max_length=256)
+    description = models.TextField(verbose_name='Description')
+    organization = models.CharField(
+        verbose_name='Organization', max_length=256)
+    url = models.URLField(verbose_name='Organization URL')
+
+    def __str__(self):
+        return self.title + " - " + self.organization
+
+
 class Donations(BaseModel):
     event = models.ForeignKey(Event, on_delete=models.CASCADE)
     business = models.ForeignKey(
@@ -37,9 +49,15 @@ class Donations(BaseModel):
 
     class Meta:
         verbose_name_plural = "donations"
+        ordering = ['event', 'item', 'business', 'fan']
 
 
 class DonationNotes(BaseModel):
     donation = models.ForeignKey(Donations, on_delete=models.CASCADE)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     note = models.TextField(verbose_name='Note')
+
+
+class DonationCauses(BaseModel):
+    donation = models.ForeignKey(Donations, on_delete=models.CASCADE)
+    cause = models.ForeignKey(Cause, on_delete=models.CASCADE)
