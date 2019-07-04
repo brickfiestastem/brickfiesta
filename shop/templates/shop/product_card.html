@@ -5,7 +5,7 @@
         <div class="card-body">
             <h5 class="card-title">{{ product.event.title }}</h5>
             <p>{{ product.get_product_type_display }}</p>
-            {% if product.event.is_upcoming and not template_details and product.quantity_available != 0 %}
+            {% if (product.event.is_upcoming or product.event.is_current) and not template_details and product.quantity_available != 0 %}
             <a href="{% url 'shop:details' product.id %}" class="btn btn-info card-link">Details -
                 {{ product.price|currency }}</a>
             {% else %}
