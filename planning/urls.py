@@ -4,7 +4,7 @@ from planning.views import EventListingView, ShirtSummaryView, ScheduleListView,
     MOCListView, MOCFullListView, MOCTablesView, MOCTableTentView, AFOLBagCheckListView, ExhibitionWillCallView, AFOLWillCallView, \
     RegistrationBoothSignsView, VendorTableTentView, SponsorTableTentView, AFOLBarCodeView, ShirtCheckListView, \
     BadgeCheckListView, ScheduleActivitiesPrintListView, AFOLCSVView, VoteCounts, PublicVoteCounts, VoteCategories, \
-    VolunteerList
+    VolunteerList, DonationsAuctionSheetsListView
 
 app_name = "planning"
 
@@ -21,6 +21,7 @@ urlpatterns = [
     path('afol/willcall/<event>', AFOLWillCallView.as_view(), name='afol_will_call'),
     path('badge/checklist/<event>',
          BadgeCheckListView.as_view(), name='badge_check_list'),
+    path('donations/auction_sheets/<event>', DonationsAuctionSheetsListView.as_view(), name='donation_auction_sheets'),
     path('exhibition/willcall/<event>',
          ExhibitionWillCallView.as_view(), name='exhibition_will_call'),
     path('program/<event>', ProgramView.as_view(), name='program'),

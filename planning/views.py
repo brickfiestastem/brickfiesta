@@ -6,6 +6,7 @@ from django.utils.decorators import method_decorator
 from django.views.generic import ListView, TemplateView
 
 from afol.models import Shirt, Attendee, Badge, ScheduleVolunteer
+from donations.models import Donations
 from event.models import Event, Schedule, Activity
 from mocs.models import Moc, MocCategories, Vote, PublicVote, EventCategory
 from shop.models import OrderItem, Product
@@ -78,6 +79,15 @@ class ShirtCheckListView(ListView):
     def get_queryset(self):
         self.obj_event = Event.objects.get(id=self.kwargs['event'])
         return Shirt.objects.filter(event=self.obj_event).order_by('fan__first_name', 'fan__last_name')
+
+
+@method_decorator(staff_member_required, name='dispatch')
+class DonationsAuctionSheetsListView(ListView):
+    template_name = 'planning/donations_auction_sheets.html'
+
+    def get_queryset(self):
+        obj_event = Event.objects.get(id=self.kwargs['event'])
+        return Donations.objects.filter(event=obj_event).order_by('item')
 
 
 @method_decorator(staff_member_required, name='dispatch')

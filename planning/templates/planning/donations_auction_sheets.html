@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="description"
+          content="Brick Fiesta - A non-profit hobby fan run family focused LEGO convention in Texas.">
+    <meta name="author" content="Brick Fiesta STEM">
+    <title>Brick Fiesta - Auction Sheets</title>
+    <link rel="stylesheet" type="text/css"
+          href="https://maxcdn.bootstrapcdn.com/bootswatch/4.0.0/simplex/bootstrap.min.css"/>
+    <style>
+@page {
+        size: Letter;
+        margin: 0.5in;
+    }
+@media print {
+	.page-break	{ display: block; page-break-before: always; }
+}
+    </style>
+<body>
+{% for object in object_list %}
+{% include 'donations/donation_auction_sheet.html' %}
+<div class="page-break"></div>
+{% endfor %}
+</body>
+</html>
