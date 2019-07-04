@@ -17,11 +17,12 @@
     {% endfor %}
     <div style="text-align: justify;">{{ event.description|linebreaks }}</div>
     <div class="lead">
-        {% if event.is_current %}
-        <p class="alert alert-warning font-weight-bold" role="alert"><strong>Advanced purchasing online for this event is now closed.</strong> Please visit the registration booth at the event for
-        pickup and purchases.</p>
-        {% endif %}
         <a class="btn btn-primary btn-lg" href="{% url 'event:details' event.id %}" role="button">More Information</a>
+        {% if event.is_current %}
+        <!-- p class="alert alert-warning font-weight-bold" role="alert"><strong>Advanced purchasing online for this event is now closed.</strong> Please visit the registration booth at the event for
+        pickup and purchases.</p -->
+        <a class="btn btn-success btn-lg" href="{% url 'shop:event' event.id %}" role="button">Online Shop</a>
+        {% endif %}
         {% if event.is_upcoming %}
         <a class="btn btn-success btn-lg" href="{% url 'shop:event' event.id %}" role="button">Online Shop</a>
         {% endif %}

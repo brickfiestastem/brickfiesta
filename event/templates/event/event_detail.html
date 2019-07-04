@@ -28,10 +28,11 @@
 <a class="btn btn-info btn-lg" href="{% url 'shop:event' event.id %}" role="button">Online Shop</a>
 {% endif %}
 {% if event.is_current %}
-<div class="alert alert-danger">
+<!--div class="alert alert-danger">
     <p><strong>Advanced purchasing  online for this event is now closed.</strong> Please visit the registration booth at the event for
         pickup and purchases.</p>
-</div>
+</div -->
+<a class="btn btn-info btn-lg" href="{% url 'shop:event' event.id %}" role="button">Online Shop</a>
 {% endif %}
 {% if event.is_past %}
 <div class="alert alert-warning">
