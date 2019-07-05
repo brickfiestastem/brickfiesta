@@ -29,11 +29,14 @@
         {% else %}
         {{ item.category }}
         {% endif %}
-        {% if user.is_authenticated %}
-            <a class="btn btn-success" href="{% url 'mocs:vote' object.id item.category.id %}">Vote!</a>
-        {% else %}
-            <a class="btn btn-success" href="{% url 'mocs:public_vote' object.id item.category.id %}">Vote!</a>
-        {% endif %}</li>
+        {% if item.category.event.is_current %}
+            {% if user.is_authenticated %}
+                <a class="btn btn-success" href="{% url 'mocs:vote' object.id item.category.id %}">Vote!</a>
+            {% else %}
+                <a class="btn btn-success" href="{% url 'mocs:public_vote' object.id item.category.id %}">Vote!</a>
+            {% endif %}
+        {% endif %}
+        </li>
         {% endfor %}
     </ul>
     <h3>MOC Stats</h3>
