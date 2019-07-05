@@ -222,6 +222,18 @@ class MOCTableTentView(ListView):
 
 
 @method_decorator(staff_member_required, name='dispatch')
+class MOCMicroCardView(ListView):
+    model = Moc
+    template_name = 'planning/moc_micro_table_tents.html'
+
+    def get_queryset(self):
+        obj_event = Event.objects.get(id=self.kwargs['event'])
+        obj_moc_categories = MocCategories.objects.filter(category__event=obj_event).order_by(
+            'moc__creator__first_name', 'moc__creator__last_name')
+        return obj_moc_categories
+
+
+@method_decorator(staff_member_required, name='dispatch')
 class AFOLBagCheckListView(ListView):
     model = OrderItem
     template_name = 'planning/afol_orderitem_list.html'

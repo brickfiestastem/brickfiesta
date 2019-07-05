@@ -3,13 +3,14 @@
 
 <h1>Event Planning</h1>
 <ul>
-{% for object in object_list %}
+    {% for object in object_list %}
     <li>{{ object.title }}
         <ul>
-            <li>Activities</li>
+            <li>Activities
             <ul>
                 <li><a href="{% url 'planning:activities_sheets' object.id %}">Activities Sheets</a></li>
             </ul>
+            </li>
             <li>Badge
                 <ul>
                     <li><a href="{% url 'planning:badge_check_list' object.id %}">Badge Check List</a></li>
@@ -28,20 +29,29 @@
             <li>Fan of LEGO
                 <ul>
                     <li><a href="{% url 'planning:afol_bags' object.id %}">Bag Check Lists</a></li>
-                    <li>All Access <a href="{% url 'planning:afol_barcodes'  object.id  'allaccess' %}">Bar Codes 8160 Avery</a>
-                        (<a href="{% url 'planning:afol_barcodes_88695'  object.id  'allaccess' %}">88895 Avery</a>)</li>
-                    <li>Companion <a href="{% url 'planning:afol_barcodes'  object.id  'companion' %}">Bar Codes 8160 Avery</a>
-                        (<a href="{% url 'planning:afol_barcodes_88695'  object.id  'companion' %}">88895 Avery</a>)</li>
+                    <li>All Access <a href="{% url 'planning:afol_barcodes'  object.id  'allaccess' %}">Bar Codes 8160
+                        Avery</a>
+                        (<a href="{% url 'planning:afol_barcodes_88695'  object.id  'allaccess' %}">88895 Avery</a>)
+                    </li>
+                    <li>Companion <a href="{% url 'planning:afol_barcodes'  object.id  'companion' %}">Bar Codes 8160
+                        Avery</a>
+                        (<a href="{% url 'planning:afol_barcodes_88695'  object.id  'companion' %}">88895 Avery</a>)
+                    </li>
                     <li><a href="{% url 'planning:afol_csv' object.id %}">Simple CSV List</a></li>
                     <li><a href="{% url 'planning:afol_will_call' object.id %}">Will Call List</a></li>
                 </ul>
             </li>
-            <li>MOCS<ul>
-                <li><a href="{% url 'planning:moc_list' object.id %}">Listing</a></li>
-                <li><a href="{% url 'planning:moc_full_list' object.id %}">Full Listing</a> Warning: This is EVERY MOC in the system.</li>
-                <li><a href="{% url 'planning:moc_tables' object.id %}">Table Space</a></li>
-                <li><a href="{% url 'planning:moc_table_tents' object.id %}">Table Tents</a></li>
-            </ul>
+            <li>MOCS
+                <ul>
+                    <li><a href="{% url 'planning:moc_list' object.id %}">Listing</a></li>
+                    <li><a href="{% url 'planning:moc_full_list' object.id %}">Full Listing</a> Warning: This is EVERY
+                        MOC in the system.
+                    </li>
+                    <li><a href="{% url 'planning:moc_tables' object.id %}">Table Space</a></li>
+                    <li><a href="{% url 'planning:moc_table_tents' object.id %}">Table Tents</a></li>
+                    <li><a href="{% url 'planning:moc_micro_table_tents' object.id %}">Micro Table Tents (5390
+                        Avery)</a></li>
+                </ul>
             </li>
             <li><a href="{% url 'planning:program' object.id %}">Program</a></li>
             <li>Registation Booth
@@ -53,23 +63,27 @@
                 <ul>
                     <li><a href="{% url 'planning:schedule_list' object.id %}">Full Schedule</a></li>
                     <li><a href="{% url 'planning:schedule_print' object.id %}">Printable Schedule</a></li>
-                    <li><a href="{% url 'planning:schedule_print_room' object.id %}">Printable Room Schedule</a> Needs work!</li>
-                    <li><a href="{% url 'planning:schedule_activities_print' object.id %}">Printable Schedule Activities Sheet</a> (Rules, Materials, etc.)</li>
+                    <li><a href="{% url 'planning:schedule_print_room' object.id %}">Printable Room Schedule</a> Needs
+                        work!
+                    </li>
+                    <li><a href="{% url 'planning:schedule_activities_print' object.id %}">Printable Schedule Activities
+                        Sheet</a> (Rules, Materials, etc.)
+                    </li>
                 </ul>
             </li>
             <li>Shirts
                 <ul>
-                    <li><a href="{% url 'planning:shirt' object.id %}">Shirt Summary</a></li></li>
+                    <li><a href="{% url 'planning:shirt' object.id %}">Shirt Summary</a></li>
                     <li><a href="{% url 'planning:shirt_check_list' object.id %}">Shirt Check List</a></li>
                 </ul>
             <li>Sponsors
                 <ul>
-                    <li><a href="{% url 'planning:sponsor_table_tents' object.id %}">Sponsor Table Tents</a> </li>
+                    <li><a href="{% url 'planning:sponsor_table_tents' object.id %}">Sponsor Table Tents</a></li>
                 </ul>
             </li>
             <li>Vendors
                 <ul>
-                    <li><a href="{% url 'planning:vendor_table_tents' object.id %}">Vendor Table Tents</a> </li>
+                    <li><a href="{% url 'planning:vendor_table_tents' object.id %}">Vendor Table Tents</a></li>
                 </ul>
             </li>
             <li>Votes
@@ -80,11 +94,11 @@
             </li>
             <li>Volunteers
                 <ul>
-                    <li><a href="{% url 'planning:volunteer_list' object.id %}">List</a> </li>
+                    <li><a href="{% url 'planning:volunteer_list' object.id %}">List</a></li>
                 </ul>
             </li>
         </ul>
     </li>
-{% endfor %}
+    {% endfor %}
 </ul>
 {% endblock content %}
