@@ -32,7 +32,7 @@ from .utils import add_attendee_fan_badge_shirt
 
 class EventListView(ListView):
     queryset = Event.objects.all().order_by('start_date').filter(
-        start_date__gte=datetime.date(2019, 7, 1))
+        start_date__gt=datetime.date.today())
     template_name = 'shop/event_list.html'
 
 
