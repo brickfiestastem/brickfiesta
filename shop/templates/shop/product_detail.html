@@ -1,5 +1,7 @@
 {% extends "brickfiesta/base.html" %} {% block content %}
 {% with True as template_details %}
+
+{% if product.is_public %}
 <h1>Add To Cart</h1>
 <div class="row">
     <div class="col-2"></div>
@@ -27,5 +29,8 @@
     </div>
     <div class="col-2"></div>
 </div>
+{% else %}
+<h1>Product Not Available</h1>
+{% endif %}
 {% endwith %}
 {% endblock content %}
