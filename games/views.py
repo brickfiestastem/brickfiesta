@@ -36,12 +36,12 @@ class PickDoorPrizePersonView(View):
         if int_number == 0:
             obj_past_winners = DoorPrizeWinner.objects.filter(event=obj_scheduled_event.event).values_list('fan',
                                                                                                            flat=True)
-            obj_fols = ScheduleAttendee.objects.exclude(fan__in=obj_past_winners). \
+            obj_fols = list(ScheduleAttendee.objects.exclude(fan__in=obj_past_winners). \
                 filter(schedule=obj_scheduled_event,
                        fan__attendee__role=Attendee.ROLE_ALLACCESS,
-                       )
+                       ))
 
-            if obj_fols.count() == 0:
+            if len(obj_fols) == 0:
                 return render(request, self.template_name,
                               {'number': int_number,
                                'winner': None,
@@ -49,13 +49,15 @@ class PickDoorPrizePersonView(View):
                                'scheduled activity and the door prize winner list for this event!',
                                'schedule': obj_scheduled_event})
 
+            shuffle(obj_fols)
+
             for fol in obj_fols:
                 obj_fol, created = DoorPrizePool.objects.get_or_create(
                     schedule=fol.schedule, fan=fol.fan)
             return render(request, self.template_name,
                           {'number': int_number,
                            'winner': None,
-                           'message': 'Just built a list of potential door prize people, refresh to start drawing names.',
+                           'message': 'Just built a list of potential door prize FOLs, refresh to start drawing names.',
                            'schedule': obj_scheduled_event})
         else:
             obj_winner = obj_pool.first()
