@@ -9,7 +9,7 @@
             <h1 align="center">{% if winner %}
                 {{ winner.fan.first_name }} {{ winner.fan.last_name }}
                 {% else %}
-                No People Have Not Already Won
+                {{ message }}
                 {% endif %}
             </h1>
         </ul>

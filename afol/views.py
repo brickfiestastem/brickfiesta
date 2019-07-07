@@ -1,6 +1,7 @@
 import datetime
 
 from django.contrib.auth import login
+from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.models import User
@@ -145,9 +146,13 @@ class AFOLVolunteerView(ListView):
         # TODO figure out why create view is posting to list view refactor to form_valid logic
         obj_fan = Fan.objects.get(id=request.POST['fan'])
         obj_schedule = Schedule.objects.get(id=request.POST['schedule'])
-        obj_volunteer, created = ScheduleVolunteer.objects.get_or_create(
-            fan=obj_fan, schedule=obj_schedule)
-        obj_volunteer.save()
+        obj_attendee = Attendee.objects.filter(fan=obj_fan, event=obj_schedule.event)
+        if obj_attendee.count():
+            obj_volunteer, created = ScheduleVolunteer.objects.get_or_create(
+                fan=obj_fan, schedule=obj_schedule)
+            obj_volunteer.save()
+        else:
+            messages.add_message(request, messages.WARNING, 'Fan not attending this event.')
         return redirect('afol:volunteer_list')
 
 
@@ -226,9 +231,12 @@ class AFOLActivitiesView(ListView):
         # TODO figure out why create view is posting to list view refactor to form_valid logic
         obj_fan = Fan.objects.get(id=request.POST['fan'])
         obj_schedule = Schedule.objects.get(id=request.POST['schedule'])
-        obj_volunteer, created = ScheduleAttendee.objects.get_or_create(
-            fan=obj_fan, schedule=obj_schedule)
-        obj_volunteer.save()
+        obj_attendee = Attendee.objects.filter(fan=obj_fan, event=obj_schedule.event)
+        if obj_attendee.count():
+            obj_scheduleattendee, created = ScheduleAttendee.objects.get_or_create(fan=obj_fan, schedule=obj_schedule)
+            obj_scheduleattendee.save()
+        else:
+            messages.add_message(request, messages.WARNING, 'Fan not attending this event.')
         return redirect('afol:activities_list')
 
 
