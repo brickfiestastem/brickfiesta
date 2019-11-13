@@ -51,6 +51,14 @@ setup_local_settings() {
     echo "}" >> settings.json
 }
 
+run_coverage() {
+    echo "Running coverage"
+    cd $SCRIPT_DIR
+    cd ../
+    coverage run --source='.' --omit='./venv/*,*/migrations/*' manage.py test brickfiesta
+    coverage report
+}
+
 run_autopep8() {
     echo "Running autopep8"
     cd $SCRIPT_DIR
@@ -115,7 +123,8 @@ usage() {
     echo "r run virtualenv"
     echo "v Just virtualenv"
     echo "8 Run autopep8"
-    echo "Usage $0 [c] [f] [l] [L] [r] [v] [8]"
+    echo "0 Run coverage"
+    echo "Usage $0 [c] [f] [l] [L] [r] [v] [8] [0]"
     exit 1
 }
 
@@ -144,7 +153,12 @@ case "$1" in
         setup_virtualenv
         ;;
     8)
+        run_virtualenv
         run_autopep8
+        ;;
+    0)
+        run_virtualenv
+        run_coverage
         ;;
     *)
         usage
